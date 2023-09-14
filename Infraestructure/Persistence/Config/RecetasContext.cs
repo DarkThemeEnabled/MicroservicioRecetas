@@ -13,6 +13,8 @@ namespace Infraestructure.Persistence.Config
         : base(options) { }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            //modelBuilder.ApplyConfiguration(new ServicioConfig());
+            //modelBuilder.ApplyConfiguration(new ViajeServicioConfig());
         }
     }
 }

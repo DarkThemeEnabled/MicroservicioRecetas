@@ -1,3 +1,4 @@
+using Infraestructure.Persistence.Config;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -12,7 +13,14 @@ builder.Services.AddSwaggerGen();
 // Custom
 var connectionString = builder.Configuration["ConnectionString"];
 
-builder.Services.AddDbContext<DbContext>(options => options.UseSqlServer(connectionString));
+builder.Services.AddDbContext<RecetasContext>(options => options.UseSqlServer(connectionString));
+//builder.Services.AddScoped<IViajeServicioService, ViajeServicioService>();
+//builder.Services.AddScoped<IViajeServicioQuery, ViajeServicioQuery>();
+//builder.Services.AddScoped<IViajeServicioCommand, ViajeServicioCommand>();
+
+//builder.Services.AddScoped<IServicioService, ServicioService>();
+//builder.Services.AddScoped<IServicioQuery, ServicioQuery>();
+//builder.Services.AddScoped<IServicioCommand, ServicioCommand>();
 
 //CORS deshabilitar
 builder.Services.AddCors(options =>
