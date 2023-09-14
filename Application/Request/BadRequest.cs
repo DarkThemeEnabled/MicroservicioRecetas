@@ -4,9 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Application.Exceptions
+namespace Application.Request
 {
-    internal class class1
-    {
-    }
+    public class BadRequest
+    { public string Message { get; set; } }
 }
