@@ -13,12 +13,13 @@ namespace Infraestructure.Persistence.Config
     {
         public void Configure(EntityTypeBuilder<IngredienteReceta> entityBuilder)
         {
-            //entityBuilder.ToTable("Servicio");
-            //entityBuilder.HasKey(e => e.ServicioId);
-
-            //entityBuilder.HasMany(m => m.ViajeServicios)
-            //.WithOne(cm => cm.Servicio)
-            //.HasForeignKey(cm => cm.ServicioId);
+            entityBuilder.ToTable("IngredientesReceta");
+            entityBuilder.HasKey(ir => ir.IngredienteRecetaId);
+            entityBuilder.HasOne(r => r.Receta)
+                .WithMany(ir => ir.IngredentesReceta)
+                .HasForeignKey(r => r.RecetaId);
+            entityBuilder.Property(ir => ir.cantidad)
+                .IsRequired();
         }
     }
 }

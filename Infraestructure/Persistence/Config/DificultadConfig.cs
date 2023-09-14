@@ -15,6 +15,9 @@ namespace Infraestructure.Persistence.Config
         {
             entityBuilder.ToTable("Dificultad");
             entityBuilder.HasKey(d => d.DificultadId);
+            entityBuilder.Property(d => d.DificultadId).IsRequired();
+            entityBuilder.HasMany(r => r.Recetas);
+            entityBuilder.Property(d => d.Nombre).HasMaxLength(50).IsRequired();
 
             //entityBuilder.HasMany(m => m.ViajeServicios)
             //.WithOne(cm => cm.Servicio)

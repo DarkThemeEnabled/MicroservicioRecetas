@@ -13,12 +13,12 @@ namespace Infraestructure.Persistence.Config
     {
         public void Configure(EntityTypeBuilder<PromedioPuntaje> entityBuilder)
         {
-            //entityBuilder.ToTable("Servicio");
-            //entityBuilder.HasKey(e => e.ServicioId);
-
-            //entityBuilder.HasMany(m => m.ViajeServicios)
-            //.WithOne(cm => cm.Servicio)
-            //.HasForeignKey(cm => cm.ServicioId);
+            entityBuilder.ToTable("PromedioPuntajes");
+            entityBuilder.HasKey(pp => pp.PromedioPuntajeId);
+            entityBuilder.HasOne<Receta>(pp => pp.Receta)
+                .WithOne(r => r.PromedioPuntaje)
+                .HasForeignKey <PromedioPuntaje> (pp => pp.RecetaId)
+                .IsRequired();
         }
     }
 }

@@ -13,12 +13,16 @@ namespace Infraestructure.Persistence.Config
     {
         public void Configure(EntityTypeBuilder<Paso> entityBuilder)
         {
-            //entityBuilder.ToTable("Servicio");
-            //entityBuilder.HasKey(e => e.ServicioId);
-
-            //entityBuilder.HasMany(m => m.ViajeServicios)
-            //.WithOne(cm => cm.Servicio)
-            //.HasForeignKey(cm => cm.ServicioId);
+            entityBuilder.ToTable("Pasos");
+            entityBuilder.HasKey(p => p.PasosId);
+            entityBuilder.HasOne(r => r.Receta)
+                .WithMany(p => p.Pasos)
+                .HasForeignKey(r => r.RecetaId);
+            entityBuilder.Property(p => p.Descripcion)
+                .HasMaxLength(500)
+                .IsRequired();
+            entityBuilder.Property(p => p.Foto)
+                .HasMaxLength(250);
         }
     }
 }
