@@ -1,12 +1,16 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Application.Interfaces;
+using Microsoft.AspNetCore.Mvc;
 
 namespace GastroNET.Controllers
 {
     public class PasosController : Controller
     {
-        public IActionResult Index()
+        private readonly IPasosService _pasosService;
+        
+        public PasosController(IPasosService pasosService)
         {
-            return View();
+            _pasosService = pasosService;
         }
+
     }
 }

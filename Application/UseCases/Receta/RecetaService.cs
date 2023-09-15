@@ -10,5 +10,6 @@ namespace Application.UseCases.Receta
 {
     public class RecetaService : IRecetaService
     {
+
     }
 }

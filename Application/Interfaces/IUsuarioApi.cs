@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Application.Interfaces
 {
-    public class IUsuarioApi
+    public interface IUsuarioApi
     {
     }
 }

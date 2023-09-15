@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Infraestructure.Command
+namespace Application.Interfaces
 {
-    internal class Class1
+    public interface IRecetaQuery
     {
     }
 }

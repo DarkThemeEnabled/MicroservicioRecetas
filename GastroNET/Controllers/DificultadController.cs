@@ -1,12 +1,35 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Application.Exceptions;
+using Application.Interfaces;
+using Application.Request;
+using Microsoft.AspNetCore.Mvc;
 
 namespace GastroNET.Controllers
 {
     public class DificultadController : Controller
     {
-        public IActionResult Index()
+        private readonly IDificultadService _service;
+
+
+        public DificultadController(IDificultadService service)
         {
-            return View();
+            _service = service;
         }
-    }
+
+        [HttpGet("Dificultad/GetListDificultad")]
+
+        public async Task<IActionResult> GetListDificultad()
+        {
+            try
+            {
+                var result = await _service.GetListDificultad();
+                return new JsonResult(result) { StatusCode = 200 };
+            }
+            catch (ExceptionSintaxError ex)
+            {
+                return new JsonResult(new BadRequest { Message = ex.Message }) { StatusCode = 400 };
+            }
+        }
+
+
+        }
 }

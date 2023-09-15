@@ -1,4 +1,7 @@
+using Application.Interfaces;
+using Application.UseCases.Dificultad;
 using Infraestructure.Persistence.Config;
+using Infraestructure.Querys;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -14,6 +17,10 @@ builder.Services.AddSwaggerGen();
 var connectionString = builder.Configuration["ConnectionString"];
 
 builder.Services.AddDbContext<RecetasContext>(options => options.UseSqlServer(connectionString));
+
+builder.Services.AddScoped<IDificultadService, DificultadService>();
+builder.Services.AddScoped<IDificultadQuery, DificultadQuery>();
+
 //builder.Services.AddScoped<IViajeServicioService, ViajeServicioService>();
 //builder.Services.AddScoped<IViajeServicioQuery, ViajeServicioQuery>();
 //builder.Services.AddScoped<IViajeServicioCommand, ViajeServicioCommand>();

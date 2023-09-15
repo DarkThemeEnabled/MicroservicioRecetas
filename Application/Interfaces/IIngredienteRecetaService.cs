@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Application.Response
+namespace Application.Interfaces
 {
-    internal class class1
+    public interface IIngredienteRecetaService
     {
     }
 }

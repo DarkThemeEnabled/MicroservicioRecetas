@@ -7195,19 +7195,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Lucas\\.nuget\\packages\\": {}
+    "C:\\Users\\diego\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\facultad\\cuarto año\\segundo cuatrimestre\\proyecto software\\GastroNet\\Domain\\Domain.csproj",
+      "projectUniqueName": "C:\\Users\\diego\\Source\\Repos\\MicroservicioRecetas\\Domain\\Domain.csproj",
       "projectName": "Domain",
-      "projectPath": "D:\\facultad\\cuarto año\\segundo cuatrimestre\\proyecto software\\GastroNet\\Domain\\Domain.csproj",
-      "packagesPath": "C:\\Users\\Lucas\\.nuget\\packages\\",
-      "outputPath": "D:\\facultad\\cuarto año\\segundo cuatrimestre\\proyecto software\\GastroNet\\Domain\\obj\\",
+      "projectPath": "C:\\Users\\diego\\Source\\Repos\\MicroservicioRecetas\\Domain\\Domain.csproj",
+      "packagesPath": "C:\\Users\\diego\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\diego\\Source\\Repos\\MicroservicioRecetas\\Domain\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\Lucas\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\diego\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -7276,7 +7276,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.202\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.400\\RuntimeIdentifierGraph.json"
       }
     }
   }

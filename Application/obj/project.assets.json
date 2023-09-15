@@ -7218,19 +7218,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Lucas\\.nuget\\packages\\": {}
+    "C:\\Users\\diego\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\facultad\\cuarto año\\segundo cuatrimestre\\proyecto software\\GastroNet\\Application\\Application.csproj",
+      "projectUniqueName": "C:\\Users\\diego\\Source\\Repos\\MicroservicioRecetas\\Application\\Application.csproj",
       "projectName": "Application",
-      "projectPath": "D:\\facultad\\cuarto año\\segundo cuatrimestre\\proyecto software\\GastroNet\\Application\\Application.csproj",
-      "packagesPath": "C:\\Users\\Lucas\\.nuget\\packages\\",
-      "outputPath": "D:\\facultad\\cuarto año\\segundo cuatrimestre\\proyecto software\\GastroNet\\Application\\obj\\",
+      "projectPath": "C:\\Users\\diego\\Source\\Repos\\MicroservicioRecetas\\Application\\Application.csproj",
+      "packagesPath": "C:\\Users\\diego\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\diego\\Source\\Repos\\MicroservicioRecetas\\Application\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\Lucas\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\diego\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -7244,8 +7244,8 @@
         "net6.0": {
           "targetAlias": "net6.0",
           "projectReferences": {
-            "D:\\facultad\\cuarto año\\segundo cuatrimestre\\proyecto software\\GastroNet\\Domain\\Domain.csproj": {
-              "projectPath": "D:\\facultad\\cuarto año\\segundo cuatrimestre\\proyecto software\\GastroNet\\Domain\\Domain.csproj"
+            "C:\\Users\\diego\\Source\\Repos\\MicroservicioRecetas\\Domain\\Domain.csproj": {
+              "projectPath": "C:\\Users\\diego\\Source\\Repos\\MicroservicioRecetas\\Domain\\Domain.csproj"
             }
           }
         }
@@ -7303,7 +7303,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.202\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.400\\RuntimeIdentifierGraph.json"
       }
     }
   }
