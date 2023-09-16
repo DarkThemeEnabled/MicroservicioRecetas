@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Infraestructure.Persistence.Config
+namespace Infraestructure.Config
 {
     public class PromedioPuntajeConfig : IEntityTypeConfiguration<PromedioPuntaje>
     {
@@ -15,9 +15,9 @@ namespace Infraestructure.Persistence.Config
         {
             entityBuilder.ToTable("PromedioPuntajes");
             entityBuilder.HasKey(pp => pp.PromedioPuntajeId);
-            entityBuilder.HasOne<Receta>(pp => pp.Receta)
+            entityBuilder.HasOne(pp => pp.Receta)
                 .WithOne(r => r.PromedioPuntaje)
-                .HasForeignKey <PromedioPuntaje> (pp => pp.RecetaId)
+                .HasForeignKey<PromedioPuntaje>(pp => pp.RecetaId)
                 .IsRequired();
         }
     }

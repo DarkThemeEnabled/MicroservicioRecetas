@@ -7,11 +7,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Infraestructure.Persistence.Config
+namespace Infraestructure.Config
 {
-    public class CategoriaRecetaConfig : IEntityTypeConfiguration<CategoriasRecetaConfig>
+    public class CategoriaRecetaConfig : IEntityTypeConfiguration<CategoriaReceta>
     {
-        public void Configure(EntityTypeBuilder<CategoriasRecetaConfig> entityBuilder)
+        public void Configure(EntityTypeBuilder<CategoriaReceta> entityBuilder)
         {
             entityBuilder.ToTable("CategoriasReceta");
             entityBuilder.HasKey(cr => cr.CategoriaRecetaId);

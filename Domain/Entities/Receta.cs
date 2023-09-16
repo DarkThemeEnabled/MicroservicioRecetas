@@ -10,7 +10,7 @@ namespace Domain.Entities
     {
         public Guid RecetaId { get; set; }
         public int CategoriaRecetaId { get; set; }
-        public CategoriasRecetaConfig CategoriaReceta { get; set; }
+        public CategoriaReceta CategoriaReceta { get; set; }
         public int DificultadId { get; set; }
         public Dificultad Dificultad { get; set; }
         public Guid UsuarioId { get; set; }

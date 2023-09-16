@@ -1,4 +1,5 @@
-﻿using Application.Interfaces;
+﻿using Application.Exceptions;
+using Application.Interfaces;
 using Application.Request;
 using Application.Response;
 using Domain.Entities;
@@ -21,55 +22,84 @@ namespace Application.UseCases.SReceta
             _recetaCommand = recetaCommand;
         }
 
-        public async Task<ResponseMessage> CreateReceta(RecetaRequest recetaRequest)
+        
+        public async Task<RecetaResponse> CreateReceta(RecetaRequest recetaRequest)
         {
-            var receta = new Receta
+            try
             {
-                CategoriaRecetaId = recetaRequest.CategoriaRecetaId,
-                DificultadId = recetaRequest.DificultadId,
-                UsuarioId = recetaRequest.UsuarioId,
-                Titulo = recetaRequest.Titulo,
-                FotoReceta = recetaRequest.FotoReceta,
-                Video = recetaRequest.Video,
-                TiempoPreparacion = recetaRequest.TiempoPreparacion
-            };
-            await _recetaCommand.CreateReceta(receta);
-            var result = new RecetaResponse
+                //Crear validador tiempopreparacion(string) a timespan
+                //Crear validador dificultadID
+                //Crear validador UsuarioID (Este debería validarse por el microservicio de usuario, hay que ver como es lo del token)
+                //Crear validador CategoríaRecetaId
+
+                //Los válidadores yo, Lucas Gomez, los creo como un método private para poder reutilizarlos en cualquier parte del código
+                //podemos charlarlo si quieren seguir mi forma de realizarlo o no 
+                TimeSpan.TryParse(recetaRequest.TiempoPreparacion, out TimeSpan tiempoPreparacion);
+                var receta = new Receta
+                {
+                    CategoriaRecetaId = recetaRequest.CategoriaRecetaId,
+                    DificultadId = recetaRequest.DificultadId,
+                    UsuarioId = recetaRequest.UsuarioId,
+                    Titulo = recetaRequest.Titulo,
+                    FotoReceta = recetaRequest.FotoReceta,
+                    Video = recetaRequest.Video,
+                    TiempoPreparacion = tiempoPreparacion
+                };
+                Receta recetaCreada= await _recetaCommand.CreateReceta(receta);
+                return new RecetaResponse
+                {
+                    RecetaId = recetaCreada.RecetaId,
+                    CategoriaRecetaId = recetaCreada.CategoriaRecetaId,
+                    DificultadId = recetaCreada.DificultadId,
+                    UsuarioId = recetaCreada.UsuarioId,
+                    Titulo = recetaCreada.Titulo,
+                    FotoReceta = recetaCreada.FotoReceta,
+                    Video = recetaCreada.Video,
+                    TiempoPreparacion = recetaCreada.TiempoPreparacion.ToString()
+                };
+                //return new ResponseMessage(201, result);  Devolver el statusCode es innecesario ya que lo estamos indicando en el return del controller :)
+                //public async Task<ResponseMessage> CreateReceta(RecetaRequest recetaRequest) <--- Devuelve un ResponseMessage que no se utiliza en el controller
+            }
+            catch (ExceptionSintaxError e)
             {
-                CategoriaRecetaId = recetaRequest.CategoriaRecetaId,
-                DificultadId = recetaRequest.DificultadId,
-                UsuarioId = recetaRequest.UsuarioId,
-                Titulo = recetaRequest.Titulo,
-                FotoReceta = recetaRequest.FotoReceta,
-                Video = recetaRequest.Video,
-                TiempoPreparacion = recetaRequest.TiempoPreparacion
-            };
-            return new ResponseMessage(201, result);
-         
+                throw new ExceptionSintaxError("Error en la sintaxis de la receta a crear: " + e.Message);
+            }
+            catch (Conflict e)
+            {
+                throw new Conflict("No se pudo agregar la receta: " + e.Message);
+            }
+
+
         }
 
         public async Task<List<RecetaResponse>> GetListRecetas()
         {
+            //Después vamos a tener que crear más métodos de búsqueda aparte de este
+            //En este caso, no veo la necesidad de realizar un try/catch ya que devuelve una lista con recetas o vacía
             var recetas = await _recetaQuery.GetListRecetas();
             var recetasResponse = new List<RecetaResponse>();
 
-            foreach (var item in recetas)
+            foreach (var receta in recetas)
             {
-                var receta = new RecetaResponse
-                {
-                    RecetaId = item.RecetaId,
-                    CategoriaRecetaId = item.CategoriaRecetaId,
-                    DificultadId = item.DificultadId,
-                    FotoReceta = item.FotoReceta,
-                    TiempoPreparacion = item.TiempoPreparacion,
-                    Titulo = item.Titulo,
-                    Video = item.Video
-                };
-                recetasResponse.Add(receta);
+                recetasResponse.Add(await CreateResponseReceta(receta));
             }
             return recetasResponse;
         }
 
-        
+        //Métodos privados para RecetaService
+        private Task<RecetaResponse> CreateResponseReceta (Receta unaReceta)
+        {
+            var receta = new RecetaResponse
+            {
+                RecetaId = unaReceta.RecetaId,
+                CategoriaRecetaId = unaReceta.CategoriaRecetaId,
+                DificultadId = unaReceta.DificultadId,
+                FotoReceta = unaReceta.FotoReceta,
+                TiempoPreparacion = unaReceta.TiempoPreparacion.ToString(),
+                Titulo = unaReceta.Titulo,
+                Video = unaReceta.Video
+            };
+            return Task.FromResult(receta);
+        }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using Application.Exceptions;
 using Application.Interfaces;
 using Application.Request;
+using Application.Response;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GastroNET.Controllers
@@ -17,6 +18,8 @@ namespace GastroNET.Controllers
         }
 
         [HttpGet("/GetListRecetas")]
+        [ProducesResponseType(typeof(List<RecetaResponse>), 200)]
+        [ProducesResponseType(typeof(BadRequest), 400)]
         public async Task<IActionResult> GetListReceta()
         {
             try
@@ -31,20 +34,24 @@ namespace GastroNET.Controllers
         }
 
         [HttpPost("/CreateReceta")]
-        
+
+        [ProducesResponseType(typeof(RecetaResponse), 201)]
         [ProducesResponseType(typeof(BadRequest), 400)]
         [ProducesResponseType(typeof(BadRequest), 409)]
-        [ProducesResponseType(typeof(BadRequest), 404)]
         public async Task<IActionResult> CreateReceta(RecetaRequest request)
         {
             try
             {
                 var result = await _service.CreateReceta(request);
-                return new JsonResult(result) { StatusCode = 200 };
+                return new JsonResult(result) { StatusCode = 201 };
             }
             catch (ExceptionSintaxError ex)
             {
                 return new JsonResult(new BadRequest { Message = ex.Message }) { StatusCode = 400 };
+            }
+            catch (Conflict ex)
+            {
+                return new JsonResult(new BadRequest { Message = ex.Message }) { StatusCode = 409 };
             }
         }
         //Referencia de ENDPOINT

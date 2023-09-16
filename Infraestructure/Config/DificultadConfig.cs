@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Infraestructure.Persistence.Config
+namespace Infraestructure.Config
 {
     public class DificultadConfig : IEntityTypeConfiguration<Dificultad>
     {
@@ -18,17 +18,6 @@ namespace Infraestructure.Persistence.Config
             entityBuilder.Property(d => d.DificultadId).IsRequired();
             entityBuilder.HasMany(r => r.Recetas);
             entityBuilder.Property(d => d.Nombre).HasMaxLength(50).IsRequired();
-
-            //entityBuilder.HasMany(m => m.ViajeServicios)
-            //.WithOne(cm => cm.Servicio)
-            //.HasForeignKey(cm => cm.ServicioId);
         }
-
-        //modelBuilder.Entity<Pelicula>()
-        //        .HasMany<Funcion>(pel => pel.Funciones)
-        //        .WithOne(fun => fun.Pelicula)
-        //        .HasForeignKey(fun => fun.PeliculaId)
-        //        .IsRequired(false);
-        //modelBuilder.ApplyConfiguration(new PeliculasData());
     }
 }

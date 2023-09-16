@@ -12,7 +12,7 @@ namespace Application.Interfaces
     {
         
         Task<List<RecetaResponse>> GetListRecetas();
-        Task<ResponseMessage> CreateReceta(RecetaRequest recetaRequest);
+        Task<RecetaResponse> CreateReceta(RecetaRequest recetaRequest);
 
     }
 }

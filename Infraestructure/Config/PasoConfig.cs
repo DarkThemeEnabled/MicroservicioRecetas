@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Infraestructure.Persistence.Config
+namespace Infraestructure.Config
 {
     public class PasoConfig : IEntityTypeConfiguration<Paso>
     {

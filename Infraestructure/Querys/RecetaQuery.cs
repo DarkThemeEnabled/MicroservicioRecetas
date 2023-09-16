@@ -1,12 +1,9 @@
-﻿using Application.Interfaces;
+﻿using Application.Exceptions;
+using Application.Interfaces;
 using Domain.Entities;
-using Infraestructure.Persistence.Config;
+using Infraestructure.Persistence;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace Infraestructure.Querys
 {
@@ -21,8 +18,16 @@ namespace Infraestructure.Querys
 
         public async Task<List<Receta>> GetListRecetas()
         {
-            var recetas = await _context.Recetas.ToListAsync();
-            return recetas;
+            try
+            {
+                var recetas = await _context.Recetas.ToListAsync();
+                return recetas;
+            }
+            
+             catch (DbUpdateException)
+            {
+                throw new Conflict("Error en la base de datos");
+            }
         }
     }
 }

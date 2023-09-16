@@ -1,10 +1,9 @@
 using Application.Interfaces;
 using Application.UseCases.SDificultad;
-using Application.UseCases.SJson;
 using Application.UseCases.SPasos;
 using Application.UseCases.SReceta;
 using Infraestructure.Command;
-using Infraestructure.Persistence.Config;
+using Infraestructure.Persistence;
 using Infraestructure.Querys;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;

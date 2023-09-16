@@ -1,6 +1,8 @@
-﻿using Application.Interfaces;
+﻿using Application.Exceptions;
+using Application.Interfaces;
 using Domain.Entities;
-using Infraestructure.Persistence.Config;
+using Infraestructure.Persistence;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,10 +20,18 @@ namespace Infraestructure.Command
             _context = context;
         }
 
-        public async Task CreateReceta(Receta receta )
+        public async Task<Receta> CreateReceta(Receta receta )
         {
-            _context.Add(receta );
-            await _context.SaveChangesAsync();
+            try
+            {
+                _context.Add(receta);
+                await _context.SaveChangesAsync();
+                return receta;
+            }
+            catch (DbUpdateException)
+            {
+                throw new Conflict("Error en la base de datos");
+            }
         }
     }
 }

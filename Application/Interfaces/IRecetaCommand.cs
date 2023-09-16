@@ -9,6 +9,6 @@ namespace Application.Interfaces
 {
     public interface IRecetaCommand
     {
-        Task CreateReceta(Receta receta);
+        Task<Receta> CreateReceta(Receta receta);
     }
 }

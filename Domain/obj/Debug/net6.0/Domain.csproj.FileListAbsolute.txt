@@ -26,3 +26,17 @@ C:\Users\diego\Source\Repos\MicroservicioRecetas\Domain\obj\Debug\net6.0\refint\
 C:\Users\diego\Source\Repos\MicroservicioRecetas\Domain\obj\Debug\net6.0\Domain.pdb
 C:\Users\diego\Source\Repos\MicroservicioRecetas\Domain\obj\Debug\net6.0\Domain.genruntimeconfig.cache
 C:\Users\diego\Source\Repos\MicroservicioRecetas\Domain\obj\Debug\net6.0\ref\Domain.dll
+E:\facultad\cuarto año\segundo cuatrimestre\proyecto software\MicroservicioReceta\Domain\bin\Debug\net6.0\Domain.deps.json
+E:\facultad\cuarto año\segundo cuatrimestre\proyecto software\MicroservicioReceta\Domain\bin\Debug\net6.0\Domain.runtimeconfig.json
+E:\facultad\cuarto año\segundo cuatrimestre\proyecto software\MicroservicioReceta\Domain\bin\Debug\net6.0\Domain.dll
+E:\facultad\cuarto año\segundo cuatrimestre\proyecto software\MicroservicioReceta\Domain\bin\Debug\net6.0\Domain.pdb
+E:\facultad\cuarto año\segundo cuatrimestre\proyecto software\MicroservicioReceta\Domain\obj\Debug\net6.0\Domain.csproj.AssemblyReference.cache
+E:\facultad\cuarto año\segundo cuatrimestre\proyecto software\MicroservicioReceta\Domain\obj\Debug\net6.0\Domain.GeneratedMSBuildEditorConfig.editorconfig
+E:\facultad\cuarto año\segundo cuatrimestre\proyecto software\MicroservicioReceta\Domain\obj\Debug\net6.0\Domain.AssemblyInfoInputs.cache
+E:\facultad\cuarto año\segundo cuatrimestre\proyecto software\MicroservicioReceta\Domain\obj\Debug\net6.0\Domain.AssemblyInfo.cs
+E:\facultad\cuarto año\segundo cuatrimestre\proyecto software\MicroservicioReceta\Domain\obj\Debug\net6.0\Domain.csproj.CoreCompileInputs.cache
+E:\facultad\cuarto año\segundo cuatrimestre\proyecto software\MicroservicioReceta\Domain\obj\Debug\net6.0\Domain.dll
+E:\facultad\cuarto año\segundo cuatrimestre\proyecto software\MicroservicioReceta\Domain\obj\Debug\net6.0\refint\Domain.dll
+E:\facultad\cuarto año\segundo cuatrimestre\proyecto software\MicroservicioReceta\Domain\obj\Debug\net6.0\Domain.pdb
+E:\facultad\cuarto año\segundo cuatrimestre\proyecto software\MicroservicioReceta\Domain\obj\Debug\net6.0\Domain.genruntimeconfig.cache
+E:\facultad\cuarto año\segundo cuatrimestre\proyecto software\MicroservicioReceta\Domain\obj\Debug\net6.0\ref\Domain.dll

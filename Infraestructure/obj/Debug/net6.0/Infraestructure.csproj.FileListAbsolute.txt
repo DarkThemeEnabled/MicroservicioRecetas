@@ -36,3 +36,22 @@ C:\Users\diego\Source\Repos\MicroservicioRecetas\Infraestructure\obj\Debug\net6.
 C:\Users\diego\Source\Repos\MicroservicioRecetas\Infraestructure\obj\Debug\net6.0\Infraestructure.pdb
 C:\Users\diego\Source\Repos\MicroservicioRecetas\Infraestructure\obj\Debug\net6.0\Infraestructure.genruntimeconfig.cache
 C:\Users\diego\Source\Repos\MicroservicioRecetas\Infraestructure\obj\Debug\net6.0\ref\Infraestructure.dll
+E:\facultad\cuarto año\segundo cuatrimestre\proyecto software\MicroservicioReceta\Infraestructure\bin\Debug\net6.0\Infraestructure.deps.json
+E:\facultad\cuarto año\segundo cuatrimestre\proyecto software\MicroservicioReceta\Infraestructure\bin\Debug\net6.0\Infraestructure.runtimeconfig.json
+E:\facultad\cuarto año\segundo cuatrimestre\proyecto software\MicroservicioReceta\Infraestructure\bin\Debug\net6.0\Infraestructure.dll
+E:\facultad\cuarto año\segundo cuatrimestre\proyecto software\MicroservicioReceta\Infraestructure\bin\Debug\net6.0\Infraestructure.pdb
+E:\facultad\cuarto año\segundo cuatrimestre\proyecto software\MicroservicioReceta\Infraestructure\bin\Debug\net6.0\Application.dll
+E:\facultad\cuarto año\segundo cuatrimestre\proyecto software\MicroservicioReceta\Infraestructure\bin\Debug\net6.0\Domain.dll
+E:\facultad\cuarto año\segundo cuatrimestre\proyecto software\MicroservicioReceta\Infraestructure\bin\Debug\net6.0\Application.pdb
+E:\facultad\cuarto año\segundo cuatrimestre\proyecto software\MicroservicioReceta\Infraestructure\bin\Debug\net6.0\Domain.pdb
+E:\facultad\cuarto año\segundo cuatrimestre\proyecto software\MicroservicioReceta\Infraestructure\obj\Debug\net6.0\Infraestructure.csproj.AssemblyReference.cache
+E:\facultad\cuarto año\segundo cuatrimestre\proyecto software\MicroservicioReceta\Infraestructure\obj\Debug\net6.0\Infraestructure.GeneratedMSBuildEditorConfig.editorconfig
+E:\facultad\cuarto año\segundo cuatrimestre\proyecto software\MicroservicioReceta\Infraestructure\obj\Debug\net6.0\Infraestructure.AssemblyInfoInputs.cache
+E:\facultad\cuarto año\segundo cuatrimestre\proyecto software\MicroservicioReceta\Infraestructure\obj\Debug\net6.0\Infraestructure.AssemblyInfo.cs
+E:\facultad\cuarto año\segundo cuatrimestre\proyecto software\MicroservicioReceta\Infraestructure\obj\Debug\net6.0\Infraestructure.csproj.CoreCompileInputs.cache
+E:\facultad\cuarto año\segundo cuatrimestre\proyecto software\MicroservicioReceta\Infraestructure\obj\Debug\net6.0\Infraestructure.csproj.CopyComplete
+E:\facultad\cuarto año\segundo cuatrimestre\proyecto software\MicroservicioReceta\Infraestructure\obj\Debug\net6.0\Infraestructure.dll
+E:\facultad\cuarto año\segundo cuatrimestre\proyecto software\MicroservicioReceta\Infraestructure\obj\Debug\net6.0\refint\Infraestructure.dll
+E:\facultad\cuarto año\segundo cuatrimestre\proyecto software\MicroservicioReceta\Infraestructure\obj\Debug\net6.0\Infraestructure.pdb
+E:\facultad\cuarto año\segundo cuatrimestre\proyecto software\MicroservicioReceta\Infraestructure\obj\Debug\net6.0\Infraestructure.genruntimeconfig.cache
+E:\facultad\cuarto año\segundo cuatrimestre\proyecto software\MicroservicioReceta\Infraestructure\obj\Debug\net6.0\ref\Infraestructure.dll
