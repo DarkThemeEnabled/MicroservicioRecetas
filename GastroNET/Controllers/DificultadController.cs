@@ -5,6 +5,8 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace GastroNET.Controllers
 {
+    [Route("api/v1/[controller]")]
+    [ApiController]
     public class DificultadController : Controller
     {
         private readonly IDificultadService _service;
@@ -15,7 +17,7 @@ namespace GastroNET.Controllers
             _service = service;
         }
 
-        [HttpGet("Dificultad/GetListDificultad")]
+        [HttpGet("/GetListDificultad")]
 
         public async Task<IActionResult> GetListDificultad()
         {

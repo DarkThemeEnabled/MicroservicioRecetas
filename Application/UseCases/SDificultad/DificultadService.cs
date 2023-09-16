@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Application.UseCases.Dificultad
+namespace Application.UseCases.SDificultad
 {
     public class DificultadService:IDificultadService
     {

@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Application.Request;
+using Application.Response;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,5 +10,9 @@ namespace Application.Interfaces
 {
     public interface IRecetaService
     {
+        
+        Task<List<RecetaResponse>> GetListRecetas();
+        Task<ResponseMessage> CreateReceta(RecetaRequest recetaRequest);
+
     }
 }

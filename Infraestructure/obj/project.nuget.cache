@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "QrqAxH/2CMLC5VdwcbrmkAt6cVweDddYWUj05iaPnj7Osp4MRLfkmzd9cvGBcduLoO+gxl3arBdkPN/mXlS8og==",
+  "dgSpecHash": "JUhHGbhUlKLOrodJLokYYQwF/8zeXROgWZmxgB8ArRqK9emNhzHthXSVeo0kw00jvzMnXkVxg9yeqciSqSCXjw==",
   "success": true,
-  "projectFilePath": "C:\\Users\\diego\\Source\\Repos\\MicroservicioRecetas\\Infraestructure\\Infraestructure.csproj",
+  "projectFilePath": "C:\\Users\\diego\\source\\repos\\MicroservicioRecetas\\Infraestructure\\Infraestructure.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\diego\\.nuget\\packages\\azure.core\\1.25.0\\azure.core.1.25.0.nupkg.sha512",
     "C:\\Users\\diego\\.nuget\\packages\\azure.identity\\1.7.0\\azure.identity.1.7.0.nupkg.sha512",

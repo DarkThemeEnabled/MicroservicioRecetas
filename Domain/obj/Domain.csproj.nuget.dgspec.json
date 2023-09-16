@@ -1,15 +1,15 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\diego\\Source\\Repos\\MicroservicioRecetas\\Domain\\Domain.csproj": {}
+    "C:\\Users\\diego\\source\\repos\\MicroservicioRecetas\\Domain\\Domain.csproj": {}
   },
   "projects": {
-    "C:\\Users\\diego\\Source\\Repos\\MicroservicioRecetas\\Domain\\Domain.csproj": {
+    "C:\\Users\\diego\\source\\repos\\MicroservicioRecetas\\Domain\\Domain.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\diego\\Source\\Repos\\MicroservicioRecetas\\Domain\\Domain.csproj",
+        "projectUniqueName": "C:\\Users\\diego\\source\\repos\\MicroservicioRecetas\\Domain\\Domain.csproj",
         "projectName": "Domain",
-        "projectPath": "C:\\Users\\diego\\Source\\Repos\\MicroservicioRecetas\\Domain\\Domain.csproj",
+        "projectPath": "C:\\Users\\diego\\source\\repos\\MicroservicioRecetas\\Domain\\Domain.csproj",
         "packagesPath": "C:\\Users\\diego\\.nuget\\packages\\",
         "outputPath": "C:\\Users\\diego\\Source\\Repos\\MicroservicioRecetas\\Domain\\obj\\",
         "projectStyle": "PackageReference",

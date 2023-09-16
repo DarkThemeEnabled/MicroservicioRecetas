@@ -1,8 +1,13 @@
 using Application.Interfaces;
-using Application.UseCases.Dificultad;
+using Application.UseCases.SDificultad;
+using Application.UseCases.SJson;
+using Application.UseCases.SPasos;
+using Application.UseCases.SReceta;
+using Infraestructure.Command;
 using Infraestructure.Persistence.Config;
 using Infraestructure.Querys;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -21,6 +26,12 @@ builder.Services.AddDbContext<RecetasContext>(options => options.UseSqlServer(co
 builder.Services.AddScoped<IDificultadService, DificultadService>();
 builder.Services.AddScoped<IDificultadQuery, DificultadQuery>();
 
+builder.Services.AddScoped<IRecetaService, RecetaService>();
+builder.Services.AddScoped<IRecetaQuery, RecetaQuery>();
+builder.Services.AddScoped<IRecetaCommand, RecetaCommand>();
+
+builder.Services.AddScoped<IPasosService, PasosService>();
+builder.Services.AddScoped<IPasosCommand,PasosCommand>();
 //builder.Services.AddScoped<IViajeServicioService, ViajeServicioService>();
 //builder.Services.AddScoped<IViajeServicioQuery, ViajeServicioQuery>();
 //builder.Services.AddScoped<IViajeServicioCommand, ViajeServicioCommand>();
