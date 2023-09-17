@@ -57,10 +57,37 @@ namespace Application.UseCases.SReceta
             }
             catch (Conflict e)
             {
-                throw new Conflict("No se pudo agregar la receta: " + e.Message);
+                throw new ExceptionNotFound("No se pudo agregar la receta: " + e.Message);
             }
 
 
+        }
+        //Hay que crear un GetRecetaResponse que te devuelva los datos de la receta pero que traiga los pasos que vinculados a esa receta
+        public async Task<RecetaResponse> GetRecetaById(Guid id)
+        {
+            try
+            {
+                //implementar este validador en un metodo aparte
+                if (!Guid.TryParse(id.ToString(), out id)) { throw new ExceptionSintaxError(); }
+                var paso = await _query.GetRecetaById(id);
+                if (paso != null)
+                {
+                    return await CreateRecetaResponse(paso);
+                }
+                else
+                {
+                    throw new ExceptionNotFound("No existe ninguna receta con ese ID");
+                }
+                
+            }
+            catch (ExceptionSintaxError)
+            {
+                throw new ExceptionSintaxError("Error en la sintaxis del id a buscar, pruebe ingresar el id con el formato válido");
+            }
+            catch (ExceptionNotFound e)
+            {
+                throw new ExceptionNotFound("Error en la búsqueda: " + e.Message);
+            }
         }
 
         public async Task<List<RecetaResponse>> GetListRecetas()

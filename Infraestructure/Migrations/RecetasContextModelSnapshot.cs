@@ -168,11 +168,11 @@ namespace Infraestructure.Migrations
 
             modelBuilder.Entity("Domain.Entities.Paso", b =>
                 {
-                    b.Property<int>("PasosId")
+                    b.Property<int>("PasoId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("PasosId"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("PasoId"));
 
                     b.Property<string>("Descripcion")
                         .IsRequired()
@@ -190,7 +190,7 @@ namespace Infraestructure.Migrations
                     b.Property<Guid>("RecetaId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.HasKey("PasosId");
+                    b.HasKey("PasoId");
 
                     b.HasIndex("RecetaId");
 

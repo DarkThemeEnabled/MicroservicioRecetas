@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infraestructure.Migrations
 {
     [DbContext(typeof(RecetasContext))]
-    [Migration("20230916220402_RecetaBD")]
-    partial class RecetaBD
+    [Migration("20230917213151_RecetaDB")]
+    partial class RecetaDB
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -171,11 +171,11 @@ namespace Infraestructure.Migrations
 
             modelBuilder.Entity("Domain.Entities.Paso", b =>
                 {
-                    b.Property<int>("PasosId")
+                    b.Property<int>("PasoId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("PasosId"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("PasoId"));
 
                     b.Property<string>("Descripcion")
                         .IsRequired()
@@ -193,7 +193,7 @@ namespace Infraestructure.Migrations
                     b.Property<Guid>("RecetaId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.HasKey("PasosId");
+                    b.HasKey("PasoId");
 
                     b.HasIndex("RecetaId");
 

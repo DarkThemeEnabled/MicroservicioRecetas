@@ -13,6 +13,7 @@ namespace Application.Interfaces
         
         Task<List<RecetaResponse>> GetListRecetas();
         Task<RecetaResponse> CreateReceta(RecetaRequest recetaRequest);
+        Task<RecetaResponse> GetRecetaById(Guid id);
 
     }
 }

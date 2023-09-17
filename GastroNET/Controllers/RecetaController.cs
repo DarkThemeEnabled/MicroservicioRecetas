@@ -2,6 +2,7 @@
 using Application.Interfaces;
 using Application.Request;
 using Application.Response;
+using Application.UseCases.SPasos;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GastroNET.Controllers
@@ -54,6 +55,28 @@ namespace GastroNET.Controllers
                 return new JsonResult(new BadRequest { Message = ex.Message }) { StatusCode = 409 };
             }
         }
+
+        [HttpGet("{id}")]
+        [ProducesResponseType(typeof(PasoResponse), 200)]
+        [ProducesResponseType(typeof(BadRequest), 400)]
+        [ProducesResponseType(typeof(BadRequest), 404)]
+        public async Task<IActionResult> GetRecetaById(Guid id)
+        {
+            try
+            {
+                var result = await _service.GetRecetaById(id);
+                return new JsonResult(result) { StatusCode = 200 };
+            }
+            catch (ExceptionSintaxError ex)
+            {
+                return new JsonResult(new BadRequest { Message = ex.Message }) { StatusCode = 400 };
+            }
+            catch (ExceptionNotFound ex)
+            {
+                return new JsonResult(new BadRequest { Message = ex.Message }) { StatusCode = 404 };
+            }
+        }
+
         //Referencia de ENDPOINT
 
         //[HttpGet]

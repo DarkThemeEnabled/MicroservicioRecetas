@@ -10,11 +10,11 @@ namespace GastroNET.Controllers
     [ApiController]
     public class PasoController : Controller
     {
-        private readonly IPasoService _pasosService;
+        private readonly IPasoService _service;
 
         public PasoController(IPasoService pasosService)
         {
-            _pasosService = pasosService;
+            _service = pasosService;
         }
         [HttpPost("/CreatePaso")]
 
@@ -25,7 +25,7 @@ namespace GastroNET.Controllers
         {
             try
             {
-                var result = await _pasosService.CreatePaso(request);
+                var result = await _service.CreatePaso(request);
                 return new JsonResult(result) { StatusCode = 201 };
             }
             catch (ExceptionSintaxError ex)
@@ -38,15 +38,69 @@ namespace GastroNET.Controllers
             }
         }
 
-        [HttpGet("{Id}")]
+        [HttpPut("{Id}")]
         [ProducesResponseType(typeof(PasoResponse), 200)]
         [ProducesResponseType(typeof(BadRequest), 400)]
         [ProducesResponseType(typeof(BadRequest), 404)]
-        public async Task<IActionResult> GetPasosByRecetaId(Guid id)
+        [ProducesResponseType(typeof(BadRequest), 409)]
+        public async Task<IActionResult> UpdatePaso(int Id, PasoRequest paso)
         {
             try
             {
-                var result = await _pasosService.GetPasoByRecetaId(id);
+                var result = await _service.UpdatePaso(paso,Id);
+                return new JsonResult(result) { StatusCode = 200 };
+            }
+            catch (ExceptionSintaxError ex)
+            {
+                return new JsonResult(new BadRequest { Message = ex.Message }) { StatusCode = 400 };
+            }
+            catch (ExceptionNotFound ex)
+            {
+                return new JsonResult(new BadRequest { Message = ex.Message }) { StatusCode = 404 };
+            }
+            catch (Conflict ex)
+            {
+                return new JsonResult(new BadRequest { Message = ex.Message }) { StatusCode = 409 };
+            }
+        }
+
+        [HttpDelete("{Id}")]
+        [ProducesResponseType(typeof(PasoResponse), 200)]
+        [ProducesResponseType(typeof(BadRequest), 400)]
+        [ProducesResponseType(typeof(BadRequest), 404)]
+        [ProducesResponseType(typeof(BadRequest), 409)]
+        public async Task<IActionResult> DeletePaso(int Id)
+        {
+            try
+            {
+                var result = await _service.DeletePaso(Id);
+                return new JsonResult(result) { StatusCode = 200 };
+            }
+            catch (ExceptionSintaxError ex)
+            {
+                return new JsonResult(new BadRequest { Message = ex.Message }) { StatusCode = 400 };
+            }
+            catch (ExceptionNotFound ex)
+            {
+                return new JsonResult(new BadRequest { Message = ex.Message }) { StatusCode = 404 };
+            }
+            catch (Conflict ex)
+            {
+                return new JsonResult(new BadRequest { Message = ex.Message }) { StatusCode = 409 };
+            }
+        }
+
+
+
+        [HttpGet("{recetaId}")]
+        [ProducesResponseType(typeof(PasoResponse), 200)]
+        [ProducesResponseType(typeof(BadRequest), 400)]
+        [ProducesResponseType(typeof(BadRequest), 404)]
+        public async Task<IActionResult> GetPasosByRecetaId(Guid recetaId)
+        {
+            try
+            {
+                var result = await _service.GetPasosByRecetaId(recetaId);
                 return new JsonResult(result) { StatusCode = 200 };
             }
             catch (ExceptionSintaxError ex)
@@ -59,7 +113,7 @@ namespace GastroNET.Controllers
             }
         }
 
-        [HttpGet("{Receta Id}")]
+        [HttpGet]
         [ProducesResponseType(typeof(PasoResponse), 200)]
         [ProducesResponseType(typeof(BadRequest), 400)]
         [ProducesResponseType(typeof(BadRequest), 404)]
@@ -67,7 +121,7 @@ namespace GastroNET.Controllers
         {
             try
             {
-                var result = await _pasosService.GetPasoById(id);
+                var result = await _service.GetPasoById(id);
                 return new JsonResult(result) { StatusCode = 200 };
             }
             catch (ExceptionSintaxError ex)

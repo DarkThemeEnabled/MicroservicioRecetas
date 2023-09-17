@@ -10,5 +10,6 @@ namespace Application.Interfaces
     public interface IRecetaQuery
     {
         Task<List<Receta>> GetListRecetas();
+        Task<Receta> GetRecetaById(Guid id);
     }
 }

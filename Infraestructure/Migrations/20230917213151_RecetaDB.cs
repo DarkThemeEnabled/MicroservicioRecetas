@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Infraestructure.Migrations
 {
     /// <inheritdoc />
-    public partial class RecetaBD : Migration
+    public partial class RecetaDB : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -94,7 +94,7 @@ namespace Infraestructure.Migrations
                 name: "Pasos",
                 columns: table => new
                 {
-                    PasosId = table.Column<int>(type: "int", nullable: false)
+                    PasoId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     RecetaId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Orden = table.Column<int>(type: "int", nullable: false),
@@ -103,7 +103,7 @@ namespace Infraestructure.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Pasos", x => x.PasosId);
+                    table.PrimaryKey("PK_Pasos", x => x.PasoId);
                     table.ForeignKey(
                         name: "FK_Pasos_Recetas_RecetaId",
                         column: x => x.RecetaId,

@@ -29,11 +29,11 @@ namespace Infraestructure.Querys
                 List<Paso> results = await _context.Pasos
                 .Where(p => p.RecetaId == recetaId)
                 .ToListAsync();
-                return await _context.Pasos.ToListAsync();
+                return results;
             }
             catch (DbUpdateException)
             {
-                throw new ExceptionNotFound("No se encontraron los pasos solicitados");
+                throw new Conflict("Error en la base de datos");
             }
         }
         public async Task<Paso> GetPasoById (int pasoId)

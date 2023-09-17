@@ -29,5 +29,19 @@ namespace Infraestructure.Querys
                 throw new Conflict("Error en la base de datos");
             }
         }
+
+        public async Task<Receta> GetRecetaById(Guid id)
+        {
+            try
+            {
+                var paso = await _context.Recetas
+                    .SingleOrDefaultAsync(r => r.RecetaId == id);
+                return paso;
+            }
+            catch (DbUpdateException)
+            {
+                throw new ExceptionNotFound("No se encontró el paso solicitado");
+            }
+        }
     }
 }
