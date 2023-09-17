@@ -46,7 +46,7 @@ namespace Infraestructure.Command
             }
             catch (DbUpdateException)
             {
-                throw new Conflict("No se pudo eliminar la mercaderia");
+                throw new Conflict("No se pudo eliminar el paso");
             }
         }
 

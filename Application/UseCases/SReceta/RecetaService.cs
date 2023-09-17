@@ -62,6 +62,64 @@ namespace Application.UseCases.SReceta
 
 
         }
+
+        public async Task<RecetaResponse> UpdateReceta(RecetaRequest request, Guid id)
+        {
+            try
+            { //400 404 409
+                //Agregar validador de recetaID
+                //Ver como hacer para que se muestren los pasos de dicha receta
+                //En un futuro agregar un validador de urls con eso de las fotos. Pero más adelante!!
+                //No debería de pedir que se modifique el recetaID!!!
+                var unaReceta = await _command.UpdateReceta(request, id);
+                return await Task.FromResult(new RecetaResponse
+                {
+                    CategoriaRecetaId = unaReceta.CategoriaRecetaId,
+                    DificultadId = unaReceta.DificultadId,
+                    UsuarioId = unaReceta.UsuarioId,
+                    Titulo = unaReceta.Titulo,
+                    FotoReceta = unaReceta.FotoReceta,
+                    Video = unaReceta.Video,
+                    TiempoPreparacion = unaReceta.TiempoPreparacion.ToString(),
+                });
+            }
+            catch (Conflict ex)
+            {
+                throw new Conflict("Error en la implementación a la base de datos: " + ex.Message);
+            }
+            catch (ExceptionNotFound ex)
+            {
+                throw new ExceptionNotFound("Error en la busqueda en la base de datos: " + ex.Message);
+            }
+            catch (ExceptionSintaxError ex)
+            {
+                throw new ExceptionSintaxError("Error en la sintaxis de la mercadería a modificar: " + ex.Message);
+            }
+        }
+
+        public async Task<RecetaResponse> DeleteReceta(Guid id)
+        {
+            try
+            {
+                //Habría que validar si existe el id primero
+                Receta recetaToDelete = await _command.DeleteReceta(await _query.GetRecetaById(id));
+                return new RecetaResponse
+                {
+                    RecetaId = recetaToDelete.RecetaId,
+                    CategoriaRecetaId = recetaToDelete.CategoriaRecetaId,
+                    DificultadId = recetaToDelete.DificultadId,
+                    UsuarioId = recetaToDelete.UsuarioId,
+                    Titulo = recetaToDelete.Titulo,
+                    FotoReceta = recetaToDelete.FotoReceta,
+                    Video = recetaToDelete.Video,
+                    TiempoPreparacion = recetaToDelete.TiempoPreparacion.ToString(),
+                };
+            }
+            catch (ExceptionNotFound ex) { throw new ExceptionNotFound("Error en la búsqueda del id: " + ex.Message); }
+            catch (Conflict ex) { throw new Conflict("Error en la base de datos: " + ex.Message); }
+            catch (ExceptionSintaxError) { throw new ExceptionSintaxError("Sintaxis incorrecta para el Id"); }
+        }
+
         //Hay que crear un GetRecetaResponse que te devuelva los datos de la receta pero que traiga los pasos que vinculados a esa receta
         public async Task<RecetaResponse> GetRecetaById(Guid id)
         {
@@ -119,5 +177,7 @@ namespace Application.UseCases.SReceta
             };
             return Task.FromResult(receta);
         }
+
+        
     }
 }

@@ -16,7 +16,7 @@ namespace GastroNET.Controllers
         {
             _service = pasosService;
         }
-        [HttpPost("/CreatePaso")]
+        [HttpPost]
 
         [ProducesResponseType(typeof(PasoResponse), 201)]
         [ProducesResponseType(typeof(BadRequest), 400)]
