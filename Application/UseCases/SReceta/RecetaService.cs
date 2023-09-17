@@ -13,13 +13,13 @@ namespace Application.UseCases.SReceta
 {
     public class RecetaService : IRecetaService
     {
-        private readonly IRecetaQuery _recetaQuery;
-        private readonly IRecetaCommand _recetaCommand;
+        private readonly IRecetaQuery _query;
+        private readonly IRecetaCommand _command;
 
         public RecetaService(IRecetaQuery recetaQuery, IRecetaCommand recetaCommand)
         {
-            _recetaQuery = recetaQuery;
-            _recetaCommand = recetaCommand;
+            _query = recetaQuery;
+            _command = recetaCommand;
         }
 
         
@@ -45,18 +45,9 @@ namespace Application.UseCases.SReceta
                     Video = recetaRequest.Video,
                     TiempoPreparacion = tiempoPreparacion
                 };
-                Receta recetaCreada= await _recetaCommand.CreateReceta(receta);
-                return new RecetaResponse
-                {
-                    RecetaId = recetaCreada.RecetaId,
-                    CategoriaRecetaId = recetaCreada.CategoriaRecetaId,
-                    DificultadId = recetaCreada.DificultadId,
-                    UsuarioId = recetaCreada.UsuarioId,
-                    Titulo = recetaCreada.Titulo,
-                    FotoReceta = recetaCreada.FotoReceta,
-                    Video = recetaCreada.Video,
-                    TiempoPreparacion = recetaCreada.TiempoPreparacion.ToString()
-                };
+
+                Receta recetaCreada= await _command.CreateReceta(receta);
+                return await CreateRecetaResponse(recetaCreada);
                 //return new ResponseMessage(201, result);  Devolver el statusCode es innecesario ya que lo estamos indicando en el return del controller :)
                 //public async Task<ResponseMessage> CreateReceta(RecetaRequest recetaRequest) <--- Devuelve un ResponseMessage que no se utiliza en el controller
             }
@@ -74,20 +65,20 @@ namespace Application.UseCases.SReceta
 
         public async Task<List<RecetaResponse>> GetListRecetas()
         {
-            //Después vamos a tener que crear más métodos de búsqueda aparte de este
+            //Después vamos a tener que crear más métodos de búsqueda aparte de este (Buscar una receta por usuario, todas las recetas de un usuario, por nombre, por dificultad, por categoria, por id, pensar mas)
             //En este caso, no veo la necesidad de realizar un try/catch ya que devuelve una lista con recetas o vacía
-            var recetas = await _recetaQuery.GetListRecetas();
+            var recetas = await _query.GetListRecetas();
             var recetasResponse = new List<RecetaResponse>();
 
             foreach (var receta in recetas)
             {
-                recetasResponse.Add(await CreateResponseReceta(receta));
+                recetasResponse.Add(await CreateRecetaResponse(receta));
             }
             return recetasResponse;
         }
 
         //Métodos privados para RecetaService
-        private Task<RecetaResponse> CreateResponseReceta (Receta unaReceta)
+        private Task<RecetaResponse> CreateRecetaResponse (Receta unaReceta)
         {
             var receta = new RecetaResponse
             {

@@ -8,7 +8,7 @@ namespace Domain.Entities
 {
     public class Paso
     {
-        public int PasosId { get; set; }
+        public int PasoId { get; set; }
         public Guid RecetaId { get; set; }
         public Receta Receta { get; set; }
         public int Orden { get; set; }

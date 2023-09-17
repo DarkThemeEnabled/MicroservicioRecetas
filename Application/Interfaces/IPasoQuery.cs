@@ -1,5 +1,4 @@
-﻿using Application.Request;
-using Application.Response;
+﻿using Domain.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,8 +7,9 @@ using System.Threading.Tasks;
 
 namespace Application.Interfaces
 {
-    public interface IPasosService
+    public interface IPasoQuery
     {
-        public Task<ResponseMessage> CreatePaso(PasoRequest request);
+        Task<List<Paso>> GetPasosByRecetaId(Guid recetaId);
+        Task<Paso> GetPasoById(int pasoId);
     }
 }

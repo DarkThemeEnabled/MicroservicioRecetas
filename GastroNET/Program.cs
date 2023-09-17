@@ -29,8 +29,9 @@ builder.Services.AddScoped<IRecetaService, RecetaService>();
 builder.Services.AddScoped<IRecetaQuery, RecetaQuery>();
 builder.Services.AddScoped<IRecetaCommand, RecetaCommand>();
 
-builder.Services.AddScoped<IPasosService, PasosService>();
-builder.Services.AddScoped<IPasosCommand,PasosCommand>();
+builder.Services.AddScoped<IPasoService, PasoService>();
+builder.Services.AddScoped<IPasoCommand,PasoCommand>();
+builder.Services.AddScoped<IPasoQuery, PasoQuery>();
 //builder.Services.AddScoped<IViajeServicioService, ViajeServicioService>();
 //builder.Services.AddScoped<IViajeServicioQuery, ViajeServicioQuery>();
 //builder.Services.AddScoped<IViajeServicioCommand, ViajeServicioCommand>();

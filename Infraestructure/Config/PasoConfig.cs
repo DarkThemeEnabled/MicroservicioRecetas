@@ -14,7 +14,7 @@ namespace Infraestructure.Config
         public void Configure(EntityTypeBuilder<Paso> entityBuilder)
         {
             entityBuilder.ToTable("Pasos");
-            entityBuilder.HasKey(p => p.PasosId);
+            entityBuilder.HasKey(p => p.PasoId);
             entityBuilder.HasOne(r => r.Receta)
                 .WithMany(p => p.Pasos)
                 .HasForeignKey(r => r.RecetaId);

@@ -7,8 +7,8 @@ using System.Threading.Tasks;
 
 namespace Application.Interfaces
 {
-    public interface IPasosCommand
+    public interface IPasoCommand
     {
-        public Task CreatePaso(Paso paso);
+        public Task<Paso> CreatePaso(Paso paso);
     }
 }
