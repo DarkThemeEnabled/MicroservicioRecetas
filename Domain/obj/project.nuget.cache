@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "qt5Wt2hysp4ocDLspLFsR4Rpr42Bd9dACuH/c/r2M7BQw7Lv76mOwAexITOhz/knmfr0Xv7/J5POAfrcKDE06A==",
+  "dgSpecHash": "Hw/9SnTuJFxzzpJAZP4ikXDvIeBKndAQ4ICRc1fDEFLztBAUswrNKrPZZrUiJaw+UUVAv6UVotr5FcrnUCdItQ==",
   "success": true,
-  "projectFilePath": "E:\\facultad\\cuarto año\\segundo cuatrimestre\\proyecto software\\MicroservicioReceta\\Domain\\Domain.csproj",
+  "projectFilePath": "D:\\facultad\\cuarto año\\segundo cuatrimestre\\proyecto software\\GastroNet\\Domain\\Domain.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Lucas\\.nuget\\packages\\azure.core\\1.25.0\\azure.core.1.25.0.nupkg.sha512",
     "C:\\Users\\Lucas\\.nuget\\packages\\azure.identity\\1.7.0\\azure.identity.1.7.0.nupkg.sha512",

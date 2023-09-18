@@ -74,6 +74,7 @@ namespace Application.UseCases.SReceta
                 var unaReceta = await _command.UpdateReceta(request, id);
                 return await Task.FromResult(new RecetaResponse
                 {
+                    RecetaId = unaReceta.RecetaId,
                     CategoriaRecetaId = unaReceta.CategoriaRecetaId,
                     DificultadId = unaReceta.DificultadId,
                     UsuarioId = unaReceta.UsuarioId,
@@ -102,6 +103,7 @@ namespace Application.UseCases.SReceta
             try
             {
                 //Habría que validar si existe el id primero
+                //Cuando se borre la receta tenemos que implementar que se borren todos los pasos
                 Receta recetaToDelete = await _command.DeleteReceta(await _query.GetRecetaById(id));
                 return new RecetaResponse
                 {
