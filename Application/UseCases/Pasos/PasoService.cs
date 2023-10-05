@@ -22,7 +22,7 @@ namespace Application.UseCases.SPasos
             _query = query;
         }
 
-        public async Task<PasoResponse> CreatePaso(PasoRequest request)
+        public async Task<PasoResponse> CreatePaso(PasoRequest request, Guid recetaId)
         {
             try
             {
@@ -33,7 +33,7 @@ namespace Application.UseCases.SPasos
                     Descripcion = request.Descripcion,
                     Foto = request.Foto,
                     Orden = request.Orden,
-                    RecetaId = request.RecetaId,
+                    //RecetaId = request.RecetaId,
                 };
 
                 Paso pasoCreado = await _command.CreatePaso(paso);
@@ -158,15 +158,14 @@ namespace Application.UseCases.SPasos
 
         private Task<PasoResponse> CreatePasoResponse(Paso unPaso)
         {
-            var paso = new PasoResponse
+            return Task.FromResult(new PasoResponse
             {
                 Id = unPaso.PasoId,
                 RecetaId = unPaso.RecetaId,
                 Descripcion = unPaso.Descripcion,
                 Foto = unPaso.Foto,
                 Orden = unPaso.Orden
-            };
-            return Task.FromResult(paso);
+            });
         }
 
         private Task<bool> Validacion404()

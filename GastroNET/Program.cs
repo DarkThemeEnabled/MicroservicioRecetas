@@ -1,7 +1,11 @@
 using Application.Interfaces;
+using Application.UseCases;
+using Application.UseCases.CategoriaReceta;
+//using Application.UseCases.IngredienteReceta;
 using Application.UseCases.SDificultad;
 using Application.UseCases.SPasos;
 using Application.UseCases.SReceta;
+using Domain.Entities;
 using Infraestructure.Command;
 using Infraestructure.Persistence;
 using Infraestructure.Querys;
@@ -32,6 +36,16 @@ builder.Services.AddScoped<IRecetaCommand, RecetaCommand>();
 builder.Services.AddScoped<IPasoService, PasoService>();
 builder.Services.AddScoped<IPasoCommand,PasoCommand>();
 builder.Services.AddScoped<IPasoQuery, PasoQuery>();
+
+builder.Services.AddScoped<ICategoriaRecetaService, CategoriaRecetaService>();
+builder.Services.AddScoped<ICategoriaRecetaQuery, CategoriaRecetaQuery>();
+
+builder.Services.AddScoped<IIngredienteRecetaService, IngredienteRecetaService>();
+builder.Services.AddScoped<IIngredienteRecetaQuery, IngredienteRecetaQuery>();
+builder.Services.AddScoped<IIngredienteRecetaCommand, IngredienteRecetaCommand>();
+
+
+
 //builder.Services.AddScoped<IViajeServicioService, ViajeServicioService>();
 //builder.Services.AddScoped<IViajeServicioQuery, ViajeServicioQuery>();
 //builder.Services.AddScoped<IViajeServicioCommand, ViajeServicioCommand>();

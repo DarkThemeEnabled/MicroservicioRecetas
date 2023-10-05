@@ -9,7 +9,6 @@ namespace Application.Request
 {
     public class PasoRequest
     {
-        public Guid RecetaId { get; set; }
         public int Orden { get; set; }
         public string Descripcion { get; set; }
         public string Foto { get; set; }

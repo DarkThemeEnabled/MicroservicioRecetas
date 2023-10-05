@@ -34,13 +34,17 @@ namespace Infraestructure.Querys
         {
             try
             {
-                var paso = await _context.Recetas
+                return await _context.Recetas
+                    .Include(r => r.Dificultad)
+                    .Include(r => r.CategoriaReceta)
+                    .Include(r => r.Pasos)
+                    .Include(r => r.IngredentesReceta)
+                    .Include(r => r.UsuarioId)
                     .SingleOrDefaultAsync(r => r.RecetaId == id);
-                return paso;
             }
             catch (DbUpdateException)
             {
-                throw new ExceptionNotFound("No se encontró el paso solicitado");
+                throw new Application.Exceptions.BadRequestt("Hubo un problema al buscar la receta");
             }
         }
     }

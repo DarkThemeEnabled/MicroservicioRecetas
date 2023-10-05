@@ -16,27 +16,27 @@ namespace GastroNET.Controllers
         {
             _service = pasosService;
         }
-        [HttpPost]
 
-        [ProducesResponseType(typeof(PasoResponse), 201)]
-        [ProducesResponseType(typeof(BadRequest), 400)]
-        [ProducesResponseType(typeof(BadRequest), 409)]
-        public async Task<IActionResult> CreatePaso(PasoRequest request)
-        {
-            try
-            {
-                var result = await _service.CreatePaso(request);
-                return new JsonResult(result) { StatusCode = 201 };
-            }
-            catch (ExceptionSintaxError ex)
-            {
-                return new JsonResult(new BadRequest { Message = ex.Message }) { StatusCode = 400 };
-            }
-            catch (Conflict ex)
-            {
-                return new JsonResult(new BadRequest { Message = ex.Message }) { StatusCode = 409 };
-            }
-        }
+        //[HttpPost]
+        //[ProducesResponseType(typeof(PasoResponse), 201)]
+        //[ProducesResponseType(typeof(BadRequest), 400)]
+        //[ProducesResponseType(typeof(BadRequest), 409)]
+        //public async Task<IActionResult> CreatePaso(PasoRequest request)
+        //{
+        //    try
+        //    {
+        //        var result = await _service.CreatePaso(request);
+        //        return new JsonResult(result) { StatusCode = 201 };
+        //    }
+        //    catch (ExceptionSintaxError ex)
+        //    {
+        //        return new JsonResult(new BadRequest { Message = ex.Message }) { StatusCode = 400 };
+        //    }
+        //    catch (Conflict ex)
+        //    {
+        //        return new JsonResult(new BadRequest { Message = ex.Message }) { StatusCode = 409 };
+        //    }
+        //}
 
         [HttpPut("{Id}")]
         [ProducesResponseType(typeof(PasoResponse), 200)]

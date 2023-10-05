@@ -18,7 +18,7 @@ namespace GastroNET.Controllers
             _service = service;
         }
 
-        [HttpGet("/GetListRecetas")]
+        [HttpGet]
         [ProducesResponseType(typeof(List<RecetaResponse>), 200)]
         [ProducesResponseType(typeof(BadRequest), 400)]
         public async Task<IActionResult> GetListReceta()
@@ -128,28 +128,6 @@ namespace GastroNET.Controllers
                 return new JsonResult(new BadRequest { Message = ex.Message }) { StatusCode = 404 };
             }
         }
-
-        //Referencia de ENDPOINT
-
-        //[HttpGet]
-        //[ProducesResponseType(typeof(List<MercaderiaGetResponse>), 200)]
-        //[ProducesResponseType(typeof(BadRequest), 400)]
-        //[ProducesResponseType(typeof(MercaderiaResponse), 201)]
-        //[ProducesResponseType(typeof(BadRequest), 409)]
-        //[ProducesResponseType(typeof(BadRequest), 404)]
-
-        ////public async Task<IActionResult> GetMercaderiaByfilter(int? tipo, string? nombre, string? orden)
-        //{
-        //    try
-        //    {
-        //        var result = await _service.GetMercaderiaByFilter(tipo, nombre, orden);
-        //        return new JsonResult(result) { StatusCode = 200 };
-        //    }
-        //    catch (ExceptionSintaxError ex)
-        //    {
-        //        return new JsonResult(new BadRequest { Message = ex.Message }) { StatusCode = 400 };
-        //    }
-        //}
     }
 
 }

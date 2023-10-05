@@ -7695,11 +7695,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\facultad\\cuarto año\\segundo cuatrimestre\\proyecto software\\GastroNet\\GastroNET\\GastroNET.csproj",
+      "projectUniqueName": "D:\\facultad\\cuarto año\\segundo cuatrimestre\\proyecto software\\Microservicio Receta\\GastroNET\\GastroNET.csproj",
       "projectName": "GastroNET",
-      "projectPath": "D:\\facultad\\cuarto año\\segundo cuatrimestre\\proyecto software\\GastroNet\\GastroNET\\GastroNET.csproj",
+      "projectPath": "D:\\facultad\\cuarto año\\segundo cuatrimestre\\proyecto software\\Microservicio Receta\\GastroNET\\GastroNET.csproj",
       "packagesPath": "C:\\Users\\Lucas\\.nuget\\packages\\",
-      "outputPath": "D:\\facultad\\cuarto año\\segundo cuatrimestre\\proyecto software\\GastroNet\\GastroNET\\obj\\",
+      "outputPath": "D:\\facultad\\cuarto año\\segundo cuatrimestre\\proyecto software\\Microservicio Receta\\GastroNET\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\Lucas\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -7716,8 +7716,8 @@
         "net6.0": {
           "targetAlias": "net6.0",
           "projectReferences": {
-            "D:\\facultad\\cuarto año\\segundo cuatrimestre\\proyecto software\\GastroNet\\Infraestructure\\Infraestructure.csproj": {
-              "projectPath": "D:\\facultad\\cuarto año\\segundo cuatrimestre\\proyecto software\\GastroNet\\Infraestructure\\Infraestructure.csproj"
+            "D:\\facultad\\cuarto año\\segundo cuatrimestre\\proyecto software\\Microservicio Receta\\Infraestructure\\Infraestructure.csproj": {
+              "projectPath": "D:\\facultad\\cuarto año\\segundo cuatrimestre\\proyecto software\\Microservicio Receta\\Infraestructure\\Infraestructure.csproj"
             }
           }
         }

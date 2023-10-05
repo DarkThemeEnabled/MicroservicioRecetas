@@ -17,6 +17,8 @@ namespace Application.Request
         public string FotoReceta { get; set; }
         public string Video { get; set; }
         public string TiempoPreparacion { get; set; }
+        public List<PasoRequest> ListaPasos { get; set; }
+        public List<int> ListaIngredienteReceta { get; set; }
 
     }
 }

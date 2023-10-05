@@ -9,6 +9,7 @@ namespace Application.Interfaces
 {
     public interface IDificultadQuery
     {
-        Task<List<Dificultad>> GetListDificultades();
+        public Task<List<Dificultad>> GetListDificultades();
+        public Task<Dificultad> GetDificultadById(int dificultadId);
     }
 }

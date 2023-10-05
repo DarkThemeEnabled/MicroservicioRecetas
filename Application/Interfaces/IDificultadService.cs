@@ -10,5 +10,6 @@ namespace Application.Interfaces
     public interface IDificultadService
     {
         Task<List<DificultadResponse>> GetListDificultad();
+        Task<bool> ValidateDificultadById(int dificultadId);
     }
 }

@@ -10,7 +10,7 @@ namespace Application.Interfaces
 {
     public interface IPasoService
     {
-        Task<PasoResponse> CreatePaso(PasoRequest request);
+        Task<PasoResponse> CreatePaso(PasoRequest request, Guid recetaId);
         Task<PasoResponse> UpdatePaso(PasoRequest request, int id);
         Task<PasoResponse> DeletePaso(int id);
         Task<List<PasoResponse>> GetPasosByRecetaId(Guid recetaId);
