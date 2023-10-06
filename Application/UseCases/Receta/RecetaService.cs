@@ -31,35 +31,28 @@ namespace Application.UseCases.SReceta
             _ingRecetaService = ingredienteRecetaService;
         }
 
-
+        //------ Metodos ABM ------
         public async Task<RecetaResponse> CreateReceta(RecetaRequest recetaRequest)
         {
             try
             {
-                //Crear validador UsuarioID (Este debería validarse por el microservicio de usuario, hay que ver como es lo del token)
-                //Validador de vídeos o foto receta???? Esto tenemos que ver como implementarlo. Se supone que se sube una imagen
-                //Validador del titulo?
-
-                if (! await VerifyDificultadId(recetaRequest.DificultadId)) { throw new ExceptionNotFound("No existe ninguna categoría para ese ID"); }
-
-                //if (VerifyInt(recetaRequest.CategoriaRecetaId)) { throw new ExceptionSintaxError("Formato érroneo para el id de CategoriaReceta, pruebe un entero"); }
-
-                if (! await VerifyCategoriaRecetaId(recetaRequest.CategoriaRecetaId)) { throw new ExceptionNotFound ("No existe ninguna categoría para ese ID"); }
-
-                TimeSpan tiempoPreparacion = await GetHorario(recetaRequest.TiempoPreparacion);
-                Receta receta = new Receta
+                Receta recetaCreada = null;
+                if(await VerifyAll(recetaRequest))
                 {
-                    CategoriaRecetaId = recetaRequest.CategoriaRecetaId,
-                    DificultadId = recetaRequest.DificultadId,
-                    UsuarioId = recetaRequest.UsuarioId,
-                    Titulo = recetaRequest.Titulo,
-                    FotoReceta = recetaRequest.FotoReceta,
-                    Video = recetaRequest.Video,
-                    TiempoPreparacion = tiempoPreparacion,
-                };
-                Receta recetaCreada = await _command.CreateReceta(receta);
+                    TimeSpan tiempoPreparacion = await GetHorario(recetaRequest.TiempoPreparacion);
+                    Receta receta = new Receta
+                    {
+                        CategoriaRecetaId = recetaRequest.CategoriaRecetaId,
+                        DificultadId = recetaRequest.DificultadId,
+                        UsuarioId = recetaRequest.UsuarioId,
+                        Titulo = recetaRequest.Titulo,
+                        FotoReceta = recetaRequest.FotoReceta,
+                        Video = recetaRequest.Video,
+                        TiempoPreparacion = tiempoPreparacion,
+                    };
+                    recetaCreada = await _command.CreateReceta(receta);
+                }
                 recetaRequest.ListaPasos.ForEach(paso => _pasoService.CreatePaso(paso, recetaCreada.RecetaId));
-                //Acá tiene que ser la llamada al otro microservicio para obtener los datos del ingredienteReceta
                 //recetaRequest.ListaIngredienteReceta.ForEach(ingReceta => _ingRecetaService.CreateIngredienteReceta(ingReceta, recetaCreada.RecetaId));
                 return await CreateRecetaResponse(recetaCreada);
             }
@@ -86,22 +79,17 @@ namespace Application.UseCases.SReceta
                 //Agregar validador de recetaID
                 //Ver como hacer para que se muestren los pasos de dicha receta
                 //En un futuro agregar un validador de urls con eso de las fotos. Pero más adelante!!
-                //No debería de pedir que se modifique el recetaID!!!
+                Receta unaReceta = null;
                 if (! await VerifyRecetaId(id)) { throw new ExceptionNotFound("El id de la receta no existe"); }
-                if (! await VerifyCategoriaRecetaId(recetaRequest.CategoriaRecetaId)) { throw new ExceptionNotFound("No existe ninguna categoría para ese ID"); }
-                TimeSpan tiempoPreparacion = await GetHorario(recetaRequest.TiempoPreparacion);
-
-                var unaReceta = await _command.UpdateReceta(recetaRequest, id);
+                if (await VerifyAll(recetaRequest))
+                {
+                    //Acá hay que verificar los conflictos posibles (qué conflictos podría haber...)
+                    //Posibles conflictos: mismo titulo de receta con el mismo usuario - 
+                    TimeSpan tiempoPreparacion = await GetHorario(recetaRequest.TiempoPreparacion);
+                    unaReceta = await _command.UpdateReceta(recetaRequest, id);
+                }
                 return await CreateRecetaResponse(unaReceta);
-            }
-                //public int CategoriaRecetaId { get; set; }
-                //public int DificultadId { get; set; }
-                //public Guid UsuarioId { get; set; }
-                //public string Titulo { get; set; }
-                //public string FotoReceta { get; set; }
-                //public string Video { get; set; }
-                //public string TiempoPreparacion { get; set; }
-                //public List<PasoRequest> ListaPasos { get; set; } 
+            } 
             catch (Conflict ex)
             {
                 throw new Conflict("Error en la implementación a la base de datos: " + ex.Message);
@@ -116,30 +104,27 @@ namespace Application.UseCases.SReceta
             }
         }
 
-        public async Task<RecetaResponse> DeleteReceta(Guid id)
+        public async Task<RecetaDeleteResponse> DeleteReceta(Guid id)
         {
             try
             {
-                //Habría que validar si existe el id primero
-                //Cuando se borre la receta tenemos que implementar que se borren todos los pasos <-----
+                //Hay que ver a nivel de usuario como se crea todo esto porque va de la mano con lo de usuario :O
+                //Cuando se borre la receta tenemos que implementar que se borren todos los pasos <----- (De acá vendría el conflict)
+                if (!await VerifyRecetaId(id)) { throw new ExceptionNotFound("El id no existe"); }
                 Receta recetaToDelete = await _command.DeleteReceta(await _query.GetRecetaById(id));
-                return new RecetaResponse
+                return new RecetaDeleteResponse
                 {
-                    RecetaId = recetaToDelete.RecetaId,
-                    CategoriaRecetaId = recetaToDelete.CategoriaRecetaId,
-                    DificultadId = recetaToDelete.DificultadId,
-                    UsuarioId = recetaToDelete.UsuarioId,
-                    Titulo = recetaToDelete.Titulo,
-                    FotoReceta = recetaToDelete.FotoReceta,
-                    Video = recetaToDelete.Video,
-                    TiempoPreparacion = recetaToDelete.TiempoPreparacion.ToString(),
+                    id = recetaToDelete.RecetaId,
+                    titulo = recetaToDelete.Titulo,
                 };
             }
-            catch (ExceptionNotFound ex) { throw new ExceptionNotFound("Error en la búsqueda del id: " + ex.Message); }
+            catch (ExceptionNotFound ex) { throw new ExceptionNotFound("Error en la búsqueda de la receta: " + ex.Message); }
             catch (Conflict ex) { throw new Conflict("Error en la base de datos: " + ex.Message); }
             catch (ExceptionSintaxError) { throw new ExceptionSintaxError("Sintaxis incorrecta para el Id"); }
         }
 
+
+        //------ Metodos De busqueda -----
         //Hay que crear un GetRecetaResponse que te devuelva los datos de la receta pero que traiga los pasos que vinculados a esa receta
         public async Task<RecetaResponse> GetRecetaById(Guid id)
         {
@@ -182,7 +167,7 @@ namespace Application.UseCases.SReceta
             return recetasResponse;
         }
 
-        //Métodos privados para RecetaService
+        //----- Métodos privados -----
 
         //----- Generadores de responses ------
         private Task<RecetaResponse> CreateRecetaResponse(Receta unaReceta)
@@ -202,10 +187,39 @@ namespace Application.UseCases.SReceta
 
         // ------ Validadores ------
 
-        //private bool VerifyInt(int entero)
-        //{
-        //    return (int.TryParse(entero.ToString(), out entero));
-        //}
+        // Validador de todos los atributos de Receta
+
+        private async Task<bool> VerifyAll(RecetaRequest recetaRequest)
+        {
+            //Validador de enteros?
+            //Crear validador UsuarioID (Este debería validarse por el microservicio de usuario, hay que ver como es lo del token)
+            //Validador de vídeos o foto receta???? Esto tenemos que ver como implementarlo. Se supone que se sube una imagen
+            //Validador de titulo
+
+            if (!await VerifyDificultadId(recetaRequest.DificultadId)) { throw new ExceptionNotFound("No existe ninguna categoría para ese ID"); }
+            if (!VerifyInt(recetaRequest.DificultadId)) { throw new ExceptionSintaxError("Formato érroneo para el id de dificultad, pruebe un entero"); }
+
+            if (!await VerifyCategoriaRecetaId(recetaRequest.CategoriaRecetaId)) { throw new ExceptionNotFound("No existe ninguna categoría para ese ID"); }
+            if (!VerifyInt(recetaRequest.CategoriaRecetaId)) { throw new ExceptionSintaxError("Formato érroneo para el id de categoriaReceta, pruebe un entero"); }
+
+            //Acá tiene que ser la llamada al otro microservicio para obtener los datos del ingredienteReceta
+            if (!recetaRequest.ListaIngredienteReceta.All(item => VerifyInt(item))) { throw new ExceptionSintaxError("Formato érroneo para el id de categoriaReceta, pruebe un entero"); }
+
+            if (!await VerifyTitleLength(recetaRequest.Titulo)) { throw new ExceptionSintaxError("El titulo es demasiado extenso"); }
+            if (!await VerifyFotoRecetaLenght(recetaRequest.FotoReceta)) { throw new ExceptionSintaxError("El url de la imagen es demasiado extenso"); }
+            if (!await VerifyVideoLenght(recetaRequest.Video)) { throw new ExceptionSintaxError("El url del video es demasiado extenso"); }
+
+            if (!await VerifyListIsNotEmpty(recetaRequest.ListaIngredienteReceta)) { throw new ExceptionSintaxError("No hay ingredientes en la lista, por favor ingrese al menos uno"); }
+            if (!await VerifyListIsNotEmpty(recetaRequest.ListaPasos)) { throw new ExceptionSintaxError("No hay pasos ingresados, por favor ingrese al menos uno"); }
+
+            return true;
+        }
+
+        // Validadores de enteros
+        private bool VerifyInt(int entero)
+        {
+            return (int.TryParse(entero.ToString(), out entero));
+        }
         private async Task<bool> VerifyRecetaId(Guid recetaId)
         {
             return (await _query.GetRecetaById(recetaId) != null );
@@ -215,6 +229,28 @@ namespace Application.UseCases.SReceta
         {
            return (await _dificultadService.ValidateDificultadById(dificultadId));
         }
+        private async Task<bool> VerifyCategoriaRecetaId(int categoriaRecetaId)
+        {
+            return (await _categoriaService.ValidateCategoriaRecetaById(categoriaRecetaId));
+        }
+
+        // Validadores de strings
+
+        private async Task<bool> VerifyTitleLength(string title)
+        {
+            return (await _query.GetTitleLength() > title.Length);
+        }
+
+        private async Task<bool> VerifyFotoRecetaLenght (string fotoreceta)
+        {
+            return (await _query.GetFotoRecetaLength() > fotoreceta.Length);
+        }
+        private async Task<bool> VerifyVideoLenght (string video)
+        {
+            return (await _query.GetVideoLenght() > video.Length);
+        }
+
+        //Validadores de otros microservicios
 
         //Este tenemos que verlo :D
         //private async Task<bool> VerifyUsuarioId(Guid recetaId)
@@ -222,10 +258,14 @@ namespace Application.UseCases.SReceta
         //    throw new NotImplementedException();
         //}
 
-        private async Task<bool> VerifyCategoriaRecetaId(int categoriaRecetaId)
+        //Validador de listas
+
+        private Task<bool> VerifyListIsNotEmpty<T>(List<T> lista)
         {
-            return (await _categoriaService.ValidateCategoriaRecetaById(categoriaRecetaId));
+            return Task.FromResult(lista.Count() > 0);
         }
+
+        
 
         private Task<TimeSpan> GetHorario(string tiempoPreparacion)
         {

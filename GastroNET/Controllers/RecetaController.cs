@@ -83,7 +83,7 @@ namespace GastroNET.Controllers
         }
 
         [HttpDelete("{Id}")]
-        [ProducesResponseType(typeof(RecetaResponse), 200)]
+        [ProducesResponseType(typeof(RecetaDeleteResponse), 200)]
         [ProducesResponseType(typeof(BadRequest), 400)]
         [ProducesResponseType(typeof(BadRequest), 404)]
         [ProducesResponseType(typeof(BadRequest), 409)]

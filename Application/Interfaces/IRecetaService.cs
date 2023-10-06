@@ -14,7 +14,7 @@ namespace Application.Interfaces
         Task<List<RecetaResponse>> GetListRecetas();
         Task<RecetaResponse> CreateReceta(RecetaRequest recetaRequest);
         Task<RecetaResponse> UpdateReceta(RecetaRequest request, Guid id);
-        Task<RecetaResponse> DeleteReceta(Guid id);
+        Task<RecetaDeleteResponse> DeleteReceta(Guid id);
         Task<RecetaResponse> GetRecetaById(Guid id);
 
     }

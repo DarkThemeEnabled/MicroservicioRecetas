@@ -3,6 +3,7 @@ using Application.Interfaces;
 using Domain.Entities;
 using Infraestructure.Persistence;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 
 namespace Infraestructure.Querys
@@ -39,12 +40,53 @@ namespace Infraestructure.Querys
                     .Include(r => r.CategoriaReceta)
                     .Include(r => r.Pasos)
                     .Include(r => r.IngredentesReceta)
-                    .Include(r => r.UsuarioId)
+                    //.Include(r => r.UsuarioId)
                     .SingleOrDefaultAsync(r => r.RecetaId == id);
             }
             catch (DbUpdateException)
             {
-                throw new Application.Exceptions.BadRequestt("Hubo un problema al buscar la receta");
+                throw new BadRequestt("Hubo un problema al buscar la receta");
+            }
+        }
+
+        public async Task<int> GetTitleLength()
+        {
+            try
+            {
+                return _context.Model.FindEntityType(typeof(Receta))
+                   .FindProperty("Titulo")
+                   .GetMaxLength().GetValueOrDefault();
+            }
+            catch (DbUpdateException) 
+            {
+                throw new BadRequestt("Hubo un problema al encontrar el limite de la longitud del titulo");
+            }
+            
+        }
+        public async Task<int> GetFotoRecetaLength()
+        {
+            try
+            {
+                return _context.Model.FindEntityType(typeof(Receta))
+                   .FindProperty("FotoReceta")
+                   .GetMaxLength().GetValueOrDefault();
+            }
+            catch (DbUpdateException)
+            {
+                throw new BadRequestt("Hubo un problema al encontrar el limite de la longitud de la imagen");
+            }
+        }
+        public async Task<int> GetVideoLenght()
+        {
+            try
+            {
+                return _context.Model.FindEntityType(typeof(Receta))
+                   .FindProperty("Video")
+                   .GetMaxLength().GetValueOrDefault();
+            }
+            catch (DbUpdateException)
+            {
+                throw new BadRequestt("Hubo un problema al encontrar el limite de la longitud de la video");
             }
         }
     }
