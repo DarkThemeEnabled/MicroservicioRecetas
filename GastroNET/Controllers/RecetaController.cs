@@ -18,22 +18,6 @@ namespace GastroNET.Controllers
             _service = service;
         }
 
-        [HttpGet]
-        [ProducesResponseType(typeof(List<RecetaResponse>), 200)]
-        [ProducesResponseType(typeof(BadRequest), 400)]
-        public async Task<IActionResult> GetListReceta()
-        {
-            try
-            {
-               var result= await _service.GetListRecetas();
-               return new JsonResult(result) { StatusCode = 200 };
-            }
-            catch (ExceptionSintaxError ex)
-            {
-                return new JsonResult(new BadRequest { Message = ex.Message }) { StatusCode = 400 };
-            }
-        }
-
         [HttpPost]
 
         [ProducesResponseType(typeof(RecetaResponse), 201)]
@@ -128,6 +112,30 @@ namespace GastroNET.Controllers
                 return new JsonResult(new BadRequest { Message = ex.Message }) { StatusCode = 404 };
             }
         }
+
+        //Buscador principal de TODO
+        [HttpGet]
+        [ProducesResponseType(typeof(List<RecetaResponse>), 200)]
+        [ProducesResponseType(typeof(BadRequest), 400)]
+        [ProducesResponseType(typeof(BadRequest), 404)]
+        public async Task<IActionResult> GetReceta()
+        {
+            try
+            {
+                var result = await _service.GetListRecetas();
+                return new JsonResult(result) { StatusCode = 200 };
+            }
+            catch (ExceptionSintaxError ex)
+            {
+                return new JsonResult(new BadRequest { Message = ex.Message }) { StatusCode = 400 };
+            }
+            catch (ExceptionNotFound ex)
+            {
+                return new JsonResult(new BadRequest { Message = ex.Message }) { StatusCode = 404 };
+            }
+        }
+
+        //Acá iría el controller que busca por cualquier filtro falopa
     }
 
 }

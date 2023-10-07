@@ -45,15 +45,6 @@ builder.Services.AddScoped<IIngredienteRecetaQuery, IngredienteRecetaQuery>();
 builder.Services.AddScoped<IIngredienteRecetaCommand, IngredienteRecetaCommand>();
 
 
-
-//builder.Services.AddScoped<IViajeServicioService, ViajeServicioService>();
-//builder.Services.AddScoped<IViajeServicioQuery, ViajeServicioQuery>();
-//builder.Services.AddScoped<IViajeServicioCommand, ViajeServicioCommand>();
-
-//builder.Services.AddScoped<IServicioService, ServicioService>();
-//builder.Services.AddScoped<IServicioQuery, ServicioQuery>();
-//builder.Services.AddScoped<IServicioCommand, ServicioCommand>();
-
 //CORS deshabilitar
 builder.Services.AddCors(options =>
 {

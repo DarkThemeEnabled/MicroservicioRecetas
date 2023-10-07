@@ -1,6 +1,7 @@
 ﻿using Application.Exceptions;
 using Application.Interfaces;
 using Application.Request;
+using Application.Response;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GastroNET.Controllers
@@ -17,7 +18,10 @@ namespace GastroNET.Controllers
             _service = service;
         }
 
-        [HttpGet("/GetListDificultad")]
+        [HttpGet]
+        [ProducesResponseType(typeof(DificultadResponse), 200)]
+        [ProducesResponseType(typeof(BadRequest), 400)]
+        [ProducesResponseType(typeof(BadRequest), 404)]
 
         public async Task<IActionResult> GetListDificultad()
         {
@@ -30,8 +34,10 @@ namespace GastroNET.Controllers
             {
                 return new JsonResult(new BadRequest { Message = ex.Message }) { StatusCode = 400 };
             }
+            catch (ExceptionNotFound ex)
+            {
+                return new JsonResult(new BadRequest { Message = ex.Message }) { StatusCode = 404 };
+            }
         }
-
-
-        }
+    }
 }

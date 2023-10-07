@@ -49,5 +49,33 @@ namespace Infraestructure.Querys
                 throw new ExceptionNotFound("No se encontró el paso solicitado");
             }
         }
+
+        public async Task<int> GetDescripcionLength()
+        {
+            try
+            {
+                return _context.Model.FindEntityType(typeof(Paso))
+                   .FindProperty("Descripcion")
+                   .GetMaxLength().GetValueOrDefault();
+            }
+            catch (DbUpdateException)
+            {
+                throw new BadRequestt("Hubo un problema al encontrar el limite de la longitud de la descripcion");
+            }
+        }
+
+        public async Task<int> GetFotoLength()
+        {
+            try
+            {
+                return _context.Model.FindEntityType(typeof(Paso))
+                   .FindProperty("Foto")
+                   .GetMaxLength().GetValueOrDefault();
+            }
+            catch (DbUpdateException)
+            {
+                throw new BadRequestt("Hubo un problema al encontrar el limite de la longitud de la foto");
+            }
+        }
     }
 }

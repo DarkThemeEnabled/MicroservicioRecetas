@@ -86,7 +86,7 @@ namespace Infraestructure.Querys
             }
             catch (DbUpdateException)
             {
-                throw new BadRequestt("Hubo un problema al encontrar el limite de la longitud de la video");
+                throw new BadRequestt("Hubo un problema al encontrar el limite de la longitud del video");
             }
         }
     }

@@ -91,47 +91,51 @@ namespace GastroNET.Controllers
         }
 
 
+        //Lo mismo este, receta ya te trae todos los pasos
 
-        [HttpGet("{recetaId}")]
-        [ProducesResponseType(typeof(PasoResponse), 200)]
-        [ProducesResponseType(typeof(BadRequest), 400)]
-        [ProducesResponseType(typeof(BadRequest), 404)]
-        public async Task<IActionResult> GetPasosByRecetaId(Guid recetaId)
-        {
-            try
-            {
-                var result = await _service.GetPasosByRecetaId(recetaId);
-                return new JsonResult(result) { StatusCode = 200 };
-            }
-            catch (ExceptionSintaxError ex)
-            {
-                return new JsonResult(new BadRequest { Message = ex.Message }) { StatusCode = 400 };
-            }
-            catch (ExceptionNotFound ex)
-            {
-                return new JsonResult(new BadRequest { Message = ex.Message }) { StatusCode = 404 };
-            }
-        }
+        //[HttpGet("{recetaId}")]
+        //[ProducesResponseType(typeof(PasoResponse), 200)]
+        //[ProducesResponseType(typeof(BadRequest), 400)]
+        //[ProducesResponseType(typeof(BadRequest), 404)]
+        //public async Task<IActionResult> GetPasosByRecetaId(Guid recetaId)
+        //{
+        //    try
+        //    {
+        //        var result = await _service.GetPasosByRecetaId(recetaId);
+        //        return new JsonResult(result) { StatusCode = 200 };
+        //    }
+        //    catch (ExceptionSintaxError ex)
+        //    {
+        //        return new JsonResult(new BadRequest { Message = ex.Message }) { StatusCode = 400 };
+        //    }
+        //    catch (ExceptionNotFound ex)
+        //    {
+        //        return new JsonResult(new BadRequest { Message = ex.Message }) { StatusCode = 404 };
+        //    }
+        //}
 
-        [HttpGet]
-        [ProducesResponseType(typeof(PasoResponse), 200)]
-        [ProducesResponseType(typeof(BadRequest), 400)]
-        [ProducesResponseType(typeof(BadRequest), 404)]
-        public async Task<IActionResult> GetPasoById(int id)
-        {
-            try
-            {
-                var result = await _service.GetPasoById(id);
-                return new JsonResult(result) { StatusCode = 200 };
-            }
-            catch (ExceptionSintaxError ex)
-            {
-                return new JsonResult(new BadRequest { Message = ex.Message }) { StatusCode = 400 };
-            }
-            catch (ExceptionNotFound ex)
-            {
-                return new JsonResult(new BadRequest { Message = ex.Message }) { StatusCode = 404 };
-            }
-        }
+        //El get de un paso solo no hace falta, en teoría los pasos vienen en el include de la receta :O
+
+
+        //[HttpGet]
+        //[ProducesResponseType(typeof(PasoResponse), 200)]
+        //[ProducesResponseType(typeof(BadRequest), 400)]
+        //[ProducesResponseType(typeof(BadRequest), 404)]
+        //public async Task<IActionResult> GetPasoById(int id)
+        //{
+        //    try
+        //    {
+        //        var result = await _service.GetPasoById(id);
+        //        return new JsonResult(result) { StatusCode = 200 };
+        //    }
+        //    catch (ExceptionSintaxError ex)
+        //    {
+        //        return new JsonResult(new BadRequest { Message = ex.Message }) { StatusCode = 400 };
+        //    }
+        //    catch (ExceptionNotFound ex)
+        //    {
+        //        return new JsonResult(new BadRequest { Message = ex.Message }) { StatusCode = 404 };
+        //    }
+        //}
     }
 }     

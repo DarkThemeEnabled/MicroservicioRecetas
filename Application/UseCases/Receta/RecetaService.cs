@@ -19,16 +19,16 @@ namespace Application.UseCases.SReceta
         private readonly IPasoService _pasoService;
         private readonly ICategoriaRecetaService _categoriaService;
         private readonly IDificultadService _dificultadService;
-        private readonly IIngredienteRecetaService _ingRecetaService;
+        //private readonly IIngredienteRecetaService _ingRecetaService;
 
-        public RecetaService(IRecetaQuery recetaQuery, IRecetaCommand recetaCommand, IPasoService pasoService, ICategoriaRecetaService categoriaService, IDificultadService dificultadService, IIngredienteRecetaService ingredienteRecetaService)
+        public RecetaService(IRecetaQuery recetaQuery, IRecetaCommand recetaCommand, IPasoService pasoService, ICategoriaRecetaService categoriaService, IDificultadService dificultadService)//, IIngredienteRecetaService ingredienteRecetaService)
         {
             _query = recetaQuery;
             _command = recetaCommand;
             _pasoService = pasoService;
             _categoriaService = categoriaService;
             _dificultadService = dificultadService;
-            _ingRecetaService = ingredienteRecetaService;
+            //_ingRecetaService = ingredienteRecetaService;
         }
 
         //------ Metodos ABM ------
@@ -49,7 +49,9 @@ namespace Application.UseCases.SReceta
                         FotoReceta = recetaRequest.FotoReceta,
                         Video = recetaRequest.Video,
                         TiempoPreparacion = tiempoPreparacion,
-                    };
+                        IngredentesReceta = new List<IngredienteReceta>(),
+                        Pasos = new List<Paso>(),
+                };
                     recetaCreada = await _command.CreateReceta(receta);
                 }
                 recetaRequest.ListaPasos.ForEach(paso => _pasoService.CreatePaso(paso, recetaCreada.RecetaId));
@@ -265,8 +267,7 @@ namespace Application.UseCases.SReceta
             return Task.FromResult(lista.Count() > 0);
         }
 
-        
-
+        //Otros
         private Task<TimeSpan> GetHorario(string tiempoPreparacion)
         {
             if (tiempoPreparacion.Length == 5 &&

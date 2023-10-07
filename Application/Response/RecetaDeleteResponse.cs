@@ -10,5 +10,7 @@ namespace Application.Response
     {
         public Guid id { get; set; }
         public string titulo { get; set; }
+
+        //public string usuario????
     }
 }

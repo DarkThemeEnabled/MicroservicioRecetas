@@ -2,6 +2,7 @@
 using Application.Interfaces;
 using Application.Request;
 using Application.Response;
+using Azure.Core;
 using Domain.Entities;
 using System;
 using System.Collections.Generic;
@@ -26,31 +27,81 @@ namespace Application.UseCases.SPasos
         {
             try
             {
-                //Agregar validador de recetaID
-                //Agregar validador de orden (aunque en teoría es automatico, verlo despues)
-                var paso = new Paso
+                Paso pasoCreado=null;
+                if (await VerifyAll(request))
                 {
-                    Descripcion = request.Descripcion,
-                    Foto = request.Foto,
-                    Orden = request.Orden,
-                    //RecetaId = request.RecetaId,
-                };
+                    var paso = new Paso
+                    {
+                        Descripcion = request.Descripcion,
+                        Foto = request.Foto,
+                        Orden = request.Orden,
+                        RecetaId = recetaId,
+                    };
 
-                Paso pasoCreado = await _command.CreatePaso(paso);
+                    pasoCreado = await _command.CreatePaso(paso);
+                }
+                //Agregar validador de orden (aunque en teoría es automatico, verlo despues)
+                
                 return await CreatePasoResponse(pasoCreado);
             }
             catch (ExceptionSintaxError e)
             {
                 throw new ExceptionSintaxError("Error en la sintaxis del paso a crear: " + e.Message);
             }
-            catch (Conflict e)
+            catch (ExceptionNotFound e)
             {
-                throw new Conflict("No se pudo agregar el paso: " + e.Message);
+                throw new ExceptionNotFound("No se pudo agregar el paso: " + e.Message);
             }
 
         }
 
-        public async Task<List<PasoResponse>> GetPasosByRecetaId (Guid recetaId)
+        public async Task<PasoResponse> UpdatePaso(PasoRequest request, int id)
+        {
+            try
+            {
+                if (await VerifyAll(request) && GetPasoById(id) != null) 
+                {
+                    var unPaso = await _command.UpdatePaso(request, id);
+                    return await CreatePasoResponse(unPaso);
+                }
+                return new PasoResponse { };
+                
+            }
+            catch (Conflict ex)
+            {
+                throw new Conflict("Error en la implementación a la base de datos: " + ex.Message);
+            }
+            catch (ExceptionNotFound ex)
+            {
+                throw new ExceptionNotFound("Error en la busqueda en la base de datos: " + ex.Message);
+            }
+            catch (ExceptionSintaxError ex)
+            {
+                throw new ExceptionSintaxError("Error en la sintaxis de la mercadería a modificar: " + ex.Message);
+            }
+        }
+        public async Task<PasoResponse> DeletePaso(int id)
+        {
+            try
+            {
+                if(GetPasoById(id) == null) { throw new ExceptionNotFound("No existe ningún paso"); }
+                Paso pasoToDelete = await _command.DeletePaso(await _query.GetPasoById(id));
+                return new PasoResponse
+                {
+                    Id = pasoToDelete.PasoId,
+                    RecetaId = pasoToDelete.RecetaId,
+                    Descripcion = pasoToDelete.Descripcion,
+                    Foto = pasoToDelete.Foto,
+                    Orden = pasoToDelete.Orden
+                };
+            }
+            catch (ExceptionNotFound ex) { throw new ExceptionNotFound("Error en la búsqueda del id: " + ex.Message); }
+            catch (Conflict ex) { throw new Conflict("Error en la base de datos: " + ex.Message); }
+            catch (ExceptionSintaxError) { throw new ExceptionSintaxError("Sintaxis incorrecta para el Id"); }
+        }
+
+        //Este capaz es innecesario ya que la receta te trae todos sus pasos
+        public async Task<List<PasoResponse>> GetPasosByRecetaId(Guid recetaId)
         {
             try
             {
@@ -76,58 +127,6 @@ namespace Application.UseCases.SPasos
 
         }
 
-        public async Task<PasoResponse> UpdatePaso(PasoRequest request, int id)
-        {
-            try
-            { //400 404 409
-                //Agregar validador de recetaID
-                //Agregar validador de PasoID
-                //En un futuro agregar un validador de urls con eso de las fotos. Pero más adelante!!
-                //No debería de pedir que se modifique el recetaID!!!
-                var unPaso = await _command.UpdatePaso(request, id);
-                return await Task.FromResult(new PasoResponse
-                {
-                    Id = unPaso.PasoId,
-                    RecetaId = unPaso.RecetaId,
-                    Descripcion = unPaso.Descripcion,
-                    Foto = unPaso.Foto,
-                    Orden = unPaso.Orden
-                });
-            }
-            catch (Conflict ex)
-            { 
-                throw new Conflict("Error en la implementación a la base de datos: " + ex.Message); 
-            }
-            catch (ExceptionNotFound ex) 
-            { 
-                throw new ExceptionNotFound("Error en la busqueda en la base de datos: " + ex.Message); 
-            }
-            catch (ExceptionSintaxError ex) 
-            { 
-                throw new ExceptionSintaxError("Error en la sintaxis de la mercadería a modificar: " + ex.Message);
-            }
-        }
-
-        public async Task<PasoResponse> DeletePaso(int id)
-        {
-            try
-            {
-                //Habría que validar si existe el id primero
-                Paso pasoToDelete = await _command.DeletePaso(await _query.GetPasoById(id));
-                return new PasoResponse
-                {
-                    Id = pasoToDelete.PasoId,
-                    RecetaId = pasoToDelete.RecetaId,
-                    Descripcion = pasoToDelete.Descripcion,
-                    Foto = pasoToDelete.Foto,
-                    Orden = pasoToDelete.Orden
-                };
-            }
-            catch (ExceptionNotFound ex) { throw new ExceptionNotFound("Error en la búsqueda del id: " + ex.Message); }
-            catch (Conflict ex) { throw new Conflict("Error en la base de datos: " + ex.Message); }
-            catch (ExceptionSintaxError) { throw new ExceptionSintaxError("Sintaxis incorrecta para el Id"); }
-        }
-
         public async Task<PasoResponse> GetPasoById(int Id)
         {
             try
@@ -142,7 +141,7 @@ namespace Application.UseCases.SPasos
                 {
                     throw new ExceptionNotFound("No existe ningún paso con ese ID");
                 }
-                
+
             }
             catch (ExceptionSintaxError e)
             {
@@ -156,6 +155,22 @@ namespace Application.UseCases.SPasos
 
         }
 
+        //------ Metodos privados ------
+        
+        //------ Validaciones ------
+        private async Task<bool> VerifyAll(PasoRequest request)
+        {
+            if (request.Descripcion.Length > await _query.GetDescripcionLength()) {throw new BadRequestt("La descripción sumera el límite permitido"); }
+            if (request.Foto.Length > await _query.GetFotoLength()) { throw new BadRequestt("El url de la foto supera el límite permitido"); }
+            //Verificador de ints??
+            return true;
+        }
+        //private async Task<bool> VerifyRecetaId(Guid recetaId)
+        //{
+        //    return (await _recService.GetRecetaById(recetaId) != null);
+        //}
+
+        //------ Creador responses ------
         private Task<PasoResponse> CreatePasoResponse(Paso unPaso)
         {
             return Task.FromResult(new PasoResponse
@@ -168,15 +183,8 @@ namespace Application.UseCases.SPasos
             });
         }
 
-        private Task<bool> Validacion404()
-        {
-            throw new NotImplementedException();
-        }
 
-        private Task<bool> Validacion409 ()
-        {
-            throw new NotImplementedException();
-        }
+       
 
 
     }
