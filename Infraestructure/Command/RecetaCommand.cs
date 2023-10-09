@@ -53,7 +53,6 @@ namespace Infraestructure.Command
         {
             try
             {
-                //Falta que modifique: Pasos, Ingredientes, Usuario(Discutir ocn el grupo)
                 var recetaToUpdate = await _context.Recetas.FirstOrDefaultAsync(r => r.RecetaId.Equals(recetaId));
                 recetaToUpdate.Titulo = recetaRequest.Titulo;
                 recetaToUpdate.DificultadId = recetaRequest.DificultadId;

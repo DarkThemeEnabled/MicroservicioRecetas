@@ -1,4 +1,5 @@
-﻿using Domain.Entities;
+﻿using Application.Request;
+using Domain.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,8 +10,8 @@ namespace Application.Interfaces
 {
     public interface IIngredienteRecetaCommand
     {
-        Task<IngredienteReceta> CreateIngredienteReceta(IngredienteReceta ingredienteReceta);
-        Task<IngredienteReceta> UpdateIngredienteReceta(IngredienteReceta ingRecetaUpdate, int ingRecetaId);
-        Task<IngredienteReceta> DeleteIngredienteReceta(int ingRecetaId);
+        Task<bool> CreateIngredienteReceta(IngredienteReceta ingredienteReceta);
+        Task<IngredienteReceta> UpdateIngredienteReceta(IngredienteRecetaRequest ingRecetaUpdate, int ingRecetaId, Guid recetaId );
+        Task<IngredienteReceta> DeleteIngredienteReceta(IngredienteReceta ingReceta);
     }
 }

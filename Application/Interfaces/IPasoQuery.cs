@@ -13,5 +13,6 @@ namespace Application.Interfaces
         Task<Paso> GetPasoById(int pasoId);
         Task<int> GetDescripcionLength();
         Task<int> GetFotoLength();
+        Task<int> GetPasoIdByRecetaId(Guid recetaId, int orden);
     }
 }

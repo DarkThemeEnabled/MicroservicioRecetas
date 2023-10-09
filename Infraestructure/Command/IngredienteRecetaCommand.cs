@@ -1,6 +1,9 @@
-﻿using Application.Interfaces;
+﻿using Application.Exceptions;
+using Application.Interfaces;
+using Application.Request;
 using Domain.Entities;
 using Infraestructure.Persistence;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,19 +20,42 @@ namespace Infraestructure.Command
         {
             _context = context;
         }
-        public Task<IngredienteReceta> CreateIngredienteReceta(IngredienteReceta ingredienteReceta)
+        public async Task<bool> CreateIngredienteReceta(IngredienteReceta ingReceta)
         {
-            throw new NotImplementedException();
+            try
+            {
+                _context.Add(ingReceta);
+                return await _context.SaveChangesAsync() == 2;
+            }
+            catch (DbUpdateException)
+            {
+                throw new Conflict("No se pudo eliminar la receta");
+            }
         }
 
-        public Task<IngredienteReceta> DeleteIngredienteReceta(int ingRecetaId)
+        public async Task<IngredienteReceta> DeleteIngredienteReceta(IngredienteReceta ingReceta)
         {
-            throw new NotImplementedException();
+            try
+            {
+                _context.Remove(ingReceta);
+                await _context.SaveChangesAsync();
+                return ingReceta;
+            }
+            catch (DbUpdateException)
+            {
+                throw new Conflict("No se pudo eliminar la receta");
+            }
         }
 
-        public Task<IngredienteReceta> UpdateIngredienteReceta(IngredienteReceta ingRecetaUpdate, int ingRecetaId)
+        public async Task<IngredienteReceta> UpdateIngredienteReceta(IngredienteRecetaRequest ingRecetaUpdate, int ingRecetaId, Guid recetaId)
         {
-            throw new NotImplementedException();
+            var ingRecetaToUpdate = await _context.IngredientesRecetas.FirstOrDefaultAsync(ir => ir.IngredienteRecetaId == ingRecetaId);
+
+            ingRecetaToUpdate.cantidad = ingRecetaUpdate.cantidad;
+            ingRecetaToUpdate.IngredienteId = ingRecetaUpdate.ingredienteId;
+            ingRecetaToUpdate.RecetaId = recetaId;
+            await _context.SaveChangesAsync();
+            return ingRecetaToUpdate;
         }
     }
 }

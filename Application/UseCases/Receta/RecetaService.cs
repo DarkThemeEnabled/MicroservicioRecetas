@@ -19,16 +19,16 @@ namespace Application.UseCases.SReceta
         private readonly IPasoService _pasoService;
         private readonly ICategoriaRecetaService _categoriaService;
         private readonly IDificultadService _dificultadService;
-        //private readonly IIngredienteRecetaService _ingRecetaService;
+        private readonly IIngredienteRecetaService _ingRecetaService;
 
-        public RecetaService(IRecetaQuery recetaQuery, IRecetaCommand recetaCommand, IPasoService pasoService, ICategoriaRecetaService categoriaService, IDificultadService dificultadService)//, IIngredienteRecetaService ingredienteRecetaService)
+        public RecetaService(IRecetaQuery recetaQuery, IRecetaCommand recetaCommand, IPasoService pasoService, ICategoriaRecetaService categoriaService, IDificultadService dificultadService, IIngredienteRecetaService ingredienteRecetaService)
         {
             _query = recetaQuery;
             _command = recetaCommand;
             _pasoService = pasoService;
             _categoriaService = categoriaService;
             _dificultadService = dificultadService;
-            //_ingRecetaService = ingredienteRecetaService;
+            _ingRecetaService = ingredienteRecetaService;
         }
 
         //------ Metodos ABM ------
@@ -54,9 +54,17 @@ namespace Application.UseCases.SReceta
                 };
                     recetaCreada = await _command.CreateReceta(receta);
                 }
-                recetaRequest.ListaPasos.ForEach(paso => _pasoService.CreatePaso(paso, recetaCreada.RecetaId));
+                //recetaRequest.ListaPasos.ForEach(paso => _pasoService.CreatePaso(paso, recetaCreada.RecetaId));
+                foreach (PasoRequest paso in recetaRequest.ListaPasos)
+                {
+                    await _pasoService.CreatePaso(paso, recetaCreada.RecetaId);
+                }
                 //recetaRequest.ListaIngredienteReceta.ForEach(ingReceta => _ingRecetaService.CreateIngredienteReceta(ingReceta, recetaCreada.RecetaId));
-                return await CreateRecetaResponse(recetaCreada);
+                foreach (IngredienteRecetaRequest ingReceta in recetaRequest.ListaIngredienteReceta)
+                {
+                    await _ingRecetaService.CreateIngredienteReceta(ingReceta, recetaCreada.RecetaId);
+                }
+                return await CreateRecetaResponse(await _query.GetRecetaById(recetaCreada.RecetaId));
             }
             catch (ExceptionSintaxError e)
             {
@@ -74,7 +82,7 @@ namespace Application.UseCases.SReceta
 
         }
 
-        public async Task<RecetaResponse> UpdateReceta(RecetaRequest recetaRequest, Guid id)
+        public async Task<RecetaResponse> UpdateReceta(RecetaRequest recetaRequest, Guid recetaId)
         {
             try
             {
@@ -82,13 +90,27 @@ namespace Application.UseCases.SReceta
                 //Ver como hacer para que se muestren los pasos de dicha receta
                 //En un futuro agregar un validador de urls con eso de las fotos. Pero más adelante!!
                 Receta unaReceta = null;
-                if (! await VerifyRecetaId(id)) { throw new ExceptionNotFound("El id de la receta no existe"); }
+                if (! await VerifyRecetaId(recetaId)) { throw new ExceptionNotFound("El id de la receta no existe"); }
                 if (await VerifyAll(recetaRequest))
                 {
                     //Acá hay que verificar los conflictos posibles (qué conflictos podría haber...)
-                    //Posibles conflictos: mismo titulo de receta con el mismo usuario - 
+                    //Posibles conflictos: sin ideas
                     TimeSpan tiempoPreparacion = await GetHorario(recetaRequest.TiempoPreparacion);
-                    unaReceta = await _command.UpdateReceta(recetaRequest, id);
+                    unaReceta = await _command.UpdateReceta(recetaRequest, recetaId);
+                    //Agregarlo a un método privado 
+                    foreach(IngredienteRecetaRequest ingReceta in recetaRequest.ListaIngredienteReceta)
+                    {
+                        //capaz pongo un bool true o false
+                        int ingRecetaId = await _ingRecetaService.GetIngredienteRecetaBy(recetaId,ingReceta.ingredienteId);
+                        IngredienteRecetaResponse pepe = await _ingRecetaService.UpdateIngredienteReceta(ingReceta, ingRecetaId); 
+                    }
+                    foreach (PasoRequest pasoRequest in recetaRequest.ListaPasos)
+                    {
+                        //Hacer lo mismo que hice con la otra lsita xD
+                        _pasoService.GetPasoidByRecetaId(recetaId, pasoRequest.Orden);
+                        PasoResponse pepo = await _pasoService.UpdatePaso(pasoRequest, 2);
+                    }
+                    
                 }
                 return await CreateRecetaResponse(unaReceta);
             } 
@@ -112,6 +134,7 @@ namespace Application.UseCases.SReceta
             {
                 //Hay que ver a nivel de usuario como se crea todo esto porque va de la mano con lo de usuario :O
                 //Cuando se borre la receta tenemos que implementar que se borren todos los pasos <----- (De acá vendría el conflict)
+                //Tambien que se borren los ingredientereceta 
                 if (!await VerifyRecetaId(id)) { throw new ExceptionNotFound("El id no existe"); }
                 Receta recetaToDelete = await _command.DeleteReceta(await _query.GetRecetaById(id));
                 return new RecetaDeleteResponse
@@ -182,9 +205,41 @@ namespace Application.UseCases.SReceta
                 FotoReceta = unaReceta.FotoReceta,
                 TiempoPreparacion = unaReceta.TiempoPreparacion.ToString(),
                 Titulo = unaReceta.Titulo,
-                Video = unaReceta.Video
+                Video = unaReceta.Video,
+                pasos = CreatePasoResponse(unaReceta.Pasos),
+                ingredientes = CreateIngredienteRecetaResponse(unaReceta.IngredentesReceta)
             };
             return Task.FromResult(receta);
+        }
+        private List<PasoResponse> CreatePasoResponse (ICollection<Paso> listaPasos)
+        {
+            List<PasoResponse> pasosResponse = new();
+            foreach (Paso unPaso in listaPasos)
+            {
+                pasosResponse.Add(new PasoResponse
+                {
+                    Id= unPaso.PasoId,
+                    Orden=unPaso.Orden,
+                    Descripcion=unPaso.Descripcion,
+                    Foto=unPaso.Foto,
+                });
+            }
+            return pasosResponse;
+        }
+        private List<IngredienteRecetaResponse> CreateIngredienteRecetaResponse (ICollection<IngredienteReceta> listaIngReceta)
+        {
+            List<IngredienteRecetaResponse> ingRecetasResponse = new();
+            foreach (IngredienteReceta ingReceta in listaIngReceta)
+            {
+                ingRecetasResponse.Add(new IngredienteRecetaResponse
+                {
+                    id=ingReceta.IngredienteRecetaId,
+                    ingredienteId=ingReceta.IngredienteId,
+                    nombre = "sas",
+                    
+                });
+            }
+            return ingRecetasResponse;
         }
 
         // ------ Validadores ------
@@ -203,9 +258,6 @@ namespace Application.UseCases.SReceta
 
             if (!await VerifyCategoriaRecetaId(recetaRequest.CategoriaRecetaId)) { throw new ExceptionNotFound("No existe ninguna categoría para ese ID"); }
             if (!VerifyInt(recetaRequest.CategoriaRecetaId)) { throw new ExceptionSintaxError("Formato érroneo para el id de categoriaReceta, pruebe un entero"); }
-
-            //Acá tiene que ser la llamada al otro microservicio para obtener los datos del ingredienteReceta
-            if (!recetaRequest.ListaIngredienteReceta.All(item => VerifyInt(item))) { throw new ExceptionSintaxError("Formato érroneo para el id de categoriaReceta, pruebe un entero"); }
 
             if (!await VerifyTitleLength(recetaRequest.Titulo)) { throw new ExceptionSintaxError("El titulo es demasiado extenso"); }
             if (!await VerifyFotoRecetaLenght(recetaRequest.FotoReceta)) { throw new ExceptionSintaxError("El url de la imagen es demasiado extenso"); }

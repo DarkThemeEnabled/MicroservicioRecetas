@@ -77,5 +77,19 @@ namespace Infraestructure.Querys
                 throw new BadRequestt("Hubo un problema al encontrar el limite de la longitud de la foto");
             }
         }
+
+        public async Task<int> GetPasoIdByRecetaId(Guid recetaId, int orden)
+        {
+            try
+            {
+                int paso = _context.Pasos
+                    .SingleOrDefaultAsync(p => p.RecetaId == recetaId && p.Orden == orden).Result.PasoId;
+                return paso;
+            }
+            catch (DbUpdateException)
+            {
+                throw new BadRequestt("Hubo un problema al encontrar el limite de la longitud de la foto");
+            }
+        }
     }
 }

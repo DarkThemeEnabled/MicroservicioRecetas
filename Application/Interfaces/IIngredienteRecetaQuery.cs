@@ -9,10 +9,9 @@ namespace Application.Interfaces
 {
     public interface IIngredienteRecetaQuery
     {
-        Task<List<IngredienteReceta>> GetIngredientesRecetaById(int ingRecetaId);
-        Task<IngredienteReceta> GetIngredienteRecetaById(int ingRecetaId);
-        Task<List<IngredienteReceta>> GetIngredienteRecetaByName(string name);
-        Task<List<IngredienteReceta>> GetIngredienteRecetaByTipo(string tipo);
-        Task<List<IngredienteReceta>> GetIngredienteRecetaByTipoMedida(string medida);
+        Task<IngredienteReceta> GetIngRecetaById(int id);
+        Task<bool> ExistIngredienteInIngReceta(Guid recetaId, int ingredienteId);
+        Task<Guid> GetRecetaIdByIngRecetaId(int ingRecetaId);
+        Task<int> GetIngRecetaByRecetaId(Guid recetaId, int ingredienteId);
     }
 }

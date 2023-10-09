@@ -13,6 +13,5 @@ namespace Application.Response
         public string nombre { get; set; }
         public int ingredienteId { get; set; }
         public int id { get; set; }
-        public RecetaResponse receta {get; set;}
     }
 }

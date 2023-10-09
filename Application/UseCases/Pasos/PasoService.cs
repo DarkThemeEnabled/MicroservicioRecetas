@@ -89,7 +89,7 @@ namespace Application.UseCases.SPasos
                 return new PasoResponse
                 {
                     Id = pasoToDelete.PasoId,
-                    RecetaId = pasoToDelete.RecetaId,
+                    //RecetaId = pasoToDelete.RecetaId,
                     Descripcion = pasoToDelete.Descripcion,
                     Foto = pasoToDelete.Foto,
                     Orden = pasoToDelete.Orden
@@ -127,21 +127,26 @@ namespace Application.UseCases.SPasos
 
         }
 
+        public async Task<int> GetPasoidByRecetaId(Guid recetaId, int orden)
+        {
+            try 
+            {
+                return await _query.GetPasoIdByRecetaId(recetaId, orden);
+            }
+            catch (ExceptionNotFound ex)
+            {
+                throw new ExceptionNotFound("Error en la búsqueda: " + ex.Message);
+            }
+        }
+
         public async Task<PasoResponse> GetPasoById(int Id)
         {
             try
             {
                 //Validar que se ingrese un int
                 var paso = await _query.GetPasoById(Id);
-                if (paso != null)
-                {
-                    return await CreatePasoResponse(paso);
-                }
-                else
-                {
-                    throw new ExceptionNotFound("No existe ningún paso con ese ID");
-                }
-
+                if (paso == null) { throw new ExceptionNotFound("No existe ningún paso con ese ID"); }
+                return await CreatePasoResponse(paso);
             }
             catch (ExceptionSintaxError e)
             {
@@ -176,7 +181,7 @@ namespace Application.UseCases.SPasos
             return Task.FromResult(new PasoResponse
             {
                 Id = unPaso.PasoId,
-                RecetaId = unPaso.RecetaId,
+                //RecetaId = unPaso.RecetaId,
                 Descripcion = unPaso.Descripcion,
                 Foto = unPaso.Foto,
                 Orden = unPaso.Orden

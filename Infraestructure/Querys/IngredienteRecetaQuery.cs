@@ -1,6 +1,8 @@
-﻿using Application.Interfaces;
+﻿using Application.Exceptions;
+using Application.Interfaces;
 using Domain.Entities;
 using Infraestructure.Persistence;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,29 +20,55 @@ namespace Infraestructure.Querys
             _context = context;
         }
 
-        public Task<IngredienteReceta> GetIngredienteRecetaById(int ingRecetaId)
+        public async Task<IngredienteReceta> GetIngRecetaById(int id)
         {
-            throw new NotImplementedException();
+            try
+            {
+                return await _context.IngredientesRecetas
+                        .SingleOrDefaultAsync(ir => ir.IngredienteId == id);
+            }
+            catch (DbUpdateException)
+            {
+                throw new BadRequestt("Hubo un error en la búsqueda del ingrediente receta");
+            }
+        }
+        public async Task<bool> ExistIngredienteInIngReceta(Guid recetaId, int ingredienteId)
+        {
+            try
+            {
+                return (await _context.IngredientesRecetas
+                .SingleOrDefaultAsync(ir => ir.RecetaId == recetaId && ir.IngredienteId == ingredienteId) != null);
+            }
+            catch (DbUpdateException)
+            {
+                throw new BadRequestt("Hubo un error en la búsqueda del ingrediente receta");
+            }
+        }
+        public async Task<Guid> GetRecetaIdByIngRecetaId(int ingRecetaId)
+        {
+            try
+            {
+                return (await _context.IngredientesRecetas
+                    .SingleOrDefaultAsync(ir => ir.IngredienteRecetaId == ingRecetaId)).RecetaId;
+            }
+            catch (DbUpdateException)
+            {
+                throw new BadRequestt("Hubo un error en la búsqueda del ingrediente receta");
+            }
+
         }
 
-        public Task<List<IngredienteReceta>> GetIngredienteRecetaByName(string name)
+        public async Task<int> GetIngRecetaByRecetaId(Guid recetaId, int ingredienteId)
         {
-            throw new NotImplementedException();
-        }
-
-        public Task<List<IngredienteReceta>> GetIngredienteRecetaByTipo(string tipo)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<List<IngredienteReceta>> GetIngredienteRecetaByTipoMedida(string medida)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<List<IngredienteReceta>> GetIngredientesRecetaById(int ingRecetaId)
-        {
-            throw new NotImplementedException();
+            try
+            {
+                return (await _context.IngredientesRecetas
+                    .SingleOrDefaultAsync(ir => ir.RecetaId.Equals(recetaId) && ir.IngredienteId == ingredienteId)).IngredienteRecetaId;
+            }
+            catch (DbUpdateException)
+            {
+                throw new BadRequestt("Hubo un error en la búsqueda del ingrediente receta");
+            }
         }
     }
 }

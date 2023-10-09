@@ -17,5 +17,6 @@ namespace Application.Response
         public string Video { get; set; }
         public string TiempoPreparacion { get; set; }
         public List<PasoResponse> pasos { get; set; }
+        public List<IngredienteRecetaResponse> ingredientes {get; set;}
     }
 }

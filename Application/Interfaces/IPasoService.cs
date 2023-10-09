@@ -15,6 +15,7 @@ namespace Application.Interfaces
         Task<PasoResponse> DeletePaso(int id);
         Task<List<PasoResponse>> GetPasosByRecetaId(Guid recetaId);
         Task<PasoResponse> GetPasoById(int Id);
+        Task<int> GetPasoidByRecetaId(Guid recetaId, int paso);
 
     }
 }
