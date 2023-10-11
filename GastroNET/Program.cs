@@ -5,6 +5,7 @@ using Application.UseCases.CategoriaReceta;
 using Application.UseCases.SDificultad;
 using Application.UseCases.SPasos;
 using Application.UseCases.SReceta;
+using Application.UserService;
 using Domain.Entities;
 using Infraestructure.Command;
 using Infraestructure.Persistence;
@@ -43,6 +44,8 @@ builder.Services.AddScoped<ICategoriaRecetaQuery, CategoriaRecetaQuery>();
 builder.Services.AddScoped<IIngredienteRecetaService, IngredienteRecetaService>();
 builder.Services.AddScoped<IIngredienteRecetaQuery, IngredienteRecetaQuery>();
 builder.Services.AddScoped<IIngredienteRecetaCommand, IngredienteRecetaCommand>();
+
+builder.Services.AddScoped<IUserIngredienteService, UserIngredienteService>();
 
 
 //CORS deshabilitar

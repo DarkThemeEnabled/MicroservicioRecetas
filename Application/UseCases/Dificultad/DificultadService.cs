@@ -1,5 +1,6 @@
 ﻿using Application.Exceptions;
 using Application.Interfaces;
+using Application.Mappers;
 using Application.Request;
 using Application.Response;
 using Application.UseCases.SPasos;
@@ -15,24 +16,38 @@ namespace Application.UseCases.SDificultad
     public class DificultadService:IDificultadService
     {
         private readonly IDificultadQuery _query;
+        DificultadMapper mapper;
 
         public DificultadService(IDificultadQuery query)
         {
             _query = query;
+            mapper = new DificultadMapper();
         }
 
         public async Task<List<DificultadResponse>> GetListDificultad()
         {
             try
             {
-                return await GenerateListDificultadResponse(await _query.GetListDificultades());
+                return await mapper.GetListDificultadResponse(await _query.GetListDificultades());
             }
-            catch (Exceptions.BadRequestt ex)
+            catch (BadRequestt ex)
             {
                 throw new Exceptions.BadRequestt("Error: "+ex.Message);
             }
             
         }
+
+        //public async Task<DificultadResponse> GetDificultadById(int id)
+        //{
+        //    try
+        //    {
+        //        return await mapper.GetDificultadResponse(await _query.GetDificultadById(id));
+        //    }
+        //    catch (ExceptionNotFound)
+        //    {
+        //        throw new ExceptionNotFound("No existe esa dificultad");
+        //    }
+        //}
 
         public async Task<bool> ValidateDificultadById(int dificultadId)
         {
@@ -50,7 +65,7 @@ namespace Application.UseCases.SDificultad
         {
             return Task.FromResult(new DificultadResponse
             {
-                DificultadId = dificultad.DificultadId,
+                Id = dificultad.DificultadId,
                 Nombre = dificultad.Nombre,
             });
         }

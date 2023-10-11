@@ -1,5 +1,6 @@
 ﻿using Application.Exceptions;
 using Application.Interfaces;
+using Application.Mappers;
 using Application.Request;
 using Application.Response;
 using Azure.Core;
@@ -20,6 +21,7 @@ namespace Application.UseCases.SReceta
         private readonly ICategoriaRecetaService _categoriaService;
         private readonly IDificultadService _dificultadService;
         private readonly IIngredienteRecetaService _ingRecetaService;
+        private readonly RecetaMapper _recetaMapper = new();
 
         public RecetaService(IRecetaQuery recetaQuery, IRecetaCommand recetaCommand, IPasoService pasoService, ICategoriaRecetaService categoriaService, IDificultadService dificultadService, IIngredienteRecetaService ingredienteRecetaService)
         {
@@ -64,7 +66,8 @@ namespace Application.UseCases.SReceta
                 {
                     await _ingRecetaService.CreateIngredienteReceta(ingReceta, recetaCreada.RecetaId);
                 }
-                return await CreateRecetaResponse(await _query.GetRecetaById(recetaCreada.RecetaId));
+                //return await CreateRecetaResponse(await _query.GetRecetaById(recetaCreada.RecetaId));
+                return await _recetaMapper.CreateRecetaResponse(await _query.GetRecetaById(recetaCreada.RecetaId));
             }
             catch (ExceptionSintaxError e)
             {
@@ -86,7 +89,6 @@ namespace Application.UseCases.SReceta
         {
             try
             {
-                //Agregar validador de recetaID
                 //Ver como hacer para que se muestren los pasos de dicha receta
                 //En un futuro agregar un validador de urls con eso de las fotos. Pero más adelante!!
                 Receta unaReceta = null;
@@ -98,9 +100,11 @@ namespace Application.UseCases.SReceta
                     TimeSpan tiempoPreparacion = await GetHorario(recetaRequest.TiempoPreparacion);
                     unaReceta = await _command.UpdateReceta(recetaRequest, recetaId);
                     //Agregarlo a un método privado 
+                    //ver a nivel logico si vamos a hacer que se traiga en el request todo, o solo lo que se va a modificar
                     foreach(IngredienteRecetaRequest ingReceta in recetaRequest.ListaIngredienteReceta)
                     {
                         //capaz pongo un bool true o false
+                        //Necesito ver la forma de reemplazar uno con el otro
                         int ingRecetaId = await _ingRecetaService.GetIngredienteRecetaBy(recetaId,ingReceta.ingredienteId);
                         IngredienteRecetaResponse pepe = await _ingRecetaService.UpdateIngredienteReceta(ingReceta, ingRecetaId); 
                     }
@@ -124,7 +128,7 @@ namespace Application.UseCases.SReceta
             }
             catch (ExceptionSintaxError ex)
             {
-                throw new ExceptionSintaxError("Error en la sintaxis de la mercadería a modificar: " + ex.Message);
+                throw new ExceptionSintaxError("Error en la sintaxis: " + ex.Message);
             }
         }
 
@@ -195,23 +199,23 @@ namespace Application.UseCases.SReceta
         //----- Métodos privados -----
 
         //----- Generadores de responses ------
-        private Task<RecetaResponse> CreateRecetaResponse(Receta unaReceta)
+        private async Task<RecetaResponse> CreateRecetaResponse(Receta unaReceta)
         {
             var receta = new RecetaResponse
             {
-                RecetaId = unaReceta.RecetaId,
-                CategoriaRecetaId = unaReceta.CategoriaRecetaId,
-                DificultadId = unaReceta.DificultadId,
+                Id = unaReceta.RecetaId,
+                //Categoria = unaReceta.CategoriaRecetaId,
+                Dificultad = await CreateDificultadResponse(unaReceta.Dificultad),
                 FotoReceta = unaReceta.FotoReceta,
                 TiempoPreparacion = unaReceta.TiempoPreparacion.ToString(),
                 Titulo = unaReceta.Titulo,
                 Video = unaReceta.Video,
-                pasos = CreatePasoResponse(unaReceta.Pasos),
-                ingredientes = CreateIngredienteRecetaResponse(unaReceta.IngredentesReceta)
+                pasos = await CreatePasoResponse(unaReceta.Pasos),
+                ingredientes = await CreateIngredienteRecetaResponse(unaReceta.IngredentesReceta)
             };
-            return Task.FromResult(receta);
+            return receta;
         }
-        private List<PasoResponse> CreatePasoResponse (ICollection<Paso> listaPasos)
+        private Task<List<PasoResponse>> CreatePasoResponse (ICollection<Paso> listaPasos)
         {
             List<PasoResponse> pasosResponse = new();
             foreach (Paso unPaso in listaPasos)
@@ -224,9 +228,9 @@ namespace Application.UseCases.SReceta
                     Foto=unPaso.Foto,
                 });
             }
-            return pasosResponse;
+            return Task.FromResult(pasosResponse);
         }
-        private List<IngredienteRecetaResponse> CreateIngredienteRecetaResponse (ICollection<IngredienteReceta> listaIngReceta)
+        private Task<List<IngredienteRecetaResponse>> CreateIngredienteRecetaResponse (ICollection<IngredienteReceta> listaIngReceta)
         {
             List<IngredienteRecetaResponse> ingRecetasResponse = new();
             foreach (IngredienteReceta ingReceta in listaIngReceta)
@@ -239,7 +243,16 @@ namespace Application.UseCases.SReceta
                     
                 });
             }
-            return ingRecetasResponse;
+            return Task.FromResult(ingRecetasResponse);
+        }
+
+        private Task<DificultadResponse> CreateDificultadResponse(Dificultad dificultad)
+        {
+            return Task.FromResult( new DificultadResponse
+            {
+                Id = dificultad.DificultadId,
+                Nombre = dificultad.Nombre,
+            });
         }
 
         // ------ Validadores ------

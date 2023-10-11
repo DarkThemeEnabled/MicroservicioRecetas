@@ -8,7 +8,7 @@ namespace Application.Response
 {
     public class DificultadResponse
     {
-        public int DificultadId { get; set; }
+        public int Id { get; set; }
         public string Nombre { get; set; }
     }
 }

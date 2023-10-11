@@ -1,5 +1,6 @@
 ﻿using Application.Exceptions;
 using Application.Interfaces;
+using Application.Mappers;
 using Application.Request;
 using Application.Response;
 using Azure.Core;
@@ -16,11 +17,13 @@ namespace Application.UseCases.SPasos
     {
         private readonly IPasoCommand _command;
         private readonly IPasoQuery _query;
-
+        private readonly PasoMapper _mapper;
         public PasoService(IPasoCommand command, IPasoQuery query)
         {
             _command = command;
             _query = query;
+            _mapper = new PasoMapper();
+            
         }
 
         public async Task<PasoResponse> CreatePaso(PasoRequest request, Guid recetaId)
@@ -42,7 +45,7 @@ namespace Application.UseCases.SPasos
                 }
                 //Agregar validador de orden (aunque en teoría es automatico, verlo despues)
                 
-                return await CreatePasoResponse(pasoCreado);
+                return await _mapper.GetPasoResponse(pasoCreado);
             }
             catch (ExceptionSintaxError e)
             {
@@ -62,7 +65,7 @@ namespace Application.UseCases.SPasos
                 if (await VerifyAll(request) && GetPasoById(id) != null) 
                 {
                     var unPaso = await _command.UpdatePaso(request, id);
-                    return await CreatePasoResponse(unPaso);
+                    return await _mapper.GetPasoResponse(unPaso);
                 }
                 return new PasoResponse { };
                 
@@ -111,7 +114,7 @@ namespace Application.UseCases.SPasos
                 {
                     foreach (var paso in pasos)
                     {
-                        pasosResponse.Add(await CreatePasoResponse(paso));
+                        pasosResponse.Add(await _mapper.GetPasoResponse(paso));
                     }
                 }
                 return pasosResponse;
@@ -146,7 +149,7 @@ namespace Application.UseCases.SPasos
                 //Validar que se ingrese un int
                 var paso = await _query.GetPasoById(Id);
                 if (paso == null) { throw new ExceptionNotFound("No existe ningún paso con ese ID"); }
-                return await CreatePasoResponse(paso);
+                return await _mapper.GetPasoResponse(paso);
             }
             catch (ExceptionSintaxError e)
             {
@@ -174,19 +177,7 @@ namespace Application.UseCases.SPasos
         //{
         //    return (await _recService.GetRecetaById(recetaId) != null);
         //}
-
-        //------ Creador responses ------
-        private Task<PasoResponse> CreatePasoResponse(Paso unPaso)
-        {
-            return Task.FromResult(new PasoResponse
-            {
-                Id = unPaso.PasoId,
-                //RecetaId = unPaso.RecetaId,
-                Descripcion = unPaso.Descripcion,
-                Foto = unPaso.Foto,
-                Orden = unPaso.Orden
-            });
-        }
+        
 
 
        

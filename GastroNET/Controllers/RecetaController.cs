@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace GastroNET.Controllers
 {
-    [Route("api/v1/[controller]")]
+    [Route("api/[controller]")]
     [ApiController]
     public class RecetaController : Controller
     {

@@ -1,5 +1,6 @@
 ﻿using Application.Exceptions;
 using Application.Interfaces;
+using Application.Mappers;
 using Application.Request;
 using Application.Response;
 using Domain.Entities;
@@ -16,10 +17,14 @@ namespace Application.UseCases
     {
         private readonly IIngredienteRecetaQuery _query;
         private readonly IIngredienteRecetaCommand _command;
-        public IngredienteRecetaService(IIngredienteRecetaQuery query, IIngredienteRecetaCommand command)
+        private readonly IUserIngredienteService _UServIngrediente;
+        private readonly IngredienteRecetaMapper _mapper;
+        public IngredienteRecetaService(IIngredienteRecetaQuery query, IIngredienteRecetaCommand command, IUserIngredienteService uServIngrediente)
         {
             _query = query;
             _command = command;
+            _UServIngrediente = uServIngrediente;
+            _mapper = new();
         }
         public async Task<bool> CreateIngredienteReceta(IngredienteRecetaRequest request, Guid recetaId)
         {
@@ -27,6 +32,7 @@ namespace Application.UseCases
             {
                 //El validador de ingrecetaId tiene que venir por conexión con el microservicio ingredientes
                 //Validador de si existe la receta id
+                //dynamic prueba = _UServIngrediente.GetByID(request.ingredienteId);
                 if (await VerifyAll(request, recetaId, 0))
                 {
                     IngredienteReceta unIngReceta = new IngredienteReceta
@@ -65,7 +71,7 @@ namespace Application.UseCases
                 if (ingReceta == null) { throw new ExceptionNotFound("No existe ese ingrediente en la receta solicitada"); }
                 else
                 {
-                    return await GenerateIngredienteDeleteResponse(await _command.DeleteIngredienteReceta(ingReceta));
+                    return await _mapper.GetIngredienteDeleteResponse(await _command.DeleteIngredienteReceta(ingReceta));
                 }
             }
             catch (ExceptionNotFound ex)
@@ -88,7 +94,7 @@ namespace Application.UseCases
                 if (await VerifyAll(request, null, ingRecetaId))
                 { 
                     IngredienteReceta unIngReceta = await _command.UpdateIngredienteReceta(request,ingRecetaId, await _query.GetRecetaIdByIngRecetaId(ingRecetaId));
-                    return await GenerateIngredienteRecetaResponse(unIngReceta);
+                    return await _mapper.GetIngredienteRecetaResponse(unIngReceta);
                 }
                 throw new Exception("Ocurrió un error inesperado");
 
@@ -117,35 +123,14 @@ namespace Application.UseCases
 
 
         //----- Metodos privados -----
-
-        //----- Generadores de responses ------
-        private Task<IngredienteRecetaResponse> GenerateIngredienteRecetaResponse (IngredienteReceta unIngRec)
-        {
-            return Task.FromResult(new IngredienteRecetaResponse
-            {
-                //Tiene que traer el nombre desde el microservicio 
-                id = unIngRec.IngredienteRecetaId,
-                nombre = "sarasa",
-                ingredienteId = 12,
-            });
-
-        }
-        private async Task<IngredienteRecetaDeleteResponse> GenerateIngredienteDeleteResponse (IngredienteReceta unIngRec)
-        {
-            return (new IngredienteRecetaDeleteResponse
-            {
-                id = unIngRec.IngredienteRecetaId,
-                //Tiene que traer el nombre desde el microservicio ingrediente
-                nombre = "sarasa",
-            });
-        }
-
+       
         //------ Validadores -----
         private async Task<bool> VerifyAll(IngredienteRecetaRequest request, Guid? recetaId, int ingRecetaId)
         {
             //ver los validadores de ints
             //Ver este porque tiene que lo que conecta al microservicio :D
             if (request.ingredienteId == 0) { throw new ExceptionNotFound("No existe el ingrediente"); }
+            //if (_UServIngrediente.GetByID(request.ingredienteId))
             if (request.cantidad < 1) { throw new ExceptionSintaxError("La cantidad no puede ser menor a 1"); }
             // ^--- Con la llamada al microservicio ingrediente, pedir el nombre para mostrar el ingrediente que es menor a 0 :D
             if (recetaId != null && await _query.ExistIngredienteInIngReceta((Guid)recetaId,request.ingredienteId)) { throw new Conflict("Ya existe el ingrediente en la receta");}
