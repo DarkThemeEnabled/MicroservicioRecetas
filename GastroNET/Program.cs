@@ -6,12 +6,10 @@ using Application.UseCases.SDificultad;
 using Application.UseCases.SPasos;
 using Application.UseCases.SReceta;
 using Application.UserService;
-using Domain.Entities;
 using Infraestructure.Command;
 using Infraestructure.Persistence;
 using Infraestructure.Querys;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -35,7 +33,7 @@ builder.Services.AddScoped<IRecetaQuery, RecetaQuery>();
 builder.Services.AddScoped<IRecetaCommand, RecetaCommand>();
 
 builder.Services.AddScoped<IPasoService, PasoService>();
-builder.Services.AddScoped<IPasoCommand,PasoCommand>();
+builder.Services.AddScoped<IPasoCommand, PasoCommand>();
 builder.Services.AddScoped<IPasoQuery, PasoQuery>();
 
 builder.Services.AddScoped<ICategoriaRecetaService, CategoriaRecetaService>();

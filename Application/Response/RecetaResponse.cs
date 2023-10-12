@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Application.Response
+﻿namespace Application.Response
 {
     public class RecetaResponse
     {
@@ -17,6 +11,6 @@ namespace Application.Response
         public string Video { get; set; }
         public string TiempoPreparacion { get; set; }
         public List<PasoResponse> pasos { get; set; }
-        public List<IngredienteRecetaResponse> ingredientes {get; set;}
+        public List<IngredienteRecetaResponse> ingredientes { get; set; }
     }
 }

@@ -3,20 +3,15 @@ using Application.Interfaces;
 using Domain.Entities;
 using Infraestructure.Persistence;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
 using System.Data.Common;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Infraestructure.Querys
 {
-    public class DificultadQuery: IDificultadQuery
+    public class DificultadQuery : IDificultadQuery
     {
         private readonly RecetasContext _context;
 
-        public DificultadQuery(RecetasContext recetasContext) 
+        public DificultadQuery(RecetasContext recetasContext)
         {
             _context = recetasContext;
         }
@@ -27,7 +22,7 @@ namespace Infraestructure.Querys
             {
                 return await _context.Dificultades.ToListAsync();
             }
-            catch (DbException ex) 
+            catch (DbException ex)
             {
                 throw new BadRequestt("Hubo un problema en la búsqueda de listas de dificultades");
             }
@@ -37,8 +32,8 @@ namespace Infraestructure.Querys
         {
             try
             {
-                    return await _context.Dificultades
-                        .SingleOrDefaultAsync(d => d.DificultadId == dificultadId);
+                return await _context.Dificultades
+                    .SingleOrDefaultAsync(d => d.DificultadId == dificultadId);
             }
             catch (DbException ex)
             {

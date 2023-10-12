@@ -3,12 +3,11 @@ using Application.Interfaces;
 using Domain.Entities;
 using Infraestructure.Persistence;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 
 namespace Infraestructure.Querys
 {
-    public class RecetaQuery: IRecetaQuery
+    public class RecetaQuery : IRecetaQuery
     {
         private readonly RecetasContext _context;
 
@@ -21,11 +20,17 @@ namespace Infraestructure.Querys
         {
             try
             {
-                var recetas = await _context.Recetas.ToListAsync();
+                var recetas = await _context.Recetas
+                .Include(r => r.Dificultad)
+                .Include(r => r.CategoriaReceta)
+                .Include(r => r.Pasos)
+                .Include(r => r.IngredentesReceta)
+                .ToListAsync();
+
                 return recetas;
             }
-            
-             catch (DbUpdateException)
+
+            catch (DbUpdateException)
             {
                 throw new Conflict("Error en la base de datos");
             }
@@ -57,11 +62,11 @@ namespace Infraestructure.Querys
                    .FindProperty("Titulo")
                    .GetMaxLength().GetValueOrDefault();
             }
-            catch (DbUpdateException) 
+            catch (DbUpdateException)
             {
                 throw new BadRequestt("Hubo un problema al encontrar el limite de la longitud del titulo");
             }
-            
+
         }
         public async Task<int> GetFotoRecetaLength()
         {

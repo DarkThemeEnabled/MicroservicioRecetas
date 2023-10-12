@@ -4,15 +4,11 @@ using Application.Request;
 using Domain.Entities;
 using Infraestructure.Persistence;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Transactions;
 
 namespace Infraestructure.Command
 {
-    public class PasoCommand:IPasoCommand
+    public class PasoCommand : IPasoCommand
     {
         private readonly RecetasContext _context;
 
@@ -23,7 +19,7 @@ namespace Infraestructure.Command
 
         public async Task<Paso> CreatePaso(Paso paso)
         {
-            try 
+            try
             {
                 _context.Add(paso);
                 await _context.SaveChangesAsync();
@@ -34,6 +30,22 @@ namespace Infraestructure.Command
                 throw new Conflict("Error en la base de datos");
             }
 
+        }
+
+        public async Task<bool> DeleteAllPasosByRecetaId(Guid recetaId)
+        {
+            try
+            {
+                var pasosToDelete = _context.Pasos
+                    .Where(p => p.RecetaId.Equals(recetaId));
+
+                _context.Pasos.RemoveRange(pasosToDelete);
+                return await _context.SaveChangesAsync() == 2;
+            }
+            catch (DbUpdateException)
+            {
+                throw new Conflict("No se pudo eliminar la receta");
+            }
         }
 
         public async Task<Paso> DeletePaso(Paso unPaso)

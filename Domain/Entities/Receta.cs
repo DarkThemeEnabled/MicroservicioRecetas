@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Domain.Entities
+﻿namespace Domain.Entities
 {
     public class Receta
     {
@@ -19,7 +13,7 @@ namespace Domain.Entities
         public string Video { get; set; }
         public TimeSpan TiempoPreparacion { get; set; }
         public ICollection<Paso> Pasos { get; set; }
-        public ICollection<IngredienteReceta> IngredentesReceta{ get; set; }
+        public ICollection<IngredienteReceta> IngredentesReceta { get; set; }
         public PromedioPuntaje PromedioPuntaje { get; set; }
 
     }

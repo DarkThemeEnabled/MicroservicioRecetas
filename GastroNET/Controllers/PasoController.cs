@@ -38,57 +38,57 @@ namespace GastroNET.Controllers
         //    }
         //}
 
-        [HttpPut("{Id}")]
-        [ProducesResponseType(typeof(PasoResponse), 200)]
-        [ProducesResponseType(typeof(BadRequest), 400)]
-        [ProducesResponseType(typeof(BadRequest), 404)]
-        [ProducesResponseType(typeof(BadRequest), 409)]
-        public async Task<IActionResult> UpdatePaso(int Id, PasoRequest paso)
-        {
-            try
-            {
-                var result = await _service.UpdatePaso(paso,Id);
-                return new JsonResult(result) { StatusCode = 200 };
-            }
-            catch (ExceptionSintaxError ex)
-            {
-                return new JsonResult(new BadRequest { Message = ex.Message }) { StatusCode = 400 };
-            }
-            catch (ExceptionNotFound ex)
-            {
-                return new JsonResult(new BadRequest { Message = ex.Message }) { StatusCode = 404 };
-            }
-            catch (Conflict ex)
-            {
-                return new JsonResult(new BadRequest { Message = ex.Message }) { StatusCode = 409 };
-            }
-        }
+        //[HttpPut("{Id}")]
+        //[ProducesResponseType(typeof(PasoResponse), 200)]
+        //[ProducesResponseType(typeof(BadRequest), 400)]
+        //[ProducesResponseType(typeof(BadRequest), 404)]
+        //[ProducesResponseType(typeof(BadRequest), 409)]
+        //public async Task<IActionResult> UpdatePaso(int Id, PasoRequest paso)
+        //{
+        //    try
+        //    {
+        //        var result = await _service.UpdatePaso(paso, Id);
+        //        return new JsonResult(result) { StatusCode = 200 };
+        //    }
+        //    catch (ExceptionSintaxError ex)
+        //    {
+        //        return new JsonResult(new BadRequest { Message = ex.Message }) { StatusCode = 400 };
+        //    }
+        //    catch (ExceptionNotFound ex)
+        //    {
+        //        return new JsonResult(new BadRequest { Message = ex.Message }) { StatusCode = 404 };
+        //    }
+        //    catch (Conflict ex)
+        //    {
+        //        return new JsonResult(new BadRequest { Message = ex.Message }) { StatusCode = 409 };
+        //    }
+        //}
 
-        [HttpDelete("{Id}")]
-        [ProducesResponseType(typeof(PasoResponse), 200)]
-        [ProducesResponseType(typeof(BadRequest), 400)]
-        [ProducesResponseType(typeof(BadRequest), 404)]
-        [ProducesResponseType(typeof(BadRequest), 409)]
-        public async Task<IActionResult> DeletePaso(int Id)
-        {
-            try
-            {
-                var result = await _service.DeletePaso(Id);
-                return new JsonResult(result) { StatusCode = 200 };
-            }
-            catch (ExceptionSintaxError ex)
-            {
-                return new JsonResult(new BadRequest { Message = ex.Message }) { StatusCode = 400 };
-            }
-            catch (ExceptionNotFound ex)
-            {
-                return new JsonResult(new BadRequest { Message = ex.Message }) { StatusCode = 404 };
-            }
-            catch (Conflict ex)
-            {
-                return new JsonResult(new BadRequest { Message = ex.Message }) { StatusCode = 409 };
-            }
-        }
+        //[HttpDelete("{Id}")]
+        //[ProducesResponseType(typeof(PasoResponse), 200)]
+        //[ProducesResponseType(typeof(BadRequest), 400)]
+        //[ProducesResponseType(typeof(BadRequest), 404)]
+        //[ProducesResponseType(typeof(BadRequest), 409)]
+        //public async Task<IActionResult> DeletePaso(int Id)
+        //{
+        //    try
+        //    {
+        //        var result = await _service.DeletePaso(Id);
+        //        return new JsonResult(result) { StatusCode = 200 };
+        //    }
+        //    catch (ExceptionSintaxError ex)
+        //    {
+        //        return new JsonResult(new BadRequest { Message = ex.Message }) { StatusCode = 400 };
+        //    }
+        //    catch (ExceptionNotFound ex)
+        //    {
+        //        return new JsonResult(new BadRequest { Message = ex.Message }) { StatusCode = 404 };
+        //    }
+        //    catch (Conflict ex)
+        //    {
+        //        return new JsonResult(new BadRequest { Message = ex.Message }) { StatusCode = 409 };
+        //    }
+        //}
 
 
         //Lo mismo este, receta ya te trae todos los pasos
@@ -138,4 +138,4 @@ namespace GastroNET.Controllers
         //    }
         //}
     }
-}     
+}

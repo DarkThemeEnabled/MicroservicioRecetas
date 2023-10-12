@@ -4,11 +4,7 @@ using Application.Request;
 using Domain.Entities;
 using Infraestructure.Persistence;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace Infraestructure.Command
 {
@@ -20,12 +16,13 @@ namespace Infraestructure.Command
         {
             _context = context;
         }
-        public async Task<bool> CreateIngredienteReceta(IngredienteReceta ingReceta)
+        public async Task<IngredienteReceta> CreateIngredienteReceta(IngredienteReceta ingReceta)
         {
             try
             {
                 _context.Add(ingReceta);
-                return await _context.SaveChangesAsync() == 2;
+                await _context.SaveChangesAsync();
+                return ingReceta;
             }
             catch (DbUpdateException)
             {
@@ -40,6 +37,22 @@ namespace Infraestructure.Command
                 _context.Remove(ingReceta);
                 await _context.SaveChangesAsync();
                 return ingReceta;
+            }
+            catch (DbUpdateException)
+            {
+                throw new Conflict("No se pudo eliminar la receta");
+            }
+        }
+
+        public async Task<bool> DeleteAllIngRecetaByRecetaId(Guid recetaId)
+        {
+            try
+            {
+                var ingredientesToDelete = _context.IngredientesRecetas
+                    .Where(ir => ir.RecetaId.Equals(recetaId));
+
+                _context.IngredientesRecetas.RemoveRange(ingredientesToDelete);
+                return await _context.SaveChangesAsync() == 2;
             }
             catch (DbUpdateException)
             {

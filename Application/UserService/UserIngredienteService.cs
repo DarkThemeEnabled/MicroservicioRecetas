@@ -1,9 +1,5 @@
-﻿using Application.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Application.Exceptions;
+using Application.Interfaces;
 
 namespace Application.UserService
 {
@@ -18,16 +14,26 @@ namespace Application.UserService
         }
         public dynamic GetByID(int Id)
         {
-            HttpResponseMessage response = _httpClient.GetAsync($"Ingrediente/{Id}").Result;
-
-            if (response.IsSuccessStatusCode)
+            try
             {
+                HttpResponseMessage response = _httpClient.GetAsync($"Ingrediente/ById/{Id}").Result;
+
+                //if (response.IsSuccessStatusCode)
+                //{
+
+                //}
+                if (response.StatusCode == System.Net.HttpStatusCode.NotFound)
+                {
+                    throw new ExceptionNotFound("No existe el ingrediente con el id: ");
+                }
                 dynamic ingrediente = response.Content.ReadAsAsync<dynamic>().Result;
+                //string content = response.Content.ReadAsStringAsync().Result;
+                //string asd = (string)Newtonsoft.Json.JsonConvert.DeserializeObject(content);
                 return ingrediente;
             }
-            else
+            catch (ExceptionNotFound e)
             {
-                throw new ArgumentException($"Error al obtener el ingrediente. Código de respuesta: {response.StatusCode}");
+                throw new ExceptionNotFound(e.Message);
             }
         }
 

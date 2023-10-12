@@ -2,7 +2,6 @@
 using Application.Interfaces;
 using Application.Request;
 using Application.Response;
-using Application.UseCases.SPasos;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GastroNET.Controllers
@@ -22,6 +21,7 @@ namespace GastroNET.Controllers
 
         [ProducesResponseType(typeof(RecetaResponse), 201)]
         [ProducesResponseType(typeof(BadRequest), 400)]
+        [ProducesResponseType(typeof(BadRequest), 404)]
         [ProducesResponseType(typeof(BadRequest), 409)]
         public async Task<IActionResult> CreateReceta(RecetaRequest request)
         {
@@ -33,6 +33,10 @@ namespace GastroNET.Controllers
             catch (ExceptionSintaxError ex)
             {
                 return new JsonResult(new BadRequest { Message = ex.Message }) { StatusCode = 400 };
+            }
+            catch (ExceptionNotFound ex)
+            {
+                return new JsonResult(new BadRequest { Message = ex.Message }) { StatusCode = 404 };
             }
             catch (Conflict ex)
             {

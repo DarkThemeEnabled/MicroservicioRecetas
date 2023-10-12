@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Application.Response
+﻿namespace Application.Response
 {
     public class ResponseMessage
     {
@@ -12,11 +6,11 @@ namespace Application.Response
         public int code { get; set; }
         public object result { get; set; }
 
-         public ResponseMessage(int code, object result)
-         {
+        public ResponseMessage(int code, object result)
+        {
             this.code = code;
             this.result = result;
-         }
-        
+        }
+
     }
 }

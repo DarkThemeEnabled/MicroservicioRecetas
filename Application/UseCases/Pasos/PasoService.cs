@@ -3,13 +3,7 @@ using Application.Interfaces;
 using Application.Mappers;
 using Application.Request;
 using Application.Response;
-using Azure.Core;
 using Domain.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Application.UseCases.SPasos
 {
@@ -23,14 +17,14 @@ namespace Application.UseCases.SPasos
             _command = command;
             _query = query;
             _mapper = new PasoMapper();
-            
+
         }
 
         public async Task<PasoResponse> CreatePaso(PasoRequest request, Guid recetaId)
         {
             try
             {
-                Paso pasoCreado=null;
+                Paso pasoCreado = null;
                 if (await VerifyAll(request))
                 {
                     var paso = new Paso
@@ -44,7 +38,7 @@ namespace Application.UseCases.SPasos
                     pasoCreado = await _command.CreatePaso(paso);
                 }
                 //Agregar validador de orden (aunque en teoría es automatico, verlo despues)
-                
+
                 return await _mapper.GetPasoResponse(pasoCreado);
             }
             catch (ExceptionSintaxError e)
@@ -62,13 +56,13 @@ namespace Application.UseCases.SPasos
         {
             try
             {
-                if (await VerifyAll(request) && GetPasoById(id) != null) 
+                if (await VerifyAll(request) && GetPasoById(id) != null)
                 {
                     var unPaso = await _command.UpdatePaso(request, id);
                     return await _mapper.GetPasoResponse(unPaso);
                 }
                 return new PasoResponse { };
-                
+
             }
             catch (Conflict ex)
             {
@@ -83,11 +77,16 @@ namespace Application.UseCases.SPasos
                 throw new ExceptionSintaxError("Error en la sintaxis de la mercadería a modificar: " + ex.Message);
             }
         }
+
+        public async Task<bool> DeleteAllPasosWhitRecetaId(Guid recetaId)
+        {
+            return await _command.DeleteAllPasosByRecetaId(recetaId);
+        }
         public async Task<PasoResponse> DeletePaso(int id)
         {
             try
             {
-                if(GetPasoById(id) == null) { throw new ExceptionNotFound("No existe ningún paso"); }
+                if (GetPasoById(id) == null) { throw new ExceptionNotFound("No existe ningún paso"); }
                 Paso pasoToDelete = await _command.DeletePaso(await _query.GetPasoById(id));
                 return new PasoResponse
                 {
@@ -132,7 +131,7 @@ namespace Application.UseCases.SPasos
 
         public async Task<int> GetPasoidByRecetaId(Guid recetaId, int orden)
         {
-            try 
+            try
             {
                 return await _query.GetPasoIdByRecetaId(recetaId, orden);
             }
@@ -164,11 +163,12 @@ namespace Application.UseCases.SPasos
         }
 
         //------ Metodos privados ------
-        
+
         //------ Validaciones ------
         private async Task<bool> VerifyAll(PasoRequest request)
         {
-            if (request.Descripcion.Length > await _query.GetDescripcionLength()) {throw new BadRequestt("La descripción sumera el límite permitido"); }
+            //Solo los validadores de los atributos paso!
+            if (request.Descripcion.Length > await _query.GetDescripcionLength()) { throw new BadRequestt("La descripción sumera el límite permitido"); }
             if (request.Foto.Length > await _query.GetFotoLength()) { throw new BadRequestt("El url de la foto supera el límite permitido"); }
             //Verificador de ints??
             return true;
@@ -177,10 +177,10 @@ namespace Application.UseCases.SPasos
         //{
         //    return (await _recService.GetRecetaById(recetaId) != null);
         //}
-        
 
 
-       
+
+
 
 
     }

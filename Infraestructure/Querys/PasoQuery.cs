@@ -3,12 +3,6 @@ using Application.Interfaces;
 using Domain.Entities;
 using Infraestructure.Persistence;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.Design;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Infraestructure.Querys
 {
@@ -36,7 +30,7 @@ namespace Infraestructure.Querys
                 throw new Conflict("Error en la base de datos");
             }
         }
-        public async Task<Paso> GetPasoById (int pasoId)
+        public async Task<Paso> GetPasoById(int pasoId)
         {
             try
             {

@@ -4,15 +4,10 @@ using Application.Request;
 using Domain.Entities;
 using Infraestructure.Persistence;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Infraestructure.Command
 {
-    public class RecetaCommand: IRecetaCommand
+    public class RecetaCommand : IRecetaCommand
     {
         private readonly RecetasContext _context;
 
@@ -21,7 +16,7 @@ namespace Infraestructure.Command
             _context = context;
         }
 
-        public async Task<Receta> CreateReceta(Receta receta )
+        public async Task<Receta> CreateReceta(Receta receta)
         {
             try
             {

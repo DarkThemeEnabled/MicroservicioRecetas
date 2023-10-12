@@ -1,22 +1,17 @@
 ﻿using Application.Response;
 using Domain.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Application.Mappers
 {
     public class IngredienteRecetaMapper
     {
-        public async Task<IngredienteRecetaResponse> GetIngredienteRecetaResponse(IngredienteReceta unIngRec)
+        public async Task<IngredienteRecetaResponse> GetIngredienteRecetaResponse(IngredienteReceta unIngRec, string nombre)
         {
             return new IngredienteRecetaResponse
             {
                 //Tiene que traer el nombre desde el microservicio 
                 id = unIngRec.IngredienteRecetaId,
-                nombre = "sarasa",
+                nombre = nombre,
                 ingredienteId = 12,
             };
 
@@ -27,7 +22,7 @@ namespace Application.Mappers
             List<IngredienteRecetaResponse> ingRecetasResponse = new();
             foreach (IngredienteReceta ingReceta in listaIngReceta)
             {
-                ingRecetasResponse.Add(await GetIngredienteRecetaResponse(ingReceta));
+                ingRecetasResponse.Add(await GetIngredienteRecetaResponse(ingReceta,"prueba"));
             }
             return ingRecetasResponse;
         }

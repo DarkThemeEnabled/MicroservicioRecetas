@@ -1,16 +1,11 @@
 ﻿using Application.Response;
 using Domain.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Application.Mappers
 {
     public class DificultadMapper
     {
-        public async Task<DificultadResponse> GetDificultadResponse (Dificultad dificultad)
+        public async Task<DificultadResponse> GetDificultadResponse(Dificultad dificultad)
         {
             return new DificultadResponse
             {
@@ -29,5 +24,5 @@ namespace Application.Mappers
         }
     }
 
-    
+
 }
