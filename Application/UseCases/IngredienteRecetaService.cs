@@ -36,7 +36,7 @@ namespace Application.UseCases
                         cantidad = request.cantidad
                     };
 
-                    return await _mapper.GetIngredienteRecetaResponse(await _command.CreateIngredienteReceta(unIngReceta), "prueba");
+                    return await _mapper.GetIngredienteRecetaResponse(await _command.CreateIngredienteReceta(unIngReceta));
                 }
                 throw new Exception("Ocurrió un error inesperado");
 

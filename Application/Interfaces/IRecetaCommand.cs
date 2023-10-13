@@ -8,5 +8,6 @@ namespace Application.Interfaces
         Task<Receta> CreateReceta(Receta receta);
         Task<Receta> UpdateReceta(RecetaRequest recetaRequest, Guid recetaId);
         Task<Receta> DeleteReceta(Receta unaReceta);
+        Task<bool> SaveChanges();
     }
 }

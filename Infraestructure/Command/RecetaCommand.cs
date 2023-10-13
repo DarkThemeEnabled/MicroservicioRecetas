@@ -21,7 +21,6 @@ namespace Infraestructure.Command
             try
             {
                 _context.Add(receta);
-                await _context.SaveChangesAsync();
                 return receta;
             }
             catch (DbUpdateException)
@@ -35,7 +34,6 @@ namespace Infraestructure.Command
             try
             {
                 _context.Remove(unaReceta);
-                await _context.SaveChangesAsync();
                 return unaReceta;
             }
             catch (DbUpdateException)
@@ -53,7 +51,6 @@ namespace Infraestructure.Command
                 recetaToUpdate.DificultadId = recetaRequest.DificultadId;
                 recetaToUpdate.FotoReceta = recetaRequest.FotoReceta;
                 recetaToUpdate.Video = recetaRequest.Video;
-                await _context.SaveChangesAsync();
 
                 return recetaToUpdate;
             }
@@ -61,6 +58,11 @@ namespace Infraestructure.Command
             {
                 throw new Conflict("Error en la base de datos");
             }
+        }
+
+        public async Task<bool> SaveChanges()
+        {
+            return await _context.SaveChangesAsync() == 2;
         }
     }
 }

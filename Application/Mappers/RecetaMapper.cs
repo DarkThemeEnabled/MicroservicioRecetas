@@ -26,5 +26,13 @@ namespace Application.Mappers
             };
             return receta;
         }
+        public async Task<RecetaDeleteResponse> CreateRecetaDeleteResponse(Receta recetaToDelete)
+        {
+            return new RecetaDeleteResponse
+            {
+                id = recetaToDelete.RecetaId,
+                titulo = recetaToDelete.Titulo,
+            };
+        }
     }
 }

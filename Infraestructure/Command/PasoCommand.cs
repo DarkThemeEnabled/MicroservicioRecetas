@@ -22,7 +22,7 @@ namespace Infraestructure.Command
             try
             {
                 _context.Add(paso);
-                await _context.SaveChangesAsync();
+                //await _context.SaveChangesAsync();
                 return paso;
             }
             catch (DbUpdateException)

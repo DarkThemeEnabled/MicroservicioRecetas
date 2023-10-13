@@ -1,18 +1,20 @@
-﻿using Application.Response;
+﻿using Application.Interfaces;
+using Application.Response;
+using Application.UserService;
 using Domain.Entities;
 
 namespace Application.Mappers
 {
     public class IngredienteRecetaMapper
     {
-        public async Task<IngredienteRecetaResponse> GetIngredienteRecetaResponse(IngredienteReceta unIngRec, string nombre)
+        private readonly IUserIngredienteService _userIngredienteService = new UserIngredienteService();
+        public async Task<IngredienteRecetaResponse> GetIngredienteRecetaResponse(IngredienteReceta unIngRec)
         {
             return new IngredienteRecetaResponse
             {
-                //Tiene que traer el nombre desde el microservicio 
                 id = unIngRec.IngredienteRecetaId,
-                nombre = nombre,
-                ingredienteId = 12,
+                nombre = _userIngredienteService.GetIngredienteName(unIngRec.IngredienteId),
+                //ingredienteId = 12,
             };
 
         }
@@ -22,7 +24,7 @@ namespace Application.Mappers
             List<IngredienteRecetaResponse> ingRecetasResponse = new();
             foreach (IngredienteReceta ingReceta in listaIngReceta)
             {
-                ingRecetasResponse.Add(await GetIngredienteRecetaResponse(ingReceta,"prueba"));
+                ingRecetasResponse.Add(await GetIngredienteRecetaResponse(ingReceta));
             }
             return ingRecetasResponse;
         }

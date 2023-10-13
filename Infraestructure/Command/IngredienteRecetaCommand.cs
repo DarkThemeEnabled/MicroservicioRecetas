@@ -21,7 +21,7 @@ namespace Infraestructure.Command
             try
             {
                 _context.Add(ingReceta);
-                await _context.SaveChangesAsync();
+                //await _context.SaveChangesAsync();
                 return ingReceta;
             }
             catch (DbUpdateException)

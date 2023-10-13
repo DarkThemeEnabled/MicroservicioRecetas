@@ -16,9 +16,10 @@ namespace Application.UseCases.SReceta
         private readonly ICategoriaRecetaService _categoriaService;
         private readonly IDificultadService _dificultadService;
         private readonly IIngredienteRecetaService _ingRecetaService;
+        private readonly IUserIngredienteService _userIngredienteService;
         private readonly RecetaMapper _recetaMapper = new();
 
-        public RecetaService(IRecetaQuery recetaQuery, IRecetaCommand recetaCommand, IPasoService pasoService, ICategoriaRecetaService categoriaService, IDificultadService dificultadService, IIngredienteRecetaService ingredienteRecetaService)
+        public RecetaService(IRecetaQuery recetaQuery, IRecetaCommand recetaCommand, IPasoService pasoService, ICategoriaRecetaService categoriaService, IDificultadService dificultadService, IIngredienteRecetaService ingredienteRecetaService, IUserIngredienteService userIngredienteService)
         {
             _query = recetaQuery;
             _command = recetaCommand;
@@ -26,12 +27,12 @@ namespace Application.UseCases.SReceta
             _categoriaService = categoriaService;
             _dificultadService = dificultadService;
             _ingRecetaService = ingredienteRecetaService;
+            _userIngredienteService = userIngredienteService;
         }
 
         //------ Metodos ABM ------
         public async Task<RecetaResponse> CreateReceta(RecetaRequest recetaRequest)
         {
-            using var transactionScope = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled);
 
             try
             {
@@ -55,7 +56,10 @@ namespace Application.UseCases.SReceta
                 }
                 foreach (PasoRequest paso in recetaRequest.ListaPasos) { await _pasoService.CreatePaso(paso, recetaCreada.RecetaId); }
                 foreach (IngredienteRecetaRequest ingReceta in recetaRequest.ListaIngredienteReceta) { await _ingRecetaService.CreateIngredienteReceta(ingReceta, recetaCreada.RecetaId); }
-                transactionScope.Complete();
+                if (await _command.SaveChanges())
+                {
+                    throw new BadRequestt("Error al publicar la receta");
+                }
                 return await _recetaMapper.CreateRecetaResponse(recetaCreada);
             }
             catch (ExceptionSintaxError e)
@@ -80,23 +84,22 @@ namespace Application.UseCases.SReceta
             {
                 //Ver como hacer para que se muestren los pasos de dicha receta
                 //En un futuro agregar un validador de urls con eso de las fotos. Pero más adelante!!
-                using var transactionScope = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled);
                 Receta unaReceta = null;
                 if (!await VerifyRecetaId(recetaId)) { throw new ExceptionNotFound("El id de la receta no existe"); }
                 if (await VerifyAll(recetaRequest))
                 {
                     //Acá hay que verificar los conflictos posibles (qué conflictos podría haber...)
-                    //Posibles conflictos: sin ideas
+                    //Posibles conflictos: pasos repetidos, ingredientes repetidso(fix)
                     TimeSpan tiempoPreparacion = await GetHorario(recetaRequest.TiempoPreparacion);
                     unaReceta = await _command.UpdateReceta(recetaRequest, recetaId);
-                    if (!await _ingRecetaService.DeleteAllIngRecetaWhitRecetaId(recetaId) && ! await _pasoService.DeleteAllPasosWhitRecetaId(recetaId))
+                    if (!await DeleteAllIngReceta(recetaId) && ! await DeleteAllPasos(recetaId))
                     {
                         foreach (PasoRequest paso in recetaRequest.ListaPasos) { await _pasoService.CreatePaso(paso, recetaId); }
                         foreach (IngredienteRecetaRequest ingReceta in recetaRequest.ListaIngredienteReceta) { await _ingRecetaService.CreateIngredienteReceta(ingReceta, recetaId); }
                     }
 
                 }
-                transactionScope.Complete();
+                if (await _command.SaveChanges()) { throw new BadRequestt("Error al publicar la receta"); }
                 return await _recetaMapper.CreateRecetaResponse(unaReceta);
             }
             catch (Conflict ex)
@@ -120,19 +123,12 @@ namespace Application.UseCases.SReceta
                 //Hay que ver a nivel de usuario como se crea todo esto porque va de la mano con lo de usuario :O
                 //Cuando se borre la receta tenemos que implementar que se borren todos los pasos <----- (De acá vendría el conflict)
                 //Tambien que se borren los ingredientereceta 
-                using var transactionScope = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled);
                 Receta recetaToDelete = null;
                 if (!await VerifyRecetaId(id)) { throw new ExceptionNotFound("El id no existe"); }
-                if (!await _ingRecetaService.DeleteAllIngRecetaWhitRecetaId(id) && !await _pasoService.DeleteAllPasosWhitRecetaId(id))
-                {
-                    recetaToDelete = await _command.DeleteReceta(await _query.GetRecetaById(id));
-                }
-                transactionScope.Complete();
-                return new RecetaDeleteResponse
-                {
-                    id = recetaToDelete.RecetaId,
-                    titulo = recetaToDelete.Titulo,
-                };
+                if (!await DeleteAllIngReceta(id) && !await DeleteAllPasos(id))
+                { recetaToDelete = await _command.DeleteReceta(await _query.GetRecetaById(id)); }
+                if (await _command.SaveChanges()) { throw new BadRequestt("Error al eliminar la receta"); }
+                return await _recetaMapper.CreateRecetaDeleteResponse(recetaToDelete);
             }
             catch (ExceptionNotFound ex) { throw new ExceptionNotFound("Error en la búsqueda de la receta: " + ex.Message); }
             catch (Conflict ex) { throw new Conflict("Error en la base de datos: " + ex.Message); }
@@ -215,38 +211,24 @@ namespace Application.UseCases.SReceta
 
         // Validadores de enteros
         private bool VerifyInt(int entero)
-        {
-            return (int.TryParse(entero.ToString(), out entero));
-        }
+        { return (int.TryParse(entero.ToString(), out entero)); }
         private async Task<bool> VerifyRecetaId(Guid recetaId)
-        {
-            return (await _query.GetRecetaById(recetaId) != null);
-        }
+        { return (await _query.GetRecetaById(recetaId) != null); }
 
         private async Task<bool> VerifyDificultadId(int dificultadId)
-        {
-            return (await _dificultadService.ValidateDificultadById(dificultadId));
-        }
+        { return (await _dificultadService.ValidateDificultadById(dificultadId)); }
         private async Task<bool> VerifyCategoriaRecetaId(int categoriaRecetaId)
-        {
-            return (await _categoriaService.ValidateCategoriaRecetaById(categoriaRecetaId));
-        }
+        { return (await _categoriaService.ValidateCategoriaRecetaById(categoriaRecetaId)); }
 
         // Validadores de strings
 
         private async Task<bool> VerifyTitleLength(string title)
-        {
-            return (await _query.GetTitleLength() > title.Length);
-        }
+        { return (await _query.GetTitleLength() > title.Length); }
 
         private async Task<bool> VerifyFotoRecetaLenght(string fotoreceta)
-        {
-            return (await _query.GetFotoRecetaLength() > fotoreceta.Length);
-        }
+        { return (await _query.GetFotoRecetaLength() > fotoreceta.Length); }
         private async Task<bool> VerifyVideoLenght(string video)
-        {
-            return (await _query.GetVideoLenght() > video.Length);
-        }
+        { return (await _query.GetVideoLenght() > video.Length); }
 
         //Validadores de otros microservicios
 
@@ -259,9 +241,13 @@ namespace Application.UseCases.SReceta
         //Validador de listas
 
         private Task<bool> VerifyListIsNotEmpty<T>(List<T> lista)
-        {
-            return Task.FromResult(lista.Count() > 0);
-        }
+        { return Task.FromResult(lista.Count() > 0); }
+
+        //Deletes
+        private async Task<bool> DeleteAllIngReceta(Guid recetaId)
+        { return await _ingRecetaService.DeleteAllIngRecetaWhitRecetaId(recetaId); }
+        private async Task<bool> DeleteAllPasos(Guid recetaId)
+        { return await _pasoService.DeleteAllPasosWhitRecetaId(recetaId); }
 
         //Otros
         private Task<TimeSpan> GetHorario(string tiempoPreparacion)
@@ -270,13 +256,10 @@ namespace Application.UseCases.SReceta
                 int.TryParse(tiempoPreparacion.Substring(0, 2), out int horas) &&
                 int.TryParse(tiempoPreparacion.Substring(3, 2), out int minutos) &&
                 tiempoPreparacion[2] == ':')
-            {
-                return Task.FromResult(new TimeSpan(horas, minutos, 0));
-            }
+            { return Task.FromResult(new TimeSpan(horas, minutos, 0)); }
             else
-            {
-                throw new ExceptionSintaxError("Formato erróneo para el horario, pruebe usando hh:mm");
-            }
+            { throw new ExceptionSintaxError("Formato erróneo para el horario, pruebe usando hh:mm"); }
         }
+
     }
 }
