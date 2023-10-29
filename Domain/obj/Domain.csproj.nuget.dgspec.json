@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "D:\\facultad\\cuarto año\\segundo cuatrimestre\\proyecto software\\Microservicio Receta\\Domain\\Domain.csproj": {}
+    "C:\\Users\\Matia\\Desktop\\Proyecto Software\\Proyecto Final Grupal\\MicroservicioReceta\\MicroservicioRecetas\\Domain\\Domain.csproj": {}
   },
   "projects": {
-    "D:\\facultad\\cuarto año\\segundo cuatrimestre\\proyecto software\\Microservicio Receta\\Domain\\Domain.csproj": {
+    "C:\\Users\\Matia\\Desktop\\Proyecto Software\\Proyecto Final Grupal\\MicroservicioReceta\\MicroservicioRecetas\\Domain\\Domain.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\facultad\\cuarto año\\segundo cuatrimestre\\proyecto software\\Microservicio Receta\\Domain\\Domain.csproj",
+        "projectUniqueName": "C:\\Users\\Matia\\Desktop\\Proyecto Software\\Proyecto Final Grupal\\MicroservicioReceta\\MicroservicioRecetas\\Domain\\Domain.csproj",
         "projectName": "Domain",
-        "projectPath": "D:\\facultad\\cuarto año\\segundo cuatrimestre\\proyecto software\\Microservicio Receta\\Domain\\Domain.csproj",
-        "packagesPath": "C:\\Users\\Lucas\\.nuget\\packages\\",
-        "outputPath": "D:\\facultad\\cuarto año\\segundo cuatrimestre\\proyecto software\\Microservicio Receta\\Domain\\obj\\",
+        "projectPath": "C:\\Users\\Matia\\Desktop\\Proyecto Software\\Proyecto Final Grupal\\MicroservicioReceta\\MicroservicioRecetas\\Domain\\Domain.csproj",
+        "packagesPath": "C:\\Users\\Matia\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Matia\\Desktop\\Proyecto Software\\Proyecto Final Grupal\\MicroservicioReceta\\MicroservicioRecetas\\Domain\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\Lucas\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Matia\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -22,7 +22,7 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "https://api.nuget.org/v3/index.json": {}
+          "https://www.nuget.org/api/v2/": {}
         },
         "frameworks": {
           "net6.0": {
@@ -83,7 +83,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.202\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.203\\RuntimeIdentifierGraph.json"
         }
       }
     }

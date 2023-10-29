@@ -54,3 +54,17 @@ D:\facultad\cuarto año\segundo cuatrimestre\proyecto software\Microservicio Rec
 D:\facultad\cuarto año\segundo cuatrimestre\proyecto software\Microservicio Receta\Domain\obj\Debug\net6.0\Domain.pdb
 D:\facultad\cuarto año\segundo cuatrimestre\proyecto software\Microservicio Receta\Domain\obj\Debug\net6.0\Domain.genruntimeconfig.cache
 D:\facultad\cuarto año\segundo cuatrimestre\proyecto software\Microservicio Receta\Domain\obj\Debug\net6.0\ref\Domain.dll
+C:\Users\Matia\Desktop\Proyecto Software\Proyecto Final Grupal\MicroservicioReceta\MicroservicioRecetas\Domain\bin\Debug\net6.0\Domain.deps.json
+C:\Users\Matia\Desktop\Proyecto Software\Proyecto Final Grupal\MicroservicioReceta\MicroservicioRecetas\Domain\bin\Debug\net6.0\Domain.runtimeconfig.json
+C:\Users\Matia\Desktop\Proyecto Software\Proyecto Final Grupal\MicroservicioReceta\MicroservicioRecetas\Domain\bin\Debug\net6.0\Domain.dll
+C:\Users\Matia\Desktop\Proyecto Software\Proyecto Final Grupal\MicroservicioReceta\MicroservicioRecetas\Domain\bin\Debug\net6.0\Domain.pdb
+C:\Users\Matia\Desktop\Proyecto Software\Proyecto Final Grupal\MicroservicioReceta\MicroservicioRecetas\Domain\obj\Debug\net6.0\Domain.csproj.AssemblyReference.cache
+C:\Users\Matia\Desktop\Proyecto Software\Proyecto Final Grupal\MicroservicioReceta\MicroservicioRecetas\Domain\obj\Debug\net6.0\Domain.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Matia\Desktop\Proyecto Software\Proyecto Final Grupal\MicroservicioReceta\MicroservicioRecetas\Domain\obj\Debug\net6.0\Domain.AssemblyInfoInputs.cache
+C:\Users\Matia\Desktop\Proyecto Software\Proyecto Final Grupal\MicroservicioReceta\MicroservicioRecetas\Domain\obj\Debug\net6.0\Domain.AssemblyInfo.cs
+C:\Users\Matia\Desktop\Proyecto Software\Proyecto Final Grupal\MicroservicioReceta\MicroservicioRecetas\Domain\obj\Debug\net6.0\Domain.csproj.CoreCompileInputs.cache
+C:\Users\Matia\Desktop\Proyecto Software\Proyecto Final Grupal\MicroservicioReceta\MicroservicioRecetas\Domain\obj\Debug\net6.0\Domain.dll
+C:\Users\Matia\Desktop\Proyecto Software\Proyecto Final Grupal\MicroservicioReceta\MicroservicioRecetas\Domain\obj\Debug\net6.0\refint\Domain.dll
+C:\Users\Matia\Desktop\Proyecto Software\Proyecto Final Grupal\MicroservicioReceta\MicroservicioRecetas\Domain\obj\Debug\net6.0\Domain.pdb
+C:\Users\Matia\Desktop\Proyecto Software\Proyecto Final Grupal\MicroservicioReceta\MicroservicioRecetas\Domain\obj\Debug\net6.0\Domain.genruntimeconfig.cache
+C:\Users\Matia\Desktop\Proyecto Software\Proyecto Final Grupal\MicroservicioReceta\MicroservicioRecetas\Domain\obj\Debug\net6.0\ref\Domain.dll

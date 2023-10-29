@@ -118,15 +118,39 @@ namespace GastroNET.Controllers
         }
 
         //Buscador principal de TODO
+        //[HttpGet]
+        //[ProducesResponseType(typeof(List<RecetaResponse>), 200)]
+        //[ProducesResponseType(typeof(BadRequest), 400)]
+        //[ProducesResponseType(typeof(BadRequest), 404)]
+        //public async Task<IActionResult> GetReceta()
+        //{
+        //    try
+        //    {
+        //        var result = await _service.GetListRecetas();
+        //        return new JsonResult(result) { StatusCode = 200 };
+        //    }
+        //    catch (ExceptionSintaxError ex)
+        //    {
+        //        return new JsonResult(new BadRequest { Message = ex.Message }) { StatusCode = 400 };
+        //    }
+        //    catch (ExceptionNotFound ex)
+        //    {
+        //        return new JsonResult(new BadRequest { Message = ex.Message }) { StatusCode = 404 };
+        //    }
+        //}
+
+        //Acá iría el controller que busca por cualquier filtro falopa
+        //Nota: No se puede tener dos metodos HTTP del el mismo tipo (Get en este caso). y falta meterle las excepciones.
+        //Nota 2: Si todos los valores que se ingresan son null entonces devuelve todas las recetas, como si fuera el buscador principal de todo.
         [HttpGet]
         [ProducesResponseType(typeof(List<RecetaResponse>), 200)]
         [ProducesResponseType(typeof(BadRequest), 400)]
         [ProducesResponseType(typeof(BadRequest), 404)]
-        public async Task<IActionResult> GetReceta()
+        public async Task<IActionResult> GetByFilters(string? titulo, string? dificultad, string? categoria, string? ingrediente)
         {
             try
             {
-                var result = await _service.GetListRecetas();
+                var result = await _service.RecetasFilter(titulo, dificultad, categoria, ingrediente);
                 return new JsonResult(result) { StatusCode = 200 };
             }
             catch (ExceptionSintaxError ex)
@@ -138,8 +162,6 @@ namespace GastroNET.Controllers
                 return new JsonResult(new BadRequest { Message = ex.Message }) { StatusCode = 404 };
             }
         }
-
-        //Acá iría el controller que busca por cualquier filtro falopa
     }
 
 }

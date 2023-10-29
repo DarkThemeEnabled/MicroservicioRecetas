@@ -4,6 +4,8 @@ using Application.Mappers;
 using Application.Request;
 using Application.Response;
 using Domain.Entities;
+using System.Collections.Generic;
+using System.Data;
 using System.Transactions;
 
 namespace Application.UseCases.SReceta
@@ -177,6 +179,33 @@ namespace Application.UseCases.SReceta
                 recetasResponse.Add(await _recetaMapper.CreateRecetaResponse(receta));
             }
             return recetasResponse;
+        }
+
+        public async Task<List<RecetaResponse>> RecetasFilter(string? titulo, string? dificultad, string? categoria, string? ingrediente)
+        {
+            var listaRecetas = await _query.GetListRecetas();
+            
+            if (!await VerifyListIsNotEmpty(listaRecetas))
+            {
+                //tirar excepción
+            }
+
+            if (titulo == null && dificultad == null && categoria == null && ingrediente == null)
+            {
+                return await GetListRecetas();
+            }
+
+            var listaFiltrada = listaRecetas
+                .Where(e =>
+                (titulo != null && e.Titulo.Contains(titulo)) ||
+                (dificultad != null && e.Dificultad.Nombre == dificultad) ||
+                (categoria != null && e.CategoriaReceta.Nombre == categoria) ||
+                (ingrediente != null && e.IngredentesReceta.Any(ing => _userIngredienteService.GetIngredienteName(ing.IngredienteId).Contains(ingrediente)))
+                )
+                .Select(e => _recetaMapper.CreateRecetaResponse(e));
+
+            //se ejecuta cuando finaliza el select
+            return (await Task.WhenAll(listaFiltrada)).ToList();
         }
 
         //----- Métodos privados -----
