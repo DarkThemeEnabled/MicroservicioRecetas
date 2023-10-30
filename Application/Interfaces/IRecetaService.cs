@@ -11,6 +11,6 @@ namespace Application.Interfaces
         Task<RecetaResponse> UpdateReceta(RecetaRequest request, Guid id);
         Task<RecetaDeleteResponse> DeleteReceta(Guid id);
         Task<RecetaResponse> GetRecetaById(Guid id);
-        Task<List<RecetaResponse>> RecetasFilter(string? titulo, string? dificultad, string? categoria, string? ingrediente);
+        Task<List<RecetaResponse>> RecetasFilter(string? titulo, int dificultad, int categoria, string? ingrediente);
     }
 }

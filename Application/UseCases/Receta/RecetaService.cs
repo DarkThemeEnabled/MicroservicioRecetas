@@ -181,16 +181,12 @@ namespace Application.UseCases.SReceta
             return recetasResponse;
         }
 
-        public async Task<List<RecetaResponse>> RecetasFilter(string? titulo, string? dificultad, string? categoria, string? ingrediente)
+        public async Task<List<RecetaResponse>> RecetasFilter(string? titulo, int dificultad, int categoria, string? ingrediente)
         {
             var listaRecetas = await _query.GetListRecetas();
             
-            if (!await VerifyListIsNotEmpty(listaRecetas))
-            {
-                //tirar excepción
-            }
 
-            if (titulo == null && dificultad == null && categoria == null && ingrediente == null)
+            if (titulo == null && dificultad == 0 && categoria == 0 && ingrediente == null)
             {
                 return await GetListRecetas();
             }
@@ -198,8 +194,8 @@ namespace Application.UseCases.SReceta
             var listaFiltrada = listaRecetas
                 .Where(e =>
                 (titulo != null && e.Titulo.Contains(titulo)) ||
-                (dificultad != null && e.Dificultad.Nombre == dificultad) ||
-                (categoria != null && e.CategoriaReceta.Nombre == categoria) ||
+                (dificultad != 0 && e.Dificultad.DificultadId == dificultad) ||
+                (categoria != 0 && e.CategoriaReceta.CategoriaRecetaId == categoria) ||
                 (ingrediente != null && e.IngredentesReceta.Any(ing => _userIngredienteService.GetIngredienteName(ing.IngredienteId).Contains(ingrediente)))
                 )
                 .Select(e => _recetaMapper.CreateRecetaResponse(e));

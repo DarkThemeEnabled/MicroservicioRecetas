@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Matia\\Desktop\\Proyecto Software\\Proyecto Final Grupal\\MicroservicioReceta\\MicroservicioRecetas\\Infraestructure\\Infraestructure.csproj": {}
+    "D:\\facultad\\cuarto año\\segundo cuatrimestre\\proyecto software\\Microservicio Receta\\MicroservicioRecetas\\Infraestructure\\Infraestructure.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Matia\\Desktop\\Proyecto Software\\Proyecto Final Grupal\\MicroservicioReceta\\MicroservicioRecetas\\Application\\Application.csproj": {
+    "D:\\facultad\\cuarto año\\segundo cuatrimestre\\proyecto software\\Microservicio Receta\\MicroservicioRecetas\\Application\\Application.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Matia\\Desktop\\Proyecto Software\\Proyecto Final Grupal\\MicroservicioReceta\\MicroservicioRecetas\\Application\\Application.csproj",
+        "projectUniqueName": "D:\\facultad\\cuarto año\\segundo cuatrimestre\\proyecto software\\Microservicio Receta\\MicroservicioRecetas\\Application\\Application.csproj",
         "projectName": "Application",
-        "projectPath": "C:\\Users\\Matia\\Desktop\\Proyecto Software\\Proyecto Final Grupal\\MicroservicioReceta\\MicroservicioRecetas\\Application\\Application.csproj",
-        "packagesPath": "C:\\Users\\Matia\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Matia\\Desktop\\Proyecto Software\\Proyecto Final Grupal\\MicroservicioReceta\\MicroservicioRecetas\\Application\\obj\\",
+        "projectPath": "D:\\facultad\\cuarto año\\segundo cuatrimestre\\proyecto software\\Microservicio Receta\\MicroservicioRecetas\\Application\\Application.csproj",
+        "packagesPath": "C:\\Users\\Lucas\\.nuget\\packages\\",
+        "outputPath": "D:\\facultad\\cuarto año\\segundo cuatrimestre\\proyecto software\\Microservicio Receta\\MicroservicioRecetas\\Application\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\Matia\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Lucas\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -22,14 +22,14 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "https://www.nuget.org/api/v2/": {}
+          "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "net6.0": {
             "targetAlias": "net6.0",
             "projectReferences": {
-              "C:\\Users\\Matia\\Desktop\\Proyecto Software\\Proyecto Final Grupal\\MicroservicioReceta\\MicroservicioRecetas\\Domain\\Domain.csproj": {
-                "projectPath": "C:\\Users\\Matia\\Desktop\\Proyecto Software\\Proyecto Final Grupal\\MicroservicioReceta\\MicroservicioRecetas\\Domain\\Domain.csproj"
+              "D:\\facultad\\cuarto año\\segundo cuatrimestre\\proyecto software\\Microservicio Receta\\MicroservicioRecetas\\Domain\\Domain.csproj": {
+                "projectPath": "D:\\facultad\\cuarto año\\segundo cuatrimestre\\proyecto software\\Microservicio Receta\\MicroservicioRecetas\\Domain\\Domain.csproj"
               }
             }
           }
@@ -87,21 +87,21 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.203\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.202\\RuntimeIdentifierGraph.json"
         }
       }
     },
-    "C:\\Users\\Matia\\Desktop\\Proyecto Software\\Proyecto Final Grupal\\MicroservicioReceta\\MicroservicioRecetas\\Domain\\Domain.csproj": {
+    "D:\\facultad\\cuarto año\\segundo cuatrimestre\\proyecto software\\Microservicio Receta\\MicroservicioRecetas\\Domain\\Domain.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Matia\\Desktop\\Proyecto Software\\Proyecto Final Grupal\\MicroservicioReceta\\MicroservicioRecetas\\Domain\\Domain.csproj",
+        "projectUniqueName": "D:\\facultad\\cuarto año\\segundo cuatrimestre\\proyecto software\\Microservicio Receta\\MicroservicioRecetas\\Domain\\Domain.csproj",
         "projectName": "Domain",
-        "projectPath": "C:\\Users\\Matia\\Desktop\\Proyecto Software\\Proyecto Final Grupal\\MicroservicioReceta\\MicroservicioRecetas\\Domain\\Domain.csproj",
-        "packagesPath": "C:\\Users\\Matia\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Matia\\Desktop\\Proyecto Software\\Proyecto Final Grupal\\MicroservicioReceta\\MicroservicioRecetas\\Domain\\obj\\",
+        "projectPath": "D:\\facultad\\cuarto año\\segundo cuatrimestre\\proyecto software\\Microservicio Receta\\MicroservicioRecetas\\Domain\\Domain.csproj",
+        "packagesPath": "C:\\Users\\Lucas\\.nuget\\packages\\",
+        "outputPath": "D:\\facultad\\cuarto año\\segundo cuatrimestre\\proyecto software\\Microservicio Receta\\MicroservicioRecetas\\Domain\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\Matia\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Lucas\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -109,7 +109,7 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "https://www.nuget.org/api/v2/": {}
+          "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "net6.0": {
@@ -170,21 +170,21 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.203\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.202\\RuntimeIdentifierGraph.json"
         }
       }
     },
-    "C:\\Users\\Matia\\Desktop\\Proyecto Software\\Proyecto Final Grupal\\MicroservicioReceta\\MicroservicioRecetas\\Infraestructure\\Infraestructure.csproj": {
+    "D:\\facultad\\cuarto año\\segundo cuatrimestre\\proyecto software\\Microservicio Receta\\MicroservicioRecetas\\Infraestructure\\Infraestructure.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Matia\\Desktop\\Proyecto Software\\Proyecto Final Grupal\\MicroservicioReceta\\MicroservicioRecetas\\Infraestructure\\Infraestructure.csproj",
+        "projectUniqueName": "D:\\facultad\\cuarto año\\segundo cuatrimestre\\proyecto software\\Microservicio Receta\\MicroservicioRecetas\\Infraestructure\\Infraestructure.csproj",
         "projectName": "Infraestructure",
-        "projectPath": "C:\\Users\\Matia\\Desktop\\Proyecto Software\\Proyecto Final Grupal\\MicroservicioReceta\\MicroservicioRecetas\\Infraestructure\\Infraestructure.csproj",
-        "packagesPath": "C:\\Users\\Matia\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Matia\\Desktop\\Proyecto Software\\Proyecto Final Grupal\\MicroservicioReceta\\MicroservicioRecetas\\Infraestructure\\obj\\",
+        "projectPath": "D:\\facultad\\cuarto año\\segundo cuatrimestre\\proyecto software\\Microservicio Receta\\MicroservicioRecetas\\Infraestructure\\Infraestructure.csproj",
+        "packagesPath": "C:\\Users\\Lucas\\.nuget\\packages\\",
+        "outputPath": "D:\\facultad\\cuarto año\\segundo cuatrimestre\\proyecto software\\Microservicio Receta\\MicroservicioRecetas\\Infraestructure\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\Matia\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Lucas\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -192,14 +192,14 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "https://www.nuget.org/api/v2/": {}
+          "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "net6.0": {
             "targetAlias": "net6.0",
             "projectReferences": {
-              "C:\\Users\\Matia\\Desktop\\Proyecto Software\\Proyecto Final Grupal\\MicroservicioReceta\\MicroservicioRecetas\\Application\\Application.csproj": {
-                "projectPath": "C:\\Users\\Matia\\Desktop\\Proyecto Software\\Proyecto Final Grupal\\MicroservicioReceta\\MicroservicioRecetas\\Application\\Application.csproj"
+              "D:\\facultad\\cuarto año\\segundo cuatrimestre\\proyecto software\\Microservicio Receta\\MicroservicioRecetas\\Application\\Application.csproj": {
+                "projectPath": "D:\\facultad\\cuarto año\\segundo cuatrimestre\\proyecto software\\Microservicio Receta\\MicroservicioRecetas\\Application\\Application.csproj"
               }
             }
           }
@@ -257,7 +257,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.203\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.202\\RuntimeIdentifierGraph.json"
         }
       }
     }
