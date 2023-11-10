@@ -1,9 +1,10 @@
-﻿using Application.Response;
+﻿using Application.Interfaces.Mappers;
+using Application.Response;
 using Domain.Entities;
 
 namespace Application.Mappers
 {
-    public class DificultadMapper
+    public class DificultadMapper: IDificultadMapper
     {
         public async Task<DificultadResponse> GetDificultadResponse(Dificultad dificultad)
         {

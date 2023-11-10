@@ -1,11 +1,12 @@
-﻿using Application.Interfaces;
+﻿using Application.Interfaces.Mappers;
+using Application.Interfaces.Services;
 using Application.Response;
 using Application.UserService;
 using Domain.Entities;
 
 namespace Application.Mappers
 {
-    public class IngredienteRecetaMapper
+    public class IngredienteRecetaMapper: IIngredienteRecetaMapper
     {
         private readonly IUserIngredienteService _userIngredienteService = new UserIngredienteService();
         public async Task<IngredienteRecetaResponse> GetIngredienteRecetaResponse(IngredienteReceta unIngRec)

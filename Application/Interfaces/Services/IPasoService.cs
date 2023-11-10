@@ -1,7 +1,7 @@
 ﻿using Application.Request;
 using Application.Response;
 
-namespace Application.Interfaces
+namespace Application.Interfaces.Services
 {
     public interface IPasoService
     {

@@ -1,5 +1,5 @@
 ﻿using Application.Exceptions;
-using Application.Interfaces;
+using Application.Interfaces.Services;
 using Azure;
 using Newtonsoft.Json.Linq;
 

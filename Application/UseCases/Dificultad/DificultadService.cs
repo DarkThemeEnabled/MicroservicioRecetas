@@ -1,5 +1,6 @@
 ﻿using Application.Exceptions;
-using Application.Interfaces;
+using Application.Interfaces.Querys;
+using Application.Interfaces.Services;
 using Application.Mappers;
 using Application.Response;
 

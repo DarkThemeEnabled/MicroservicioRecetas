@@ -1,9 +1,10 @@
-﻿using Application.Response;
+﻿using Application.Interfaces.Mappers;
+using Application.Response;
 using Domain.Entities;
 
 namespace Application.Mappers
 {
-    public class PasoMapper
+    public class PasoMapper: IPasoMapper
     {
         public Task<PasoResponse> GetPasoResponse(Paso unPaso)
         {

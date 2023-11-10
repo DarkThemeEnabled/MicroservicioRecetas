@@ -1,4 +1,5 @@
-﻿using Application.Interfaces;
+﻿using Application.Interfaces.Querys;
+using Application.Interfaces.Services;
 
 namespace Application.UseCases.CategoriaReceta
 {

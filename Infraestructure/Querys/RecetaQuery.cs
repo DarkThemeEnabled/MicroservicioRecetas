@@ -1,5 +1,6 @@
 ﻿using Application.Exceptions;
-using Application.Interfaces;
+using Application.Interfaces.Querys;
+using Application.Interfaces.Services;
 using Domain.Entities;
 using Infraestructure.Persistence;
 using Microsoft.EntityFrameworkCore;
@@ -10,10 +11,12 @@ namespace Infraestructure.Querys
     public class RecetaQuery : IRecetaQuery
     {
         private readonly RecetasContext _context;
+        private readonly IUserIngredienteService _userIngredienteService;
 
-        public RecetaQuery(RecetasContext context)
+        public RecetaQuery(RecetasContext context, IUserIngredienteService userIngredienteService)
         {
             _context = context;
+            _userIngredienteService = userIngredienteService;
         }
 
         public async Task<List<Receta>> GetListRecetas()
@@ -48,6 +51,43 @@ namespace Infraestructure.Querys
                     //.Include(r => r.UsuarioId)
                     .SingleOrDefaultAsync(r => r.RecetaId == id);
             }
+            catch (DbUpdateException)
+            {
+                throw new BadRequestt("Hubo un problema al buscar la receta");
+            }
+        }
+
+        public async Task<List<Receta>> GetRecetasByFilters (string? titulo, int dificultad, int categoria, string? ingrediente)
+        {
+            try
+            {
+                return await _context.Recetas
+                .Where(e =>
+                (titulo != null && e.Titulo.Contains(titulo)) ||
+                (dificultad != 0 && e.Dificultad.DificultadId == dificultad) ||
+                (categoria != 0 && e.CategoriaReceta.CategoriaRecetaId == categoria) ||
+                (ingrediente != null && e.IngredentesReceta.Any(ing => _userIngredienteService.GetIngredienteName(ing.IngredienteId).Contains(ingrediente)))
+                )
+                .Include(r => r.Dificultad)
+                .Include(r => r.IngredentesReceta)
+                .Include(r => r.CategoriaReceta)
+                .Include(r => r.Pasos)
+                .ToListAsync();
+            }
+
+            catch (DbUpdateException)
+            {
+                throw new BadRequestt("Hubo un problema al buscar la receta");
+            }
+        }
+
+        public async Task<List<Receta>> GetRecetasByString (string text)
+        {
+            try
+            {
+                throw new NotImplementedException();
+            }
+
             catch (DbUpdateException)
             {
                 throw new BadRequestt("Hubo un problema al buscar la receta");

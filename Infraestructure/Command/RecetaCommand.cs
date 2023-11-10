@@ -1,5 +1,5 @@
 ﻿using Application.Exceptions;
-using Application.Interfaces;
+using Application.Interfaces.Commands;
 using Application.Request;
 using Domain.Entities;
 using Infraestructure.Persistence;

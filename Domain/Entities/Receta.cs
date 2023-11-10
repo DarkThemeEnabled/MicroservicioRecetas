@@ -12,6 +12,7 @@
         public string FotoReceta { get; set; }
         public string Video { get; set; }
         public TimeSpan TiempoPreparacion { get; set; }
+
         public ICollection<Paso> Pasos { get; set; }
         public ICollection<IngredienteReceta> IngredentesReceta { get; set; }
         public PromedioPuntaje PromedioPuntaje { get; set; }

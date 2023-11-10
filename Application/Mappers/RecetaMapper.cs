@@ -1,14 +1,23 @@
-﻿using Application.Response;
+﻿using Application.Interfaces.Mappers;
+using Application.Response;
 using Domain.Entities;
 
 namespace Application.Mappers
 {
-    public class RecetaMapper
+    public class RecetaMapper: IRecetaMapper
     {
-        private readonly PasoMapper _pasoMapper = new();
-        private readonly DificultadMapper _dificultadMapper = new();
-        private readonly IngredienteRecetaMapper _ingRecMapper = new();
-        private readonly CategoriaRecetaMapper _catRecMapper = new();
+        private readonly IPasoMapper _pasoMapper;
+        private readonly IDificultadMapper _dificultadMapper;
+        private readonly IIngredienteRecetaMapper _ingRecMapper;
+        private readonly ICategoriaRecetaMapper _catRecMapper;
+
+        public RecetaMapper(IPasoMapper pasoMapper, IDificultadMapper dificultadMapper, IIngredienteRecetaMapper ingredienteRecetaMapper, ICategoriaRecetaMapper categoriaRecetaMapper)
+        {
+            _pasoMapper = pasoMapper;
+            _dificultadMapper = dificultadMapper;
+            _ingRecMapper = ingredienteRecetaMapper;
+            _catRecMapper = categoriaRecetaMapper;
+        }
 
         public async Task<RecetaResponse> CreateRecetaResponse(Receta unaReceta)
         {
@@ -25,14 +34,6 @@ namespace Application.Mappers
                 ingredientes = await _ingRecMapper.GetIngredientesRecetaResponse(unaReceta.IngredentesReceta)
             };
             return receta;
-        }
-        public async Task<RecetaDeleteResponse> CreateRecetaDeleteResponse(Receta recetaToDelete)
-        {
-            return new RecetaDeleteResponse
-            {
-                id = recetaToDelete.RecetaId,
-                titulo = recetaToDelete.Titulo,
-            };
         }
     }
 }

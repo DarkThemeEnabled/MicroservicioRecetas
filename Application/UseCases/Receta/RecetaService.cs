@@ -1,6 +1,8 @@
 ﻿using Application.Exceptions;
-using Application.Interfaces;
-using Application.Mappers;
+using Application.Interfaces.Commands;
+using Application.Interfaces.Mappers;
+using Application.Interfaces.Querys;
+using Application.Interfaces.Services;
 using Application.Request;
 using Application.Response;
 using Domain.Entities;
@@ -19,9 +21,11 @@ namespace Application.UseCases.SReceta
         private readonly IDificultadService _dificultadService;
         private readonly IIngredienteRecetaService _ingRecetaService;
         private readonly IUserIngredienteService _userIngredienteService;
-        private readonly RecetaMapper _recetaMapper = new();
+        private readonly IRecetaMapper _recetaMapper;
+        private readonly IRecetaDeleteMapper _recetaDeleteMapper;
+        private readonly IRecetaGetResponseMapper _recetaGetResponseMapper;
 
-        public RecetaService(IRecetaQuery recetaQuery, IRecetaCommand recetaCommand, IPasoService pasoService, ICategoriaRecetaService categoriaService, IDificultadService dificultadService, IIngredienteRecetaService ingredienteRecetaService, IUserIngredienteService userIngredienteService)
+        public RecetaService(IRecetaQuery recetaQuery, IRecetaCommand recetaCommand, IPasoService pasoService, ICategoriaRecetaService categoriaService, IDificultadService dificultadService, IIngredienteRecetaService ingredienteRecetaService, IUserIngredienteService userIngredienteService, IRecetaMapper recetaMapper, IRecetaDeleteMapper recetaDeleteMapper, IRecetaGetResponseMapper recetaGetResponseMapper)
         {
             _query = recetaQuery;
             _command = recetaCommand;
@@ -30,6 +34,9 @@ namespace Application.UseCases.SReceta
             _dificultadService = dificultadService;
             _ingRecetaService = ingredienteRecetaService;
             _userIngredienteService = userIngredienteService;
+            _recetaMapper = recetaMapper;
+            _recetaDeleteMapper = recetaDeleteMapper;
+            _recetaGetResponseMapper = recetaGetResponseMapper;
         }
 
         //------ Metodos ABM ------
@@ -94,7 +101,7 @@ namespace Application.UseCases.SReceta
                     //Posibles conflictos: pasos repetidos, ingredientes repetidso(fix)
                     TimeSpan tiempoPreparacion = await GetHorario(recetaRequest.TiempoPreparacion);
                     unaReceta = await _command.UpdateReceta(recetaRequest, recetaId);
-                    if (!await DeleteAllIngReceta(recetaId) && ! await DeleteAllPasos(recetaId))
+                    if (!await DeleteAllIngReceta(recetaId) && !await DeleteAllPasos(recetaId))
                     {
                         foreach (PasoRequest paso in recetaRequest.ListaPasos) { await _pasoService.CreatePaso(paso, recetaId); }
                         foreach (IngredienteRecetaRequest ingReceta in recetaRequest.ListaIngredienteReceta) { await _ingRecetaService.CreateIngredienteReceta(ingReceta, recetaId); }
@@ -130,7 +137,7 @@ namespace Application.UseCases.SReceta
                 if (!await DeleteAllIngReceta(id) && !await DeleteAllPasos(id))
                 { recetaToDelete = await _command.DeleteReceta(await _query.GetRecetaById(id)); }
                 if (await _command.SaveChanges()) { throw new BadRequestt("Error al eliminar la receta"); }
-                return await _recetaMapper.CreateRecetaDeleteResponse(recetaToDelete);
+                return await _recetaDeleteMapper.CreateRecetaDeleteResponse(recetaToDelete);
             }
             catch (ExceptionNotFound ex) { throw new ExceptionNotFound("Error en la búsqueda de la receta: " + ex.Message); }
             catch (Conflict ex) { throw new Conflict("Error en la base de datos: " + ex.Message); }
@@ -181,27 +188,37 @@ namespace Application.UseCases.SReceta
             return recetasResponse;
         }
 
-        public async Task<List<RecetaResponse>> RecetasFilter(string? titulo, int dificultad, int categoria, string? ingrediente)
+        public async Task<List<RecetaGetResponse>> GetRecetaByFilter(string? titulo, int dificultad, int categoria, string? ingrediente)
         {
-            var listaRecetas = await _query.GetListRecetas();
-            
-
-            if (titulo == null && dificultad == 0 && categoria == 0 && ingrediente == null)
+            try
             {
-                return await GetListRecetas();
+                List<RecetaGetResponse> recetasGetResponse = new();
+                List<Receta> listaFiltrada;
+
+                if (titulo == null && dificultad == 0 && categoria == 0 && ingrediente == null)
+                {
+                    listaFiltrada = await _query.GetListRecetas();
+                }
+                else
+                {
+                    listaFiltrada = await _query.GetRecetasByFilters(titulo, dificultad, categoria, ingrediente);
+
+                }
+                var resultados = await Task.WhenAll(listaFiltrada.Select(async unaReceta =>
+                        await _recetaGetResponseMapper.CreateRecetaGetResponse(unaReceta)
+                    ));
+                recetasGetResponse.AddRange(resultados);
+
+                return recetasGetResponse;
             }
+            catch (ExceptionNotFound ex) { throw new ExceptionNotFound("Error en la búsqueda: " + ex.Message); }
+            catch (ExceptionSintaxError ex) { throw new ExceptionSintaxError("Error en la búsqueda: " + ex.Message); }
+            
+        }
 
-            var listaFiltrada = listaRecetas
-                .Where(e =>
-                (titulo != null && e.Titulo.Contains(titulo)) ||
-                (dificultad != 0 && e.Dificultad.DificultadId == dificultad) ||
-                (categoria != 0 && e.CategoriaReceta.CategoriaRecetaId == categoria) ||
-                (ingrediente != null && e.IngredentesReceta.Any(ing => _userIngredienteService.GetIngredienteName(ing.IngredienteId).Contains(ingrediente)))
-                )
-                .Select(e => _recetaMapper.CreateRecetaResponse(e));
-
-            //se ejecuta cuando finaliza el select
-            return (await Task.WhenAll(listaFiltrada)).ToList();
+        public Task<List<RecetaGetResponse>> GetRecetaByString(string text)
+        {
+            throw new NotImplementedException();
         }
 
         //----- Métodos privados -----
@@ -286,5 +303,6 @@ namespace Application.UseCases.SReceta
             { throw new ExceptionSintaxError("Formato erróneo para el horario, pruebe usando hh:mm"); }
         }
 
+       
     }
 }

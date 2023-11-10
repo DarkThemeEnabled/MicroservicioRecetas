@@ -1,4 +1,8 @@
-using Application.Interfaces;
+using Application.Interfaces.Commands;
+using Application.Interfaces.Mappers;
+using Application.Interfaces.Querys;
+using Application.Interfaces.Services;
+using Application.Mappers;
 using Application.UseCases;
 using Application.UseCases.CategoriaReceta;
 //using Application.UseCases.IngredienteReceta;
@@ -45,6 +49,15 @@ builder.Services.AddScoped<IIngredienteRecetaCommand, IngredienteRecetaCommand>(
 
 builder.Services.AddScoped<IUserIngredienteService, UserIngredienteService>();
 
+builder.Services.AddScoped<IRecetaMapper, RecetaMapper>();
+builder.Services.AddScoped<IRecetaGetResponseMapper, RecetaGetResponseMapper>();
+builder.Services.AddScoped<IRecetaDeleteMapper, RecetaDeleteMapper>();
+builder.Services.AddScoped<ICategoriaRecetaMapper, CategoriaRecetaMapper>();
+builder.Services.AddScoped<IDificultadMapper, DificultadMapper>();
+builder.Services.AddScoped<IPasoMapper, PasoMapper>();
+builder.Services.AddScoped<IIngredienteRecetaMapper, IngredienteRecetaMapper>();
+
+
 
 //CORS deshabilitar
 builder.Services.AddCors(options =>
@@ -65,6 +78,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.UseCors("AllowAll");
 
 app.UseHttpsRedirection();
 

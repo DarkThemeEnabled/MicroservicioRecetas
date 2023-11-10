@@ -1,5 +1,5 @@
 ﻿using Application.Exceptions;
-using Application.Interfaces;
+using Application.Interfaces.Services;
 using Application.Request;
 using Application.Response;
 using Microsoft.AspNetCore.Mvc;

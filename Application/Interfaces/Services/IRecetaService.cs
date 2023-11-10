@@ -1,7 +1,7 @@
 ﻿using Application.Request;
 using Application.Response;
 
-namespace Application.Interfaces
+namespace Application.Interfaces.Services
 {
     public interface IRecetaService
     {
@@ -11,6 +11,7 @@ namespace Application.Interfaces
         Task<RecetaResponse> UpdateReceta(RecetaRequest request, Guid id);
         Task<RecetaDeleteResponse> DeleteReceta(Guid id);
         Task<RecetaResponse> GetRecetaById(Guid id);
-        Task<List<RecetaResponse>> RecetasFilter(string? titulo, int dificultad, int categoria, string? ingrediente);
+        Task<List<RecetaGetResponse>> GetRecetaByFilter(string? titulo, int dificultad, int categoria, string? ingrediente);
+        Task<List<RecetaGetResponse>> GetRecetaByString(string text);
     }
 }

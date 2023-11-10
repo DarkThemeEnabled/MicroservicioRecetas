@@ -1,5 +1,5 @@
 ﻿using Application.Exceptions;
-using Application.Interfaces;
+using Application.Interfaces.Querys;
 using Domain.Entities;
 using Infraestructure.Persistence;
 using Microsoft.EntityFrameworkCore;

@@ -1,6 +1,6 @@
 ﻿using Application.Response;
 
-namespace Application.Interfaces
+namespace Application.Interfaces.Services
 {
     public interface IDificultadService
     {

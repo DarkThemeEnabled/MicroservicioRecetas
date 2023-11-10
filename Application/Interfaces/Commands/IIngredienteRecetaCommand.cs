@@ -1,7 +1,7 @@
 ﻿using Application.Request;
 using Domain.Entities;
 
-namespace Application.Interfaces
+namespace Application.Interfaces.Commands
 {
     public interface IIngredienteRecetaCommand
     {
