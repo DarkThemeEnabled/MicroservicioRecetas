@@ -122,32 +122,11 @@ namespace GastroNET.Controllers
         [ProducesResponseType(typeof(List<RecetaResponse>), 200)]
         [ProducesResponseType(typeof(BadRequest), 400)]
         [ProducesResponseType(typeof(BadRequest), 404)]
-        public async Task<IActionResult> GetByFilters(string? titulo, int dificultad, int categoria, string? ingrediente)
+        public async Task<IActionResult> GetByFilters(string? tituloOIngrediente, int dificultad, int categoria)
         {
             try
             {
-                var result = await _service.GetRecetaByFilter(titulo, dificultad, categoria, ingrediente);
-                return new JsonResult(result) { StatusCode = 200 };
-            }
-            catch (ExceptionSintaxError ex)
-            {
-                return new JsonResult(new BadRequest { Message = ex.Message }) { StatusCode = 400 };
-            }
-            catch (ExceptionNotFound ex)
-            {
-                return new JsonResult(new BadRequest { Message = ex.Message }) { StatusCode = 404 };
-            }
-        }
-
-        [HttpGet("{text}")]
-        [ProducesResponseType(typeof(List<RecetaGetResponse>), 200)]
-        [ProducesResponseType(typeof(BadRequest), 400)]
-        [ProducesResponseType(typeof(BadRequest), 404)]
-        public async Task<IActionResult> GetRecetaByString(string text)
-        {
-            try
-            {
-                var result = await _service.GetRecetaByString(text);
+                var result = await _service.GetRecetaByFilter(tituloOIngrediente, dificultad, categoria);
                 return new JsonResult(result) { StatusCode = 200 };
             }
             catch (ExceptionSintaxError ex)

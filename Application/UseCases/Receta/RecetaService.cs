@@ -6,9 +6,7 @@ using Application.Interfaces.Services;
 using Application.Request;
 using Application.Response;
 using Domain.Entities;
-using System.Collections.Generic;
 using System.Data;
-using System.Transactions;
 
 namespace Application.UseCases.SReceta
 {
@@ -42,7 +40,6 @@ namespace Application.UseCases.SReceta
         //------ Metodos ABM ------
         public async Task<RecetaResponse> CreateReceta(RecetaRequest recetaRequest)
         {
-
             try
             {
                 Receta recetaCreada = null;
@@ -58,6 +55,7 @@ namespace Application.UseCases.SReceta
                         FotoReceta = recetaRequest.FotoReceta,
                         Video = recetaRequest.Video,
                         TiempoPreparacion = tiempoPreparacion,
+                        Topics = recetaRequest.Topics,
                         IngredentesReceta = new List<IngredienteReceta>(),
                         Pasos = new List<Paso>(),
                     };
@@ -188,43 +186,49 @@ namespace Application.UseCases.SReceta
             return recetasResponse;
         }
 
-        public async Task<List<RecetaGetResponse>> GetRecetaByFilter(string? titulo, int dificultad, int categoria, string? ingrediente)
+        public async Task<List<RecetaGetResponse>> GetRecetaByFilter(string? tituloOIngrediente, int dificultad, int categoria)
         {
             try
             {
-                List<RecetaGetResponse> recetasGetResponse = new();
-                List<Receta> listaFiltrada;
-
-                if (titulo == null && dificultad == 0 && categoria == 0 && ingrediente == null)
+                if (string.IsNullOrEmpty(tituloOIngrediente) && dificultad == 0 && categoria == 0)
                 {
-                    listaFiltrada = await _query.GetListRecetas();
+                    return (await Task.WhenAll((await _query.GetListRecetas()).Select(async e => await _recetaGetResponseMapper.CreateRecetaGetResponse(e)))).ToList();
                 }
-                else
-                {
-                    listaFiltrada = await _query.GetRecetasByFilters(titulo, dificultad, categoria, ingrediente);
 
-                }
-                var resultados = await Task.WhenAll(listaFiltrada.Select(async unaReceta =>
-                        await _recetaGetResponseMapper.CreateRecetaGetResponse(unaReceta)
-                    ));
-                recetasGetResponse.AddRange(resultados);
 
-                return recetasGetResponse;
+                var listaFiltrada = await Task.WhenAll((await _query.GetListRecetas())
+                .Where(e =>
+                (tituloOIngrediente != null && e.Titulo.ToLower().Contains(tituloOIngrediente.ToLower())) ||
+                (dificultad != null && e.Dificultad.DificultadId == dificultad) ||
+                (categoria != null && e.CategoriaReceta.CategoriaRecetaId == categoria) ||
+                (tituloOIngrediente != null && e.IngredentesReceta.Any(ing => _userIngredienteService.GetIngredienteName(ing.IngredienteId).ToLower().Contains(tituloOIngrediente.ToLower())) ||
+                (tituloOIngrediente != null && e.Topics.ToLower().Contains(tituloOIngrediente.ToLower()))))
+                .Select(async e => await _recetaGetResponseMapper.CreateRecetaGetResponse(e)));
+
+                return listaFiltrada.ToList();
+                //    List<RecetaGetResponse> recetasGetResponse = new();
+                //    List<Receta> listaFiltrada;
+
+                //    if (titulo == null && dificultad == 0 && categoria == 0 && ingrediente == null)
+                //    {
+                //        listaFiltrada = await _query.GetListRecetas();
+                //    }
+                //    else
+                //    {
+                //        listaFiltrada = await _query.GetRecetasByFilters(titulo, dificultad, categoria, ingrediente);
+
+                //    }
+                //    var resultados = await Task.WhenAll(listaFiltrada.Select(async unaReceta =>
+                //            await _recetaGetResponseMapper.CreateRecetaGetResponse(unaReceta)
+                //        ));
+                //    recetasGetResponse.AddRange(resultados);
+
+                //    return recetasGetResponse;
             }
             catch (ExceptionNotFound ex) { throw new ExceptionNotFound("Error en la búsqueda: " + ex.Message); }
             catch (ExceptionSintaxError ex) { throw new ExceptionSintaxError("Error en la búsqueda: " + ex.Message); }
-            
+
         }
-
-        public Task<List<RecetaGetResponse>> GetRecetaByString(string text)
-        {
-            throw new NotImplementedException();
-        }
-
-        //----- Métodos privados -----
-
-        // ------ Validadores ------
-
 
         private async Task<bool> VerifyAll(RecetaRequest recetaRequest)
         {
@@ -303,6 +307,6 @@ namespace Application.UseCases.SReceta
             { throw new ExceptionSintaxError("Formato erróneo para el horario, pruebe usando hh:mm"); }
         }
 
-       
+
     }
 }

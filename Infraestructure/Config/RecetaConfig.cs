@@ -29,6 +29,8 @@ namespace Infraestructure.Config
                 .IsRequired();
             entityBuilder.Property(r => r.TiempoPreparacion)
                 .IsRequired();
+            entityBuilder.Property(r => r.Topics)
+                .HasMaxLength(255);
         }
     }
 }

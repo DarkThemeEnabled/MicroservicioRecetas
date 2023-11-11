@@ -1,6 +1,5 @@
 ﻿using Application.Exceptions;
 using Application.Interfaces.Services;
-using Azure;
 using Newtonsoft.Json.Linq;
 
 namespace Application.UserService
@@ -72,6 +71,6 @@ namespace Application.UserService
             }
         }
 
-        
+
     }
 }

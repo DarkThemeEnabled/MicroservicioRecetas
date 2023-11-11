@@ -4,7 +4,7 @@ using Domain.Entities;
 
 namespace Application.Mappers
 {
-    public class RecetaMapper: IRecetaMapper
+    public class RecetaMapper : IRecetaMapper
     {
         private readonly IPasoMapper _pasoMapper;
         private readonly IDificultadMapper _dificultadMapper;
@@ -30,6 +30,7 @@ namespace Application.Mappers
                 TiempoPreparacion = unaReceta.TiempoPreparacion.ToString(),
                 Titulo = unaReceta.Titulo,
                 Video = unaReceta.Video,
+                Topics = unaReceta.Topics,
                 pasos = await _pasoMapper.GetListPasosResponse(unaReceta.Pasos),
                 ingredientes = await _ingRecMapper.GetIngredientesRecetaResponse(unaReceta.IngredentesReceta)
             };

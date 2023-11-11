@@ -6,7 +6,7 @@ using Domain.Entities;
 
 namespace Application.Mappers
 {
-    public class IngredienteRecetaMapper: IIngredienteRecetaMapper
+    public class IngredienteRecetaMapper : IIngredienteRecetaMapper
     {
         private readonly IUserIngredienteService _userIngredienteService = new UserIngredienteService();
         public async Task<IngredienteRecetaResponse> GetIngredienteRecetaResponse(IngredienteReceta unIngRec)

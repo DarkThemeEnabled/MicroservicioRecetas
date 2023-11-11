@@ -1,7 +1,4 @@
-﻿using Application.Exceptions;
-using Application.Interfaces.Services;
-using Application.Request;
-using Application.Response;
+﻿using Application.Interfaces.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GastroNET.Controllers

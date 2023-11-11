@@ -4,7 +4,7 @@ using Domain.Entities;
 
 namespace Application.Mappers
 {
-    public class PasoMapper: IPasoMapper
+    public class PasoMapper : IPasoMapper
     {
         public Task<PasoResponse> GetPasoResponse(Paso unPaso)
         {

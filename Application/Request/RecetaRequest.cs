@@ -10,6 +10,7 @@
         public string FotoReceta { get; set; }
         public string Video { get; set; }
         public string TiempoPreparacion { get; set; }
+        public string Topics { get; set; }
         public List<PasoRequest> ListaPasos { get; set; }
         public List<IngredienteRecetaRequest> ListaIngredienteReceta { get; set; }
 

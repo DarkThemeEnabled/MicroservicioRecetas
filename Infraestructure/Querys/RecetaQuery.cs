@@ -57,7 +57,7 @@ namespace Infraestructure.Querys
             }
         }
 
-        public async Task<List<Receta>> GetRecetasByFilters (string? titulo, int dificultad, int categoria, string? ingrediente)
+        public async Task<List<Receta>> GetRecetasByFilters(string? titulo, int dificultad, int categoria, string? ingrediente)
         {
             try
             {
@@ -81,7 +81,7 @@ namespace Infraestructure.Querys
             }
         }
 
-        public async Task<List<Receta>> GetRecetasByString (string text)
+        public async Task<List<Receta>> GetRecetasByString(string text)
         {
             try
             {

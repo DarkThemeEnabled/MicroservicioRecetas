@@ -4,7 +4,7 @@ using Domain.Entities;
 
 namespace Application.Mappers
 {
-    public class DificultadMapper: IDificultadMapper
+    public class DificultadMapper : IDificultadMapper
     {
         public async Task<DificultadResponse> GetDificultadResponse(Dificultad dificultad)
         {

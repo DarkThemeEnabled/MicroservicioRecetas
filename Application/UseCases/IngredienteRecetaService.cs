@@ -109,9 +109,9 @@ namespace Application.UseCases
             //Ver este porque tiene que lo que conecta al microservicio :D
             //if (request.ingredienteId == 0) { throw new ExceptionNotFound("No existe el ingrediente"); }
             //if (_UServIngrediente.GetByID(request.ingredienteId))
-            
+
             // ^--- Con la llamada al microservicio ingrediente, pedir el nombre para mostrar el ingrediente que es menor a 0 :D
-            
+
             // ^--- Con la llamada al microservicio ingrediente, pedir el nombre para mostrar el ingrediente que se está repitiendo :D
             //if (ingRecetaId > 0 && _query.GetIngRecetaById(ingRecetaId) == null) { throw new ExceptionNotFound("No existe el ingrediente"); }
             //En blanco: Tiene  atributos: ingrediente id, cantidad!
