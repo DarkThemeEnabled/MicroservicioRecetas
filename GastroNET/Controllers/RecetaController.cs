@@ -2,6 +2,7 @@
 using Application.Interfaces.Services;
 using Application.Request;
 using Application.Response;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GastroNET.Controllers
@@ -17,8 +18,8 @@ namespace GastroNET.Controllers
             _service = service;
         }
 
+        [Authorize]
         [HttpPost]
-
         [ProducesResponseType(typeof(RecetaResponse), 201)]
         [ProducesResponseType(typeof(BadRequest), 400)]
         [ProducesResponseType(typeof(BadRequest), 404)]
@@ -44,6 +45,7 @@ namespace GastroNET.Controllers
             }
         }
 
+        [Authorize]
         [HttpPut("{Id}")]
         [ProducesResponseType(typeof(RecetaResponse), 200)]
         [ProducesResponseType(typeof(BadRequest), 400)]
@@ -70,6 +72,7 @@ namespace GastroNET.Controllers
             }
         }
 
+        [Authorize]
         [HttpDelete("{Id}")]
         [ProducesResponseType(typeof(RecetaDeleteResponse), 200)]
         [ProducesResponseType(typeof(BadRequest), 400)]
@@ -95,6 +98,7 @@ namespace GastroNET.Controllers
                 return new JsonResult(new BadRequest { Message = ex.Message }) { StatusCode = 409 };
             }
         }
+
 
         [HttpGet("{id}")]
         [ProducesResponseType(typeof(PasoResponse), 200)]

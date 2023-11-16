@@ -580,3 +580,13 @@ D:\facultad\cuarto año\segundo cuatrimestre\proyecto software\Microservicio Rec
 D:\facultad\cuarto año\segundo cuatrimestre\proyecto software\Microservicio Receta\MicroservicioRecetas\GastroNET\obj\Debug\net6.0\GastroNET.pdb
 D:\facultad\cuarto año\segundo cuatrimestre\proyecto software\Microservicio Receta\MicroservicioRecetas\GastroNET\obj\Debug\net6.0\GastroNET.genruntimeconfig.cache
 D:\facultad\cuarto año\segundo cuatrimestre\proyecto software\Microservicio Receta\MicroservicioRecetas\GastroNET\obj\Debug\net6.0\ref\GastroNET.dll
+C:\Users\maria\Desktop\Proyecto Software\Grupal\MicroservicioRecetas\GastroNET\obj\Debug\net6.0\GastroNET.csproj.AssemblyReference.cache
+C:\Users\maria\Desktop\Proyecto Software\Grupal\MicroservicioRecetas\GastroNET\obj\Debug\net6.0\GastroNET.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\maria\Desktop\Proyecto Software\Grupal\MicroservicioRecetas\GastroNET\obj\Debug\net6.0\GastroNET.AssemblyInfoInputs.cache
+C:\Users\maria\Desktop\Proyecto Software\Grupal\MicroservicioRecetas\GastroNET\obj\Debug\net6.0\GastroNET.AssemblyInfo.cs
+C:\Users\maria\Desktop\Proyecto Software\Grupal\MicroservicioRecetas\GastroNET\obj\Debug\net6.0\GastroNET.csproj.CoreCompileInputs.cache
+C:\Users\maria\Desktop\Proyecto Software\Grupal\MicroservicioRecetas\GastroNET\obj\Debug\net6.0\GastroNET.MvcApplicationPartsAssemblyInfo.cs
+C:\Users\maria\Desktop\Proyecto Software\Grupal\MicroservicioRecetas\GastroNET\obj\Debug\net6.0\GastroNET.MvcApplicationPartsAssemblyInfo.cache
+C:\Users\maria\Desktop\Proyecto Software\Grupal\MicroservicioRecetas\GastroNET\obj\Debug\net6.0\GastroNET.dll
+C:\Users\maria\Desktop\Proyecto Software\Grupal\MicroservicioRecetas\GastroNET\obj\Debug\net6.0\refint\GastroNET.dll
+C:\Users\maria\Desktop\Proyecto Software\Grupal\MicroservicioRecetas\GastroNET\obj\Debug\net6.0\GastroNET.pdb
