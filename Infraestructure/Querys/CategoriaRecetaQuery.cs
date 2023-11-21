@@ -1,7 +1,9 @@
-﻿using Application.Interfaces.Querys;
+﻿using Application.Exceptions;
+using Application.Interfaces.Querys;
 using Domain.Entities;
 using Infraestructure.Persistence;
 using Microsoft.EntityFrameworkCore;
+using System.Data.Common;
 
 namespace Infraestructure.Querys
 {
@@ -14,9 +16,21 @@ namespace Infraestructure.Querys
             _context = context;
         }
 
-        public Task<CategoriaReceta> getCategoriaRecetaById(int id)
+        public async Task<CategoriaReceta> GetCategoriaRecetaById(int id)
         {
-            return _context.CategoriasReceta.FirstOrDefaultAsync(cr => cr.CategoriaRecetaId == id);
+            return await _context.CategoriasReceta.FirstOrDefaultAsync(cr => cr.CategoriaRecetaId == id);
+        }
+
+        public async Task<List<CategoriaReceta>> GetCategoriaRecetas()
+        {
+            try
+            {
+                return await _context.CategoriasReceta.ToListAsync();
+            }
+            catch (DbException ex)
+            {
+                throw new BadRequestt("Hubo un problema en la búsqueda de listas de dificultades");
+            }
         }
     }
 }

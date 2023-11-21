@@ -10,9 +10,19 @@ namespace Application.Mappers
         {
             return new CategoriaRecetaResponse
             {
-                Id = categoriaReceta.CategoriaRecetaId,
-                Nombre = categoriaReceta.Nombre
+                id = categoriaReceta.CategoriaRecetaId,
+                nombre = categoriaReceta.Nombre
             };
+        }
+
+        public async Task<List<CategoriaRecetaResponse>> GetListCategoriaRecetaResponse(List<CategoriaReceta> Categorias)
+        {
+            List<CategoriaRecetaResponse> categoriasResponse = new();
+            foreach (CategoriaReceta unaCategoria in Categorias)
+            {
+                categoriasResponse.Add(await GetCategoriaRecetaResponse(unaCategoria));
+            }
+            return categoriasResponse;
         }
     }
 }

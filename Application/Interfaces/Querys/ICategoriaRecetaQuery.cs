@@ -4,6 +4,7 @@ namespace Application.Interfaces.Querys
 {
     public interface ICategoriaRecetaQuery
     {
-        Task<CategoriaReceta> getCategoriaRecetaById(int id);
+        Task<CategoriaReceta> GetCategoriaRecetaById(int id);
+        Task<List<CategoriaReceta>> GetCategoriaRecetas();
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Application.Exceptions;
+using Application.Interfaces.Mappers;
 using Application.Interfaces.Querys;
 using Application.Interfaces.Services;
 using Application.Mappers;
@@ -9,19 +10,19 @@ namespace Application.UseCases.SDificultad
     public class DificultadService : IDificultadService
     {
         private readonly IDificultadQuery _query;
-        DificultadMapper mapper;
+        private readonly IDificultadMapper _mapper;
 
-        public DificultadService(IDificultadQuery query)
+        public DificultadService(IDificultadQuery query, IDificultadMapper mapper)
         {
             _query = query;
-            mapper = new DificultadMapper();
+            _mapper = mapper;
         }
 
         public async Task<List<DificultadResponse>> GetListDificultad()
         {
             try
             {
-                return await mapper.GetListDificultadResponse(await _query.GetListDificultades());
+                return await _mapper.GetListDificultadResponse(await _query.GetListDificultades());
             }
             catch (BadRequestt ex)
             {
@@ -29,18 +30,6 @@ namespace Application.UseCases.SDificultad
             }
 
         }
-
-        //public async Task<DificultadResponse> GetDificultadById(int id)
-        //{
-        //    try
-        //    {
-        //        return await mapper.GetDificultadResponse(await _query.GetDificultadById(id));
-        //    }
-        //    catch (ExceptionNotFound)
-        //    {
-        //        throw new ExceptionNotFound("No existe esa dificultad");
-        //    }
-        //}
 
         public async Task<bool> ValidateDificultadById(int dificultadId)
         {
