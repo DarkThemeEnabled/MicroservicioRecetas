@@ -18,6 +18,18 @@ namespace Application.UseCases.CategoriaReceta
             _categoriaMapper = mapper;
         }
 
+        public async Task<CategoriaRecetaResponse> GetCategoriaRecetaById(int id)
+        {
+            try
+            {
+                return await _categoriaMapper.GetCategoriaRecetaResponse(await _categoriaQuery.GetCategoriaRecetaById(id));
+            }
+            catch (BadRequestt ex)
+            {
+                throw new Exceptions.BadRequestt("Error: " + ex.Message);
+            }
+        }
+
         public async Task<List<CategoriaRecetaResponse>> GetCategoriasReceta()
         {
                 try

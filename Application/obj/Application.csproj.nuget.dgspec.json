@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\maria\\Desktop\\Proyecto Software\\Grupal\\MicroservicioRecetas\\Application\\Application.csproj": {}
+    "D:\\facultad\\cuarto año\\segundo cuatrimestre\\proyecto software\\MicroservicioRecetas\\Application\\Application.csproj": {}
   },
   "projects": {
-    "C:\\Users\\maria\\Desktop\\Proyecto Software\\Grupal\\MicroservicioRecetas\\Application\\Application.csproj": {
+    "D:\\facultad\\cuarto año\\segundo cuatrimestre\\proyecto software\\MicroservicioRecetas\\Application\\Application.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\maria\\Desktop\\Proyecto Software\\Grupal\\MicroservicioRecetas\\Application\\Application.csproj",
+        "projectUniqueName": "D:\\facultad\\cuarto año\\segundo cuatrimestre\\proyecto software\\MicroservicioRecetas\\Application\\Application.csproj",
         "projectName": "Application",
-        "projectPath": "C:\\Users\\maria\\Desktop\\Proyecto Software\\Grupal\\MicroservicioRecetas\\Application\\Application.csproj",
-        "packagesPath": "C:\\Users\\maria\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\maria\\Desktop\\Proyecto Software\\Grupal\\MicroservicioRecetas\\Application\\obj\\",
+        "projectPath": "D:\\facultad\\cuarto año\\segundo cuatrimestre\\proyecto software\\MicroservicioRecetas\\Application\\Application.csproj",
+        "packagesPath": "C:\\Users\\Lucas\\.nuget\\packages\\",
+        "outputPath": "D:\\facultad\\cuarto año\\segundo cuatrimestre\\proyecto software\\MicroservicioRecetas\\Application\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\maria\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Lucas\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -28,8 +28,8 @@
           "net6.0": {
             "targetAlias": "net6.0",
             "projectReferences": {
-              "C:\\Users\\maria\\Desktop\\Proyecto Software\\Grupal\\MicroservicioRecetas\\Domain\\Domain.csproj": {
-                "projectPath": "C:\\Users\\maria\\Desktop\\Proyecto Software\\Grupal\\MicroservicioRecetas\\Domain\\Domain.csproj"
+              "D:\\facultad\\cuarto año\\segundo cuatrimestre\\proyecto software\\MicroservicioRecetas\\Domain\\Domain.csproj": {
+                "projectPath": "D:\\facultad\\cuarto año\\segundo cuatrimestre\\proyecto software\\MicroservicioRecetas\\Domain\\Domain.csproj"
               }
             }
           }
@@ -87,21 +87,21 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.403\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.202\\RuntimeIdentifierGraph.json"
         }
       }
     },
-    "C:\\Users\\maria\\Desktop\\Proyecto Software\\Grupal\\MicroservicioRecetas\\Domain\\Domain.csproj": {
+    "D:\\facultad\\cuarto año\\segundo cuatrimestre\\proyecto software\\MicroservicioRecetas\\Domain\\Domain.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\maria\\Desktop\\Proyecto Software\\Grupal\\MicroservicioRecetas\\Domain\\Domain.csproj",
+        "projectUniqueName": "D:\\facultad\\cuarto año\\segundo cuatrimestre\\proyecto software\\MicroservicioRecetas\\Domain\\Domain.csproj",
         "projectName": "Domain",
-        "projectPath": "C:\\Users\\maria\\Desktop\\Proyecto Software\\Grupal\\MicroservicioRecetas\\Domain\\Domain.csproj",
-        "packagesPath": "C:\\Users\\maria\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\maria\\Desktop\\Proyecto Software\\Grupal\\MicroservicioRecetas\\Domain\\obj\\",
+        "projectPath": "D:\\facultad\\cuarto año\\segundo cuatrimestre\\proyecto software\\MicroservicioRecetas\\Domain\\Domain.csproj",
+        "packagesPath": "C:\\Users\\Lucas\\.nuget\\packages\\",
+        "outputPath": "D:\\facultad\\cuarto año\\segundo cuatrimestre\\proyecto software\\MicroservicioRecetas\\Domain\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\maria\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Lucas\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -170,7 +170,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.403\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.202\\RuntimeIdentifierGraph.json"
         }
       }
     }

@@ -4,6 +4,7 @@ using Application.Interfaces.Querys;
 using Application.Interfaces.Services;
 using Application.Mappers;
 using Application.Response;
+using Domain.Entities;
 
 namespace Application.UseCases.SDificultad
 {
@@ -23,6 +24,24 @@ namespace Application.UseCases.SDificultad
             try
             {
                 return await _mapper.GetListDificultadResponse(await _query.GetListDificultades());
+            }
+            catch (BadRequestt ex)
+            {
+                throw new Exceptions.BadRequestt("Error: " + ex.Message);
+            }
+
+        }
+
+        public async Task<DificultadResponse> GetDificultadById(int id)
+        {
+            try
+            {
+                DificultadResponse dificultad = new DificultadResponse();
+                if (await ValidateDificultadById(id))
+                { 
+                  dificultad=await _mapper.GetDificultadResponse(await _query.GetDificultadById(id));
+                }
+                return dificultad;
             }
             catch (BadRequestt ex)
             {
