@@ -9,6 +9,7 @@
         public Dificultad Dificultad { get; set; }
         public Guid UsuarioId { get; set; }
         public string Titulo { get; set; }
+        public string Descripcion { get; set; }
         public string FotoReceta { get; set; }
         public string Video { get; set; }
         public string Topics { get; set; }

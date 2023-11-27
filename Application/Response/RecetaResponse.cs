@@ -7,6 +7,7 @@
         public Guid UsuarioId { get; set; }
         public DificultadResponse Dificultad { get; set; }
         public string Titulo { get; set; }
+        public string Descripcion { get; set; }
         public string FotoReceta { get; set; }
         public string Video { get; set; }
         public string TiempoPreparacion { get; set; }

@@ -225,6 +225,11 @@ namespace Infraestructure.Migrations
                     b.Property<int>("CategoriaRecetaId")
                         .HasColumnType("int");
 
+                    b.Property<string>("Descripcion")
+                        .IsRequired()
+                        .HasMaxLength(750)
+                        .HasColumnType("nvarchar(750)");
+
                     b.Property<int>("DificultadId")
                         .HasColumnType("int");
 

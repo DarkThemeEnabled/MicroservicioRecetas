@@ -29,6 +29,7 @@ namespace Application.Mappers
                 FotoReceta = unaReceta.FotoReceta,
                 TiempoPreparacion = unaReceta.TiempoPreparacion.ToString(),
                 Titulo = unaReceta.Titulo,
+                Descripcion = unaReceta.Descripcion,
                 Video = unaReceta.Video,
                 Topics = unaReceta.Topics,
                 pasos = await _pasoMapper.GetListPasosResponse(unaReceta.Pasos),

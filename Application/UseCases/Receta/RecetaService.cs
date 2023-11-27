@@ -52,6 +52,7 @@ namespace Application.UseCases.SReceta
                         DificultadId = recetaRequest.DificultadId,
                         UsuarioId = recetaRequest.UsuarioId,
                         Titulo = recetaRequest.Titulo,
+                        Descripcion = recetaRequest.Descripcion,
                         FotoReceta = recetaRequest.FotoReceta,
                         Video = recetaRequest.Video,
                         TiempoPreparacion = tiempoPreparacion,

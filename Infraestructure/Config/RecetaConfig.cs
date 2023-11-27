@@ -21,6 +21,9 @@ namespace Infraestructure.Config
             entityBuilder.Property(r => r.Titulo)
                 .HasMaxLength(50)
                 .IsRequired();
+            entityBuilder.Property(r => r.Descripcion) 
+                .HasMaxLength(750)
+                .IsRequired();
             entityBuilder.Property(r => r.FotoReceta)
                 .HasMaxLength(250)
                 .IsRequired();
