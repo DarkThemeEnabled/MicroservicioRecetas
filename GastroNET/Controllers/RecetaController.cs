@@ -101,7 +101,7 @@ namespace GastroNET.Controllers
 
 
         [HttpGet("{id}")]
-        [ProducesResponseType(typeof(PasoResponse), 200)]
+        [ProducesResponseType(typeof(RecetaResponse), 200)]
         [ProducesResponseType(typeof(BadRequest), 400)]
         [ProducesResponseType(typeof(BadRequest), 404)]
         public async Task<IActionResult> GetRecetaById(Guid id)
