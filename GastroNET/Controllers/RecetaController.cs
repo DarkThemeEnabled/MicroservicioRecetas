@@ -18,7 +18,7 @@ namespace GastroNET.Controllers
             _service = service;
         }
 
-        // (DESCOMENTAR LUEGO) [Authorize]
+        [Authorize]
         [HttpPost]
         [ProducesResponseType(typeof(RecetaResponse), 201)]
         [ProducesResponseType(typeof(BadRequest), 400)]
@@ -45,7 +45,7 @@ namespace GastroNET.Controllers
             }
         }
 
-        // (DESCOMENTAR LUEGO) [Authorize]
+        [Authorize]
         [HttpPut("{Id}")]
         [ProducesResponseType(typeof(RecetaResponse), 200)]
         [ProducesResponseType(typeof(BadRequest), 400)]
@@ -72,7 +72,7 @@ namespace GastroNET.Controllers
             }
         }
 
-        // (DESCOMENTAR LUEGO) [Authorize]
+        [Authorize]
         [HttpDelete("{Id}")]
         [ProducesResponseType(typeof(RecetaDeleteResponse), 200)]
         [ProducesResponseType(typeof(BadRequest), 400)]

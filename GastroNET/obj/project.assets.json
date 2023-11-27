@@ -7725,19 +7725,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Lucas\\.nuget\\packages\\": {}
+    "C:\\Users\\maria\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\facultad\\cuarto año\\segundo cuatrimestre\\proyecto software\\MicroservicioRecetas\\GastroNET\\GastroNET.csproj",
+      "projectUniqueName": "C:\\Users\\maria\\Desktop\\Proyecto Software\\Grupal\\MicroservicioRecetas\\GastroNET\\GastroNET.csproj",
       "projectName": "GastroNET",
-      "projectPath": "D:\\facultad\\cuarto año\\segundo cuatrimestre\\proyecto software\\MicroservicioRecetas\\GastroNET\\GastroNET.csproj",
-      "packagesPath": "C:\\Users\\Lucas\\.nuget\\packages\\",
-      "outputPath": "D:\\facultad\\cuarto año\\segundo cuatrimestre\\proyecto software\\MicroservicioRecetas\\GastroNET\\obj\\",
+      "projectPath": "C:\\Users\\maria\\Desktop\\Proyecto Software\\Grupal\\MicroservicioRecetas\\GastroNET\\GastroNET.csproj",
+      "packagesPath": "C:\\Users\\maria\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\maria\\Desktop\\Proyecto Software\\Grupal\\MicroservicioRecetas\\GastroNET\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\Lucas\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\maria\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -7751,8 +7751,8 @@
         "net6.0": {
           "targetAlias": "net6.0",
           "projectReferences": {
-            "D:\\facultad\\cuarto año\\segundo cuatrimestre\\proyecto software\\MicroservicioRecetas\\Infraestructure\\Infraestructure.csproj": {
-              "projectPath": "D:\\facultad\\cuarto año\\segundo cuatrimestre\\proyecto software\\MicroservicioRecetas\\Infraestructure\\Infraestructure.csproj"
+            "C:\\Users\\maria\\Desktop\\Proyecto Software\\Grupal\\MicroservicioRecetas\\Infraestructure\\Infraestructure.csproj": {
+              "projectPath": "C:\\Users\\maria\\Desktop\\Proyecto Software\\Grupal\\MicroservicioRecetas\\Infraestructure\\Infraestructure.csproj"
             }
           }
         }
@@ -7821,7 +7821,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.202\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.403\\RuntimeIdentifierGraph.json"
       }
     }
   }

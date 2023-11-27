@@ -72,21 +72,21 @@ builder.Services.AddCors(options =>
     });
 });
 
-// (DESCOMENTAR LUEGO)  agregado servicio de token 
+// agregado servicio de token 
 
-//builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-//.AddJwtBearer(JwtBearerDefaults.AuthenticationScheme, jwtBearerOptions =>
-//{
-//    jwtBearerOptions.TokenValidationParameters = new TokenValidationParameters
-//    {
-//        IssuerSigningKey = new SymmetricSecurityKey(
-//            Encoding.UTF8.GetBytes(builder.Configuration["AppSettings:Secret"])
-//        ),
-//        ValidIssuer = "localhost",
-//        ValidAudience = "usuarios",
-//        ValidateLifetime = true
-//    };
-//});
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+.AddJwtBearer(JwtBearerDefaults.AuthenticationScheme, jwtBearerOptions =>
+{
+    jwtBearerOptions.TokenValidationParameters = new TokenValidationParameters
+    {
+        IssuerSigningKey = new SymmetricSecurityKey(
+            Encoding.UTF8.GetBytes(builder.Configuration["AppSettings:Secret"])
+        ),
+        ValidIssuer = "localhost",
+        ValidAudience = "usuarios",
+        ValidateLifetime = true
+    };
+});
 
 var app = builder.Build();
 
