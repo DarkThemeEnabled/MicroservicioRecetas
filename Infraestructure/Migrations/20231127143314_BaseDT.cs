@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Infraestructure.Migrations
 {
     /// <inheritdoc />
-    public partial class RecetaBD : Migration
+    public partial class BaseDT : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

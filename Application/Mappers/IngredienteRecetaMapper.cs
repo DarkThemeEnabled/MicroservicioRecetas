@@ -13,9 +13,8 @@ namespace Application.Mappers
         {
             return new IngredienteRecetaResponse
             {
-                id = unIngRec.IngredienteRecetaId,
-                nombre = _userIngredienteService.GetIngredienteName(unIngRec.IngredienteId),
-                //ingredienteId = 12,
+                id = unIngRec.IngredienteId,
+                cantidad =unIngRec.cantidad,
             };
 
         }
